@@ -4,6 +4,23 @@ import { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ShoppingCart, DollarSign, Target, BarChart3, Lightbulb, Clock, Calendar, Rocket } from 'lucide-react';
 
+// Consistent number formatting function to avoid hydration issues
+const formatCurrency = (amount: number, currency: string = 'EUR', decimals: number = 0): string => {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(amount);
+};
+
+const formatNumber = (amount: number): string => {
+  return new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
 // Historische Inflationsdaten (vereinfacht)
 const historicalInflation = {
   1990: { rate: 2.7, currency: 'DM', factor: 1.95 }, // DM zu Euro Faktor
@@ -97,7 +114,7 @@ export default function TimeTravelSimulator() {
       </div>
 
       {/* Input Controls */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 items-end">
         <div>
           <label className="block text-white font-semibold mb-3 flex items-center gap-2">
             <Calendar size={20} className="text-purple-400" />
@@ -136,27 +153,27 @@ export default function TimeTravelSimulator() {
             </span>
           </div>
         </div>
-      </div>
 
-      {/* Calculate Button */}
-      <div className="text-center mb-8">
-        <button
-          onClick={calculatePurchasingPower}
-          disabled={isCalculating || amount <= 0}
-          className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
-        >
-          {isCalculating ? (
-            <div className="flex items-center gap-3">
-              <div className="calculation-spinner w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></div>
-              Zeitreise läuft...
-            </div>
-          ) : (
-            <>
-              <Rocket size={20} className="mr-2" />
-              Zeitreise starten!
-            </>
-          )}
-        </button>
+        {/* Calculate Button */}
+        <div>
+          <button
+            onClick={calculatePurchasingPower}
+            disabled={isCalculating || amount <= 0}
+            className="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+          >
+            {isCalculating ? (
+              <div className="flex items-center justify-center gap-3">
+                <div className="calculation-spinner w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></div>
+                Zeitreise läuft...
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2">
+                <Rocket size={20} />
+                Zeitreise starten!
+              </div>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Results */}
@@ -180,14 +197,10 @@ export default function TimeTravelSimulator() {
                 Kaufkraft heute:
               </h5>
               <div className="text-3xl font-bold text-green-400 mb-2">
-                {result.todayValue.toLocaleString('de-DE', { 
-                  style: 'currency', 
-                  currency: 'EUR',
-                  maximumFractionDigits: 0
-                })}
+                {formatCurrency(result.todayValue, 'EUR', 0)}
               </div>
               <p className="text-sm text-gray-300">
-                Ursprünglich: {result.originalAmount.toLocaleString('de-DE')} {result.originalCurrency}
+                Ursprünglich: {formatNumber(result.originalAmount)} {result.originalCurrency}
               </p>
               <p className="text-sm text-gray-300">
                 Wertsteigerung: +{result.purchasingPowerLoss.toFixed(1)}%
@@ -204,18 +217,10 @@ export default function TimeTravelSimulator() {
                 <span className="text-purple-300">{result.example.name}</span>
               </div>
               <div className="text-sm text-gray-300">
-                {selectedYear}: {result.example.price.toLocaleString('de-DE', { 
-                  style: 'currency', 
-                  currency: result.example.currency === 'DM' ? 'EUR' : 'EUR',
-                  maximumFractionDigits: 2
-                })} {result.example.currency}
+                {selectedYear}: {formatCurrency(result.example.price, 'EUR', 2)} {result.example.currency}
               </div>
               <div className="text-sm text-green-400">
-                Heute: ~{result.exampleToday.toLocaleString('de-DE', { 
-                  style: 'currency', 
-                  currency: 'EUR',
-                  maximumFractionDigits: 2
-                })}
+                Heute: ~{formatCurrency(result.exampleToday, 'EUR', 2)}
               </div>
             </div>
           </div>
@@ -252,7 +257,7 @@ export default function TimeTravelSimulator() {
               <Lightbulb size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong>Fun Fact:</strong> Dein Geld hätte sich in {result.yearsDiff} Jahren
-                um {result.purchasingPowerLoss.toFixed(0)}% "vermehrt" - aber nur nominal!
+                um {result.purchasingPowerLoss.toFixed(0)}% &quot;vermehrt&quot; - aber nur nominal!
                 Real hat es die gleiche Kaufkraft wie damals.
               </span>
             </p>

@@ -72,16 +72,12 @@ export default function CountUpNumber({
   };
 
   const formatValue = (value: number) => {
-    let formatted = value.toFixed(decimals);
-    
-    // Für große Zahlen: Tausender-Trennzeichen
-    if (value >= 1000) {
-      formatted = parseFloat(formatted).toLocaleString('de-DE', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
-      });
-    }
-    
+    // Use consistent formatting to avoid hydration issues
+    const formatted = new Intl.NumberFormat('de-DE', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }).format(value);
+
     return `${prefix}${formatted}${suffix}`;
   };
 

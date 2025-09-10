@@ -90,7 +90,7 @@ export default function QuizSection() {
       setShowExplanation(false);
     } else {
       // Calculate final score
-      const score = quizState.selectedAnswers.reduce((total, answer, index) => {
+      const score = quizState.selectedAnswers.reduce((total: number, answer, index) => {
         return total + (answer === quizQuestions[index].correct ? 1 : 0);
       }, 0);
       
@@ -151,9 +151,9 @@ export default function QuizSection() {
             ref={titleRef}
             className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6"
           >
-            Teste dein
+            Quiz zum Thema
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 block">
-              Wissen!
+              Inflation!
             </span>
           </h2>
           <p className="text-xl text-green-200">

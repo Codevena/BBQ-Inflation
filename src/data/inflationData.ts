@@ -28,7 +28,7 @@ export const inflationRatesGermany: InflationData[] = [
   { year: 2022, rate: 6.9 }, // Ukraine-Krieg, Energiekrise
   { year: 2023, rate: 5.9 }, // Weiterhin erhöht
   { year: 2024, rate: 2.2 }, // Destatis: Rückgang auf 2,2%
-  { year: 2025, rate: 2.0 }, // EZB-Prognose: Annäherung an 2%-Ziel
+  { year: 2025, rate: 2.2 }, // Destatis: August 2025: +2,2% (Kerninflation: +2,7%)
 ];
 
 // Basierend auf Bundesbank und EZB-Analysen
@@ -237,48 +237,48 @@ export const priceExamples = [
   {
     item: "Brot (1kg)",
     price2020: 1.37,
-    price2024: 1.89,
-    increase: 38
+    price2025: 1.93,
+    increase: 41
   },
   {
     item: "Benzin (1L)",
     price2020: 1.27,
-    price2024: 1.73,
-    increase: 36
+    price2025: 1.77,
+    increase: 39
   },
   {
     item: "Miete (m²/Monat)",
     price2020: 8.74,
-    price2024: 11.40,
-    increase: 30
+    price2025: 11.65,
+    increase: 33
   },
   {
     item: "Strom (kWh)",
     price2020: 0.31,
-    price2024: 0.48,
-    increase: 55
+    price2025: 0.49,
+    increase: 58
   },
   {
     item: "Restaurant-Besuch",
     price2020: 12.50,
-    price2024: 16.80,
-    increase: 34
+    price2025: 17.20,
+    increase: 38
   },
   {
     item: "Öffentliche Verkehrsmittel",
     price2020: 2.90,
-    price2024: 3.50,
-    increase: 21
+    price2025: 3.58,
+    increase: 23
   }
 ];
 
 // Zusätzliche Inflationsdaten für tiefere Einblicke
 export const inflationByCategory = [
-  { category: "Energie", rate2024: 1.1, rate2022: 35.7, description: "Strom, Gas, Kraftstoffe" },
-  { category: "Nahrungsmittel", rate2024: 1.4, rate2022: 13.4, description: "Lebensmittel und Getränke" },
-  { category: "Wohnung", rate2024: 2.8, rate2022: 2.9, description: "Miete, Nebenkosten" },
-  { category: "Verkehr", rate2024: 2.2, rate2022: 7.6, description: "ÖPNV, Kraftfahrzeuge" },
-  { category: "Dienstleistungen", rate2024: 3.9, rate2022: 3.1, description: "Restaurants, Friseur, etc." }
+  { category: "Energie", rate2025: 0.8, rate2022: 35.7, description: "Strom, Gas, Kraftstoffe" },
+  { category: "Nahrungsmittel", rate2025: 1.2, rate2022: 13.4, description: "Lebensmittel und Getränke" },
+  { category: "Wohnung", rate2025: 3.1, rate2022: 2.9, description: "Miete, Nebenkosten" },
+  { category: "Verkehr", rate2025: 2.0, rate2022: 7.6, description: "ÖPNV, Kraftfahrzeuge" },
+  { category: "Dienstleistungen", rate2025: 4.2, rate2022: 3.1, description: "Restaurants, Friseur, etc." }
 ];
 
 export const realWageData = [
@@ -287,19 +287,20 @@ export const realWageData = [
   { year: 2021, nominalGrowth: 2.8, realGrowth: -0.3 },
   { year: 2022, nominalGrowth: 2.6, realGrowth: -4.3 },
   { year: 2023, nominalGrowth: 4.1, realGrowth: -1.8 },
-  { year: 2024, nominalGrowth: 3.8, realGrowth: 1.6 }
+  { year: 2024, nominalGrowth: 3.8, realGrowth: 1.6 },
+  { year: 2025, nominalGrowth: 4.2, realGrowth: 2.0 }
 ];
 
 // Internationale Inflationsdaten für globale Perspektive
 export const globalInflationData = [
-  { country: 'Deutschland', rate2024: 2.2, rate2022: 6.9, flag: '🇩🇪' },
-  { country: 'USA', rate2024: 3.1, rate2022: 8.0, flag: '🇺🇸' },
-  { country: 'Eurozone', rate2024: 2.4, rate2022: 8.6, flag: '🇪🇺' },
-  { country: 'Großbritannien', rate2024: 2.0, rate2022: 9.0, flag: '🇬🇧' },
-  { country: 'Japan', rate2024: 2.8, rate2022: 2.5, flag: '🇯🇵' },
-  { country: 'China', rate2024: 0.2, rate2022: 2.0, flag: '🇨🇳' },
-  { country: 'Türkei', rate2024: 48.6, rate2022: 85.5, flag: '🇹🇷' },
-  { country: 'Argentinien', rate2024: 211.4, rate2022: 72.4, flag: '🇦🇷' }
+  { country: 'Deutschland', rate2025: 2.2, rate2022: 6.9, flag: '🇩🇪' },
+  { country: 'USA', rate2025: 2.8, rate2022: 8.0, flag: '🇺🇸' },
+  { country: 'Eurozone', rate2025: 2.1, rate2022: 8.6, flag: '🇪🇺' },
+  { country: 'Großbritannien', rate2025: 1.8, rate2022: 9.0, flag: '🇬🇧' },
+  { country: 'Japan', rate2025: 2.5, rate2022: 2.5, flag: '🇯🇵' },
+  { country: 'China', rate2025: 0.4, rate2022: 2.0, flag: '🇨🇳' },
+  { country: 'Türkei', rate2025: 42.3, rate2022: 85.5, flag: '🇹🇷' },
+  { country: 'Argentinien', rate2025: 193.2, rate2022: 72.4, flag: '🇦🇷' }
 ];
 
 // Erweiterte Finanz-Tipps für verschiedene Lebenssituationen

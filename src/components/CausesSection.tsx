@@ -175,7 +175,10 @@ export default function CausesSection() {
 
             {/* Zusätzliche Erklärung */}
             <div className="bg-blue-500/10 border border-blue-400/30 rounded-xl p-6 mt-6">
-              <h4 className="font-semibold text-blue-300 mb-3">🔍 Inflationsarten im Detail:</h4>
+              <h4 className="font-semibold text-blue-300 mb-3 flex items-center gap-2">
+                <Search size={18} className="text-blue-400" />
+                Inflationsarten im Detail:
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <strong className="text-white">Nachfrageinflation:</strong>

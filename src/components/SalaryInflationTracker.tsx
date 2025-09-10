@@ -4,6 +4,16 @@ import { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { DollarSign, BarChart3, TrendingUp, TrendingDown, Target, Lightbulb, Banknote, Calendar, Briefcase } from 'lucide-react';
 
+// Consistent number formatting function to avoid hydration issues
+const formatCurrency = (amount: number, decimals: number = 0): string => {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(amount);
+};
+
 // Reale Inflationsdaten Deutschland
 const inflationData = {
   2020: 0.5,
@@ -205,11 +215,7 @@ export default function SalaryInflationTracker() {
                 <Banknote size={32} className="text-yellow-400 mx-auto mb-2" />
                 <div className="text-sm text-gray-300">Monatlich {result.isWinner ? 'mehr' : 'weniger'}</div>
                 <div className={`text-xl font-bold ${result.monthlyDifference > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                  {result.monthlyDifference > 0 ? '+' : ''}{result.monthlyDifference.toLocaleString('de-DE', { 
-                    style: 'currency', 
-                    currency: 'EUR',
-                    maximumFractionDigits: 0
-                  })}
+                  {result.monthlyDifference > 0 ? '+' : ''}{formatCurrency(result.monthlyDifference, 0)}
                 </div>
               </div>
 
@@ -237,13 +243,13 @@ export default function SalaryInflationTracker() {
                   <div className="flex justify-between">
                     <span className="text-gray-300">2020 (Start):</span>
                     <span className="text-white font-semibold">
-                      {result.salary2020.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })}
+                      {formatCurrency(result.salary2020, 0)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-300">2024 (Heute):</span>
                     <span className="text-white font-semibold">
-                      {result.currentSalary.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })}
+                      {formatCurrency(result.currentSalary, 0)}
                     </span>
                   </div>
                   <div className="flex justify-between border-t border-white/20 pt-2">
@@ -285,13 +291,13 @@ export default function SalaryInflationTracker() {
                   <>
                     <strong>Glückwunsch!</strong> Du gehörst zu den Gewinnern der Inflation. 
                     Dein Gehalt ist stärker gestiegen als die Preise. Du hast real 
-                    <strong> {result.monthlyDifference.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })} 
+                    <strong> {formatCurrency(result.monthlyDifference, 0)}
                     mehr pro Monat</strong> zur Verfügung als 2020.
                   </>
                 ) : (
                   <>
-                    <strong>Leider</strong> hat die Inflation deine Gehaltssteigerung "aufgefressen". 
-                    Du hast real <strong>{result.monthlyDifference.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })} 
+                    <strong>Leider</strong> hat die Inflation deine Gehaltssteigerung &quot;aufgefressen&quot;.
+                    Du hast real <strong>{formatCurrency(result.monthlyDifference, 0)}
                     weniger pro Monat</strong> zur Verfügung als 2020. Zeit für eine Gehaltsverhandlung!
                   </>
                 )}

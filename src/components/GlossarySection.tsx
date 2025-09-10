@@ -25,7 +25,7 @@ const glossaryTerms = [
   {
     term: 'Disinflation',
     definition: 'Verlangsamung der Inflationsrate (aber noch positiv)',
-    example: 'Deutschland 2023-2024: Von 5,9% auf 2,2%',
+    example: 'Deutschland 2023-2025: Von 5,9% auf 2,2%',
     category: 'Grundbegriffe'
   },
   {
@@ -181,8 +181,9 @@ export default function GlossarySection() {
 
         {/* Glossary */}
         <div ref={glossaryRef} className="mb-16">
-          <h3 className="text-3xl font-bold text-white mb-8 text-center">
-            📖 Fachbegriffe erklärt
+          <h3 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <BookOpen size={32} className="text-blue-400" />
+            Fachbegriffe erklärt
           </h3>
           
           {/* Search and Filter */}
@@ -278,49 +279,7 @@ export default function GlossarySection() {
           </div>
         </div>
 
-        {/* Final Summary */}
-        <div ref={summaryRef}>
-          <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 border border-blue-400/30">
-            <div className="text-center">
-              <h3 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
-                <GraduationCap size={36} className="text-blue-400" />
-                Herzlichen Glückwunsch!
-              </h3>
-              <p className="text-xl text-blue-100 mb-8">
-                Du hast jetzt ein umfassendes Verständnis von Inflation entwickelt
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center">
-                  <Brain size={48} className="text-purple-400 mx-auto mb-3" />
-                  <h4 className="font-bold text-white mb-2">Theorie verstanden</h4>
-                  <p className="text-blue-200 text-sm">Definition, Messung, Ursachen</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl mb-3">💡</div>
-                  <h4 className="font-bold text-white mb-2">Praxis gelernt</h4>
-                  <p className="text-blue-200 text-sm">EZB-Politik, Alltagsauswirkungen</p>
-                </div>
-                <div className="text-center">
-                  <Globe size={48} className="text-blue-400 mx-auto mb-3" />
-                  <h4 className="font-bold text-white mb-2">Global gedacht</h4>
-                  <p className="text-blue-200 text-sm">Internationale Perspektive</p>
-                </div>
-              </div>
 
-              <div className="bg-white/10 rounded-xl p-6">
-                <h4 className="text-xl font-bold text-white mb-4">
-                  🚀 Dein nächster Schritt
-                </h4>
-                <p className="text-blue-100 leading-relaxed">
-                  Nutze dein Wissen für bessere Finanzentscheidungen. Verstehe Nachrichten über 
-                  Geldpolitik. Schütze dein Vermögen vor Inflation. Du bist jetzt ein 
-                  <strong> Inflation-Experte</strong>!
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

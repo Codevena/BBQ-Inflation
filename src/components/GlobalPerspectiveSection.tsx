@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Search, Lightbulb, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star } from 'lucide-react';
+import { Globe, Search, Lightbulb, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star, Sparkles } from 'lucide-react';
 import CountUpNumber from './CountUpNumber';
 import { globalInflationData, inflationMythsFacts } from '@/data/inflationData';
 
@@ -109,7 +109,7 @@ export default function GlobalPerspectiveSection() {
         <div ref={worldMapRef} className="mb-16">
           <h3 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
             <Map size={32} className="text-blue-400" />
-            Inflation weltweit (2024)
+            Inflation weltweit (2025)
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -119,31 +119,31 @@ export default function GlobalPerspectiveSection() {
                 className={`cursor-pointer transition-all duration-300 rounded-xl p-4 border ${
                   selectedCountry === index 
                     ? 'scale-105 bg-white/15 border-purple-400' 
-                    : `${getInflationBgColor(country.rate2024)} hover:scale-102`
+                    : `${getInflationBgColor(country.rate2025)} hover:scale-102`
                 }`}
                 onClick={() => setSelectedCountry(selectedCountry === index ? null : index)}
               >
                 <div className="text-center">
                   <div className="text-3xl mb-2">{country.flag}</div>
                   <h4 className="font-bold text-white text-sm mb-2">{country.country}</h4>
-                  <div className={`text-2xl font-bold mb-1 ${getInflationColor(country.rate2024)}`}>
+                  <div className={`text-2xl font-bold mb-1 ${getInflationColor(country.rate2025)}`}>
                     <CountUpNumber
-                      endValue={country.rate2024}
+                      endValue={country.rate2025}
                       decimals={1}
                       suffix="%"
                       duration={1500 + index * 200}
                     />
                   </div>
-                  <div className="text-xs text-purple-200">2024</div>
+                  <div className="text-xs text-purple-200">2025</div>
                   
                   {selectedCountry === index && (
                     <div className="mt-3 pt-3 border-t border-white/20 animate-fadeIn">
                       <div className="text-xs text-purple-200">2022: {country.rate2022}%</div>
                       <div className={`text-sm font-bold mt-1 ${
-                        country.rate2024 < country.rate2022 ? 'text-green-400' : 'text-red-400'
+                        country.rate2025 < country.rate2022 ? 'text-green-400' : 'text-red-400'
                       }`}>
-                        {country.rate2024 < country.rate2022 ? '↓' : '↑'} 
-                        {Math.abs(country.rate2024 - country.rate2022).toFixed(1)}pp
+                        {country.rate2025 < country.rate2022 ? '↓' : '↑'}
+                        {Math.abs(country.rate2025 - country.rate2022).toFixed(1)}pp
                       </div>
                     </div>
                   )}
@@ -229,8 +229,9 @@ export default function GlobalPerspectiveSection() {
 
         {/* Future Trends */}
         <div ref={trendsRef}>
-          <h3 className="text-3xl font-bold text-white mb-8 text-center">
-            🔮 Zukunft der Inflation
+          <h3 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Sparkles size={32} className="text-purple-400" />
+            Zukunft der Inflation
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -259,7 +260,7 @@ export default function GlobalPerspectiveSection() {
               </p>
               <div className="bg-green-500/10 rounded-lg p-3">
                 <p className="text-green-100 text-xs">
-                  <strong>Herausforderung:</strong> "Greenflation" durch teure grüne Technologien
+                  <strong>Herausforderung:</strong> &quot;Greenflation&quot; durch teure grüne Technologien
                 </p>
               </div>
             </div>

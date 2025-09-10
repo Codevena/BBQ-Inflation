@@ -3,9 +3,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { DollarSign, Home, TrendingUp, CreditCard, Target, BarChart3, Shield, TrendingUp as TrendingUpIcon, Calculator, Lightbulb } from 'lucide-react';
+import { DollarSign, Home, TrendingUp, CreditCard, Target, BarChart3, Shield, TrendingUp as TrendingUpIcon, Calculator, Lightbulb, Coins } from 'lucide-react';
 import TimeTravelSimulator from './TimeTravelSimulator';
-import SalaryInflationTracker from './SalaryInflationTracker';
+
+// Consistent number formatting function to avoid hydration issues
+const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -167,7 +174,10 @@ export default function InflationEverydaySection() {
             ref={titleRef}
             className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6"
           >
-            💡 Inflation im
+            <span className="flex items-center justify-center gap-3">
+              <Lightbulb size={40} className="text-emerald-400" />
+              Inflation im
+            </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 block">
               Alltag meistern
             </span>
@@ -201,7 +211,7 @@ export default function InflationEverydaySection() {
                   />
                   <div className="flex justify-between text-sm text-emerald-300 mt-1">
                     <span>1.000€</span>
-                    <span className="font-bold">{initialAmount.toLocaleString()}€</span>
+                    <span className="font-bold">{formatCurrency(initialAmount)}€</span>
                     <span>100.000€</span>
                   </div>
                 </div>
@@ -251,12 +261,12 @@ export default function InflationEverydaySection() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-emerald-200">Nominaler Wert:</span>
-                      <span className="text-2xl font-bold text-white">{initialAmount.toLocaleString()}€</span>
+                      <span className="text-2xl font-bold text-white">{formatCurrency(initialAmount)}€</span>
                     </div>
-                    
+
                     <div className="flex justify-between items-center">
                       <span className="text-emerald-200">Realer Wert:</span>
-                      <span className="text-2xl font-bold text-red-400">{parseInt(impact.realValue).toLocaleString()}€</span>
+                      <span className="text-2xl font-bold text-red-400">{formatCurrency(parseInt(impact.realValue))}€</span>
                     </div>
                     
                     <div className="flex justify-between items-center">
@@ -267,9 +277,13 @@ export default function InflationEverydaySection() {
 
                   <div className="mt-6 p-4 bg-yellow-500/20 border border-yellow-400/30 rounded-lg">
                     <p className="text-yellow-100 text-sm">
-                      💡 <strong>Das bedeutet:</strong> Was heute {initialAmount.toLocaleString()}€ kostet, 
-                      kostet in {years} Jahren etwa {impact.futureValue}€. 
-                      Deine {initialAmount.toLocaleString()}€ haben dann nur noch die Kaufkraft von {parseInt(impact.realValue).toLocaleString()}€.
+                      <span className="flex items-center gap-2">
+                        <Lightbulb size={16} className="text-yellow-400" />
+                        <strong>Das bedeutet:</strong>
+                      </span>
+                      Was heute {formatCurrency(initialAmount)}€ kostet,
+                      kostet in {years} Jahren etwa {impact.futureValue}€.
+                      Deine {formatCurrency(initialAmount)}€ haben dann nur noch die Kaufkraft von {formatCurrency(parseInt(impact.realValue))}€.
                     </p>
                   </div>
                 </div>
@@ -283,15 +297,11 @@ export default function InflationEverydaySection() {
           <TimeTravelSimulator />
         </div>
 
-        {/* Salary Inflation Tracker */}
-        <div className="mb-16">
-          <SalaryInflationTracker />
-        </div>
-
         {/* Inflation Protection Assets */}
         <div ref={protectionRef} className="mb-16">
-          <h3 className="text-3xl font-bold text-white mb-8 text-center">
-            🛡️ Inflationsschutz-Strategien
+          <h3 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Shield size={32} className="text-blue-400" />
+            Inflationsschutz-Strategien
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -353,8 +363,9 @@ export default function InflationEverydaySection() {
 
         {/* Personal Finance Tips */}
         <div ref={tipsRef}>
-          <h3 className="text-3xl font-bold text-white mb-8 text-center">
-            💰 Praktische Finanz-Tipps
+          <h3 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Coins size={32} className="text-yellow-400" />
+            Praktische Finanz-Tipps
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -379,32 +390,7 @@ export default function InflationEverydaySection() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-16 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-sm rounded-2xl p-8 border border-emerald-400/30">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-              <Target size={28} className="text-emerald-400" />
-              Dein Inflations-Aktionsplan
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <BarChart3 size={48} className="text-emerald-400 mx-auto mb-2" />
-                <h4 className="font-bold text-white mb-2">1. Analysieren</h4>
-                <p className="text-emerald-200 text-sm">Berechne deine persönliche Inflationsbetroffenheit</p>
-              </div>
-              <div className="text-center">
-                <Shield size={48} className="text-emerald-400 mx-auto mb-2" />
-                <h4 className="font-bold text-white mb-2">2. Schützen</h4>
-                <p className="text-emerald-200 text-sm">Diversifiziere in inflationsgeschützte Anlagen</p>
-              </div>
-              <div className="text-center">
-                <TrendingUpIcon size={48} className="text-emerald-400 mx-auto mb-2" />
-                <h4 className="font-bold text-white mb-2">3. Optimieren</h4>
-                <p className="text-emerald-200 text-sm">Passe deine Strategie regelmäßig an</p>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

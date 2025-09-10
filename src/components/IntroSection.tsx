@@ -128,7 +128,7 @@ export default function IntroSection() {
           <SequentialTypewriter
             texts={[
               'Inflation verstehen',
-              'Eine interaktive Reise durch Ursachen, Auswirkungen und Geschichte der Geldentwertung'
+              'Ursachen, Auswirkungen und Geschichte der Geldentwertung'
             ]}
             speeds={[80, 50]}
             delays={[500, 1000]}

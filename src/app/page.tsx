@@ -65,12 +65,14 @@ export default function Home() {
       <QuizSection />
       </div>
 
-      {/* Copyright */}
-      <div className="fixed bottom-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-sm z-50">
-        <div className="text-white/80">
-          © 2025 Markus Wiesecke
+      {/* Footer */}
+      <footer className="bg-slate-800/50 backdrop-blur-sm border-t border-white/10 py-8">
+        <div className="container mx-auto px-6 text-center">
+          <div className="text-white/60 text-sm">
+            © 2025 Markus Wiesecke
+          </div>
         </div>
-      </div>
+      </footer>
 
       {/* Keyboard Instructions */}
       <div className="fixed bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-sm z-50">

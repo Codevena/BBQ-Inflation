@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
-import { Building2, TrendingUp, TrendingDown, Target, LineChart } from 'lucide-react';
+import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -22,7 +22,8 @@ const ecbRateHistory = [
   { year: '2022 Q3', rate: 1.25, event: 'Erste Zinserhöhung' },
   { year: '2022 Q4', rate: 2.5, event: 'Aggressive Erhöhung' },
   { year: '2023 Q2', rate: 4.0, event: 'Weitere Straffung' },
-  { year: '2024', rate: 4.5, event: 'Höchststand erreicht' }
+  { year: '2024', rate: 4.5, event: 'Höchststand erreicht' },
+  { year: '2025', rate: 3.75, event: 'Normalisierung' }
 ];
 
 export default function ECBPolicySection() {
@@ -220,7 +221,7 @@ export default function ECBPolicySection() {
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <h3 className="text-2xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
               <LineChart size={28} className="text-blue-400" />
-              EZB-Leitzins 2019-2024
+              EZB-Leitzins 2019-2025
             </h3>
             <div className="h-80">
               <Line data={chartData} options={chartOptions} />
@@ -385,8 +386,9 @@ export default function ECBPolicySection() {
         {/* Success Story */}
         <div className="mt-16 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm rounded-2xl p-8 border border-green-400/30">
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              ✅ Erfolgsgeschichte 2022-2024
+            <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+              <CheckCircle size={24} className="text-green-400" />
+              Erfolgsgeschichte 2022-2025
             </h3>
             <p className="text-xl text-green-100 mb-6">
               EZB-Strategie funktioniert: Inflation von 6,9% auf 2,2% gesenkt

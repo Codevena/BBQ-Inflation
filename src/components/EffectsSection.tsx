@@ -195,7 +195,7 @@ export default function EffectsSection() {
                   Inflationsentwicklung Deutschland
                 </h3>
                 <p className="text-sm text-blue-200">
-                  2019-2025 (2025 ist Prognose)
+                  2019-2025 (aktuelle Daten)
                 </p>
               </div>
             </div>
@@ -226,6 +226,46 @@ export default function EffectsSection() {
                 </div>
               </div>
             </div>
+
+            {/* Reallohn-Entwicklung */}
+            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30">
+              <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <BarChart3 size={20} className="text-purple-400" />
+                Reallohn-Entwicklung Deutschland
+              </h4>
+              <div className="grid grid-cols-3 gap-4">
+                {realWageData.slice(-3).map((data, index) => (
+                  <div key={data.year} className="text-center">
+                    <div className="text-sm text-purple-200">{data.year}</div>
+                    <div className={`text-lg font-bold ${data.realGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {data.realGrowth > 0 ? '+' : ''}{data.realGrowth}%
+                    </div>
+                    <div className="text-xs text-purple-300">Real</div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-purple-200 text-sm mt-3">
+                Reallöhne = Nominallöhne minus Inflation. 2022-2023 sanken die Reallöhne stark.
+              </p>
+            </div>
+
+            {/* Kaufkraftverlust */}
+            <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
+              <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <Lightbulb size={20} className="text-yellow-400" />
+                Kaufkraftverlust
+              </h4>
+              <p className="text-blue-200 text-sm leading-relaxed">
+                Bei {inflationRate}% Inflation verlieren €1.000 in 4 Jahren etwa{' '}
+                <span className="font-bold text-red-400">
+                  €{(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toFixed(0)}
+                </span>{' '}
+                ihrer Kaufkraft. Das entspricht einem realen Wert von nur noch{' '}
+                <span className="font-bold text-yellow-400">
+                  €{(1000 / Math.pow(1 + inflationRate / 100, 4)).toFixed(0)}
+                </span>.
+              </p>
+            </div>
           </div>
 
           {/* Right Column - Price Examples */}
@@ -247,7 +287,7 @@ export default function EffectsSection() {
                     <div className="flex items-center justify-between mb-4">
                       <h4 className="text-lg font-semibold text-white">{example.item}</h4>
                       <div className="text-right">
-                        <div className="text-sm text-blue-200">2020 → 2024</div>
+                        <div className="text-sm text-blue-200">2020 → 2025</div>
                         <div className={`text-lg font-bold ${increase > 30 ? 'text-red-400' : increase > 15 ? 'text-yellow-400' : 'text-green-400'}`}>
                           +{increase.toFixed(1)}%
                         </div>
@@ -260,7 +300,7 @@ export default function EffectsSection() {
                         <span className="font-semibold">€{example.price2020.toFixed(2)}</span>
                       </div>
                       <div className="text-white">
-                        <span className="text-sm">2024: </span>
+                        <span className="text-sm">2025: </span>
                         <span className="font-semibold text-red-400">€{newPrice.toFixed(2)}</span>
                       </div>
                     </div>
@@ -277,46 +317,6 @@ export default function EffectsSection() {
                   </div>
                 );
               })}
-            </div>
-
-            {/* Reallohn-Entwicklung */}
-            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30 mb-6">
-              <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <BarChart3 size={20} className="text-purple-400" />
-                Reallohn-Entwicklung Deutschland
-              </h4>
-              <div className="grid grid-cols-2 gap-4">
-                {realWageData.slice(-3).map((data, index) => (
-                  <div key={data.year} className="text-center">
-                    <div className="text-sm text-purple-200">{data.year}</div>
-                    <div className={`text-lg font-bold ${data.realGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {data.realGrowth > 0 ? '+' : ''}{data.realGrowth}%
-                    </div>
-                    <div className="text-xs text-purple-300">Real</div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-purple-200 text-sm mt-3">
-                Reallöhne = Nominallöhne minus Inflation. 2022-2023 sanken die Reallöhne stark.
-              </p>
-            </div>
-
-            {/* Summary Card */}
-            <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
-              <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <Lightbulb size={20} className="text-yellow-400" />
-                Kaufkraftverlust
-              </h4>
-              <p className="text-blue-200 text-sm leading-relaxed">
-                Bei {inflationRate}% Inflation verlieren €1.000 in 4 Jahren etwa{' '}
-                <span className="font-bold text-red-400">
-                  €{(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toFixed(0)}
-                </span>{' '}
-                ihrer Kaufkraft. Das entspricht einem realen Wert von nur noch{' '}
-                <span className="font-bold text-yellow-400">
-                  €{(1000 / Math.pow(1 + inflationRate / 100, 4)).toFixed(0)}
-                </span>.
-              </p>
             </div>
           </div>
         </div>

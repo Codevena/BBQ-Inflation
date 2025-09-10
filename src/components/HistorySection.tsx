@@ -145,7 +145,7 @@ export default function HistorySection() {
             {historicalEvents.map((event, index) => (
               <div
                 key={event.year}
-                ref={el => eventsRef.current[index] = el!}
+                ref={el => { if (el) eventsRef.current[index] = el; }}
                 className={`relative flex items-center ${
                   index % 2 === 0 ? 'justify-start' : 'justify-end'
                 }`}
