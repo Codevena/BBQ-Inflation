@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
-import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle } from 'lucide-react';
+import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -411,6 +411,191 @@ export default function ECBPolicySection() {
                   <CountUpNumber endValue={2.2} decimals={1} suffix="%" duration={2400} />
                 </div>
                 <div className="text-green-200">Inflation 2024</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* EZB Steuerungsinstrumente */}
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4 flex items-center justify-center gap-3">
+              <Settings size={36} className="text-blue-400" />
+              EZB-Steuerungsinstrumente
+            </h3>
+            <p className="text-xl text-blue-200 max-w-3xl mx-auto">
+              Die vier Hauptwerkzeuge der Europäischen Zentralbank zur Geldmengensteuerung
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+
+            {/* Hauptrefinanzierungsfazilität */}
+            <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm rounded-2xl p-8 border border-blue-400/30">
+              <div className="text-center mb-6">
+                <Building2 size={48} className="text-blue-400 mx-auto mb-4" />
+                <h4 className="text-xl font-bold text-blue-400">Hauptrefinanzierungsfazilität</h4>
+                <p className="text-blue-200 text-sm">Das wichtigste Instrument</p>
+              </div>
+
+              <div className="space-y-3 text-blue-200">
+                <div className="flex items-start gap-3">
+                  <ArrowUpDown size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Kredite gegen Sicherheiten</div>
+                    <div className="text-sm">EZB verleiht Geld an Banken gegen Wertpapiere</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Clock size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Wöchentliche Geschäfte</div>
+                    <div className="text-sm">Meist 1 Woche Laufzeit (Wertpapierpensionsgeschäfte)</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Target size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Leitzins-Steuerung</div>
+                    <div className="text-sm">Bestimmt den Hauptrefinanzierungssatz</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Spitzenrefinanzierungsfazilität */}
+            <div className="bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-8 border border-orange-400/30">
+              <div className="text-center mb-6">
+                <Clock size={48} className="text-orange-400 mx-auto mb-4" />
+                <h4 className="text-xl font-bold text-orange-400">Spitzenrefinanzierungsfazilität</h4>
+                <p className="text-orange-200 text-sm">Notfall-Liquidität</p>
+              </div>
+
+              <div className="space-y-3 text-orange-200">
+                <div className="flex items-start gap-3">
+                  <Clock size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Über-Nacht-Kredite</div>
+                    <div className="text-sm">Kurzfristige Liquidität für Banken</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <TrendingUp size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Höherer Zinssatz</div>
+                    <div className="text-sm">Spitzenrefinanzierungssatz (SRS) über Leitzins</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <AlertTriangle size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Notfall-Instrument</div>
+                    <div className="text-sm">Bei kurzfristigen Liquiditätsengpässen</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Einlagefazilität */}
+            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm rounded-2xl p-8 border border-green-400/30">
+              <div className="text-center mb-6">
+                <PiggyBank size={48} className="text-green-400 mx-auto mb-4" />
+                <h4 className="text-xl font-bold text-green-400">Einlagefazilität</h4>
+                <p className="text-green-200 text-sm">Geld parken bei der EZB</p>
+              </div>
+
+              <div className="space-y-3 text-green-200">
+                <div className="flex items-start gap-3">
+                  <PiggyBank size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Überschüssige Liquidität</div>
+                    <div className="text-sm">Banken legen nicht benötigtes Geld an</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Clock size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Über-Nacht-Anlage</div>
+                    <div className="text-sm">Kurzfristige Geldanlage bei der EZB</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <DollarSign size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Einlagesatz</div>
+                    <div className="text-sm">Oft negativ = Strafzinsen für Banken!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mindestreservepolitik */}
+            <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-8 border border-purple-400/30">
+              <div className="text-center mb-6">
+                <Shield size={48} className="text-purple-400 mx-auto mb-4" />
+                <h4 className="text-xl font-bold text-purple-400">Mindestreservepolitik</h4>
+                <p className="text-purple-200 text-sm">Pflichtreserven der Banken</p>
+              </div>
+
+              <div className="space-y-3 text-purple-200">
+                <div className="flex items-start gap-3">
+                  <Shield size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Pflichtreserve</div>
+                    <div className="text-sm">Banken müssen Anteil bei EZB hinterlegen</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Target size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Aktuell 1%</div>
+                    <div className="text-sm">1% der Kundeneinlagen zinslos bei EZB</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <TrendingDown size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white">Geldmenge reduzieren</div>
+                    <div className="text-sm">Hohe Reserve = weniger Geld im Markt</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mechanismus-Erklärung */}
+          <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm rounded-2xl p-8 border border-cyan-400/30">
+            <div className="text-center mb-8">
+              <h4 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                <Target size={28} className="text-cyan-400" />
+                Wie die EZB die Geldmenge steuert
+              </h4>
+              <p className="text-xl text-cyan-100 max-w-4xl mx-auto">
+                Alle Instrumente zielen darauf ab, die Geldmenge im Wirtschaftskreislauf zu kontrollieren
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="text-center p-6 bg-green-500/10 rounded-xl border border-green-400/30">
+                <TrendingUp size={32} className="text-green-400 mx-auto mb-3" />
+                <h5 className="text-lg font-bold text-white mb-2">Mehr Geld → Höhere Inflation</h5>
+                <div className="text-green-200 text-sm space-y-1">
+                  <p>• Niedrige Zinsen</p>
+                  <p>• Mehr Kredite an Banken</p>
+                  <p>• Mehr Investitionen & Konsum</p>
+                  <p>• Preise steigen</p>
+                </div>
+              </div>
+
+              <div className="text-center p-6 bg-red-500/10 rounded-xl border border-red-400/30">
+                <TrendingDown size={32} className="text-red-400 mx-auto mb-3" />
+                <h5 className="text-lg font-bold text-white mb-2">Weniger Geld → Niedrigere Inflation</h5>
+                <div className="text-red-200 text-sm space-y-1">
+                  <p>• Hohe Zinsen</p>
+                  <p>• Weniger Kredite an Banken</p>
+                  <p>• Weniger Investitionen & Konsum</p>
+                  <p>• Preise stabilisieren sich</p>
+                </div>
               </div>
             </div>
           </div>
