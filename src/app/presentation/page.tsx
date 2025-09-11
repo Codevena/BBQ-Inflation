@@ -50,6 +50,7 @@ const slides = [
   'measurement-categories',
   'ecb-policy',
   'ecb-instruments',
+  'ecb-mechanism',
   'history-intro',
   'history-timeline',
   'key-takeaways',
@@ -656,25 +657,153 @@ export default function PresentationMode() {
                 </div>
               </div>
             </div>
+          </div>
+        );
 
-            {/* Zusammenfassung */}
-            <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl p-8 border border-cyan-400/30">
-              <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-                <Target size={28} className="text-cyan-400" />
-                Geldmengensteuerung im Überblick
-              </h3>
-              <p className="text-xl text-cyan-100 mb-4">
-                Die EZB steuert die Geldmenge über das Bankensystem - mehr Geld bei Banken führt zu mehr Krediten,
-                Investitionen und Konsum, was die Preise und Inflation antreibt.
+      case 'ecb-mechanism':
+        return (
+          <div className="text-center">
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Target size={48} className="text-cyan-400" />
+              Geldmengensteuerung im Überblick
+            </h1>
+
+            {/* Haupterklärung */}
+            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-12 border border-blue-400/30 mb-12">
+              <p className="text-2xl text-blue-100 leading-relaxed mb-8">
+                Die EZB steuert die <strong className="text-white">Geldmenge über das Bankensystem</strong> -
+                mehr Geld bei Banken führt zu mehr Krediten, Investitionen und Konsum,
+                was die Preise und Inflation antreibt.
               </p>
-              <div className="grid grid-cols-2 gap-6 text-sm">
+
+              {/* Mechanismus-Kette */}
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
                 <div className="text-center">
-                  <div className="text-lg font-bold text-green-400">Mehr Geld → Höhere Inflation</div>
-                  <div className="text-green-200">Niedrige Zinsen, lockere Geldpolitik</div>
+                  <Building2 size={32} className="text-blue-400 mx-auto mb-2" />
+                  <div className="text-sm font-bold text-white">EZB</div>
+                  <div className="text-xs text-blue-200">Geldpolitik</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-lg font-bold text-red-400">Weniger Geld → Niedrigere Inflation</div>
-                  <div className="text-red-200">Hohe Zinsen, straffe Geldpolitik</div>
+                  <div className="text-2xl text-cyan-400">→</div>
+                </div>
+                <div className="text-center">
+                  <Building2 size={32} className="text-green-400 mx-auto mb-2" />
+                  <div className="text-sm font-bold text-white">Banken</div>
+                  <div className="text-xs text-green-200">Kreditvergabe</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl text-cyan-400">→</div>
+                </div>
+                <div className="text-center">
+                  <Briefcase size={32} className="text-yellow-400 mx-auto mb-2" />
+                  <div className="text-sm font-bold text-white">Wirtschaft</div>
+                  <div className="text-xs text-yellow-200">Investitionen</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Zwei Szenarien */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+              {/* Expansive Geldpolitik */}
+              <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-8 border border-green-400/30">
+                <div className="text-center mb-6">
+                  <TrendingUp size={48} className="text-green-400 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-green-400">Mehr Geld → Höhere Inflation</h2>
+                  <p className="text-green-200 text-sm">Expansive Geldpolitik</p>
+                </div>
+
+                <div className="space-y-4 text-left">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                    <div>
+                      <div className="font-bold text-white">Niedrige Zinsen</div>
+                      <div className="text-green-200 text-sm">EZB senkt Leitzins</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                    <div>
+                      <div className="font-bold text-white">Mehr Kredite</div>
+                      <div className="text-green-200 text-sm">Banken vergeben mehr Geld</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                    <div>
+                      <div className="font-bold text-white">Mehr Investitionen</div>
+                      <div className="text-green-200 text-sm">Unternehmen & Verbraucher</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                    <div>
+                      <div className="font-bold text-white">Höherer Konsum</div>
+                      <div className="text-green-200 text-sm">Nachfrage steigt</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">5</div>
+                    <div>
+                      <div className="font-bold text-white">Preise steigen</div>
+                      <div className="text-green-200 text-sm">Inflation nimmt zu</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Restriktive Geldpolitik */}
+              <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl p-8 border border-red-400/30">
+                <div className="text-center mb-6">
+                  <TrendingDown size={48} className="text-red-400 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-red-400">Weniger Geld → Niedrigere Inflation</h2>
+                  <p className="text-red-200 text-sm">Restriktive Geldpolitik</p>
+                </div>
+
+                <div className="space-y-4 text-left">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                    <div>
+                      <div className="font-bold text-white">Hohe Zinsen</div>
+                      <div className="text-red-200 text-sm">EZB erhöht Leitzins</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                    <div>
+                      <div className="font-bold text-white">Weniger Kredite</div>
+                      <div className="text-red-200 text-sm">Banken vergeben weniger Geld</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                    <div>
+                      <div className="font-bold text-white">Weniger Investitionen</div>
+                      <div className="text-red-200 text-sm">Zurückhaltung bei Ausgaben</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                    <div>
+                      <div className="font-bold text-white">Geringerer Konsum</div>
+                      <div className="text-red-200 text-sm">Nachfrage sinkt</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">5</div>
+                    <div>
+                      <div className="font-bold text-white">Preise stabilisieren</div>
+                      <div className="text-red-200 text-sm">Inflation sinkt</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -975,6 +1104,15 @@ export default function PresentationMode() {
                 <p className="mb-2"><strong>Spitzenrefinanzierung:</strong> &quot;Notfall über Nacht - teurer, aber sofort verfügbar.&quot;</p>
                 <p className="mb-2"><strong>Einlagefazilität:</strong> &quot;Banken parken überschüssiges Geld - oft mit Strafzinsen!&quot;</p>
                 <p><strong>Mindestreserve:</strong> &quot;1% müssen Banken immer bei der EZB lassen - das bindet Geld.&quot;</p>
+              </div>
+            )}
+            {slides[currentSlide] === 'ecb-mechanism' && (
+              <div>
+                <p className="mb-2"><strong>Gesamtbild:</strong> &quot;Jetzt sehen wir das große Ganze - wie alles zusammenhängt.&quot;</p>
+                <p className="mb-2"><strong>Kette:</strong> &quot;EZB → Banken → Wirtschaft → Verbraucher → Preise.&quot;</p>
+                <p className="mb-2"><strong>Expansiv:</strong> &quot;Niedrige Zinsen = mehr Geld = mehr Konsum = höhere Preise.&quot;</p>
+                <p className="mb-2"><strong>Restriktiv:</strong> &quot;Hohe Zinsen = weniger Geld = weniger Konsum = niedrigere Preise.&quot;</p>
+                <p><strong>Aktuell:</strong> &quot;2022-2025 perfektes Beispiel: Restriktive Politik hat Inflation gebremst.&quot;</p>
               </div>
             )}
             {slides[currentSlide] === 'history-intro' && (
