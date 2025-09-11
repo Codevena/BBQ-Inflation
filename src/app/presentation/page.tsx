@@ -4,6 +4,32 @@ import { useState, useEffect, useCallback } from 'react';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line, Doughnut } from 'react-chartjs-2';
+import {
+  TrendingUp,
+  Lightbulb,
+  BarChart3,
+  Target,
+  Scale,
+  Search,
+  Banknote,
+  Briefcase,
+  Building2,
+  ShoppingCart,
+  CreditCard,
+  DollarSign,
+  TrendingDown,
+  ChevronUp,
+  ChevronDown,
+  Flag,
+  AlertTriangle,
+  RefreshCw,
+  Brain,
+  FileText,
+  ThumbsUp,
+  MessageSquare,
+  Calendar,
+  Hash
+} from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler);
 
@@ -86,8 +112,9 @@ export default function PresentationMode() {
       case 'title':
         return (
           <div className="text-center">
-            <h1 className="text-6xl font-bold text-white mb-8">
-              📈 Inflation verstehen
+            <h1 className="text-6xl font-bold text-white mb-8 flex items-center justify-center gap-4">
+              <TrendingUp size={64} className="text-cyan-400" />
+              Inflation verstehen
             </h1>
             <p className="text-2xl text-blue-200 mb-12">
               Ursachen, Auswirkungen und Geschichte
@@ -116,27 +143,28 @@ export default function PresentationMode() {
       case 'definition':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              💡 Was ist Inflation?
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Lightbulb size={48} className="text-cyan-400" />
+              Was ist Inflation?
             </h1>
             <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-12 border border-blue-400/30">
               <p className="text-2xl text-blue-100 leading-relaxed mb-8">
-                Inflation ist der <strong className="text-white">allgemeine Anstieg des Preisniveaus</strong> für 
+                Inflation ist der <strong className="text-white">allgemeine Anstieg des Preisniveaus</strong> für
                 Güter und Dienstleistungen in einer Volkswirtschaft über einen bestimmten Zeitraum.
               </p>
               <div className="grid grid-cols-3 gap-8 mt-12">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">📊</div>
+                  <BarChart3 size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Messung</h3>
                   <p className="text-blue-200">Verbraucherpreisindex (VPI)</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🎯</div>
+                  <Target size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Ziel</h3>
                   <p className="text-blue-200">2% jährlich (EZB)</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl mb-4">⚖️</div>
+                  <Scale size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Balance</h3>
                   <p className="text-blue-200">Weder zu hoch noch zu niedrig</p>
                 </div>
@@ -148,8 +176,9 @@ export default function PresentationMode() {
       case 'statistics':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📊 Deutschland: Inflationsentwicklung
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <BarChart3 size={48} className="text-cyan-400" />
+              Deutschland: Inflationsentwicklung
             </h1>
             <div className="bg-white/5 rounded-2xl p-8 mb-8">
               <div className="h-96">
@@ -188,8 +217,9 @@ export default function PresentationMode() {
       case 'causes-intro':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              🔍 Was verursacht Inflation?
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Search size={48} className="text-cyan-400" />
+              Was verursacht Inflation?
             </h1>
             <div className="grid grid-cols-2 gap-12">
               <div className="bg-red-500/20 rounded-2xl p-8 border border-red-400/30">
@@ -221,8 +251,9 @@ export default function PresentationMode() {
       case 'causes-chart':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📊 Inflationsursachen im Detail
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <BarChart3 size={48} className="text-cyan-400" />
+              Inflationsursachen im Detail
             </h1>
             <div className="grid grid-cols-2 gap-12 items-center">
               <div className="bg-white/5 rounded-2xl p-8">
@@ -278,22 +309,23 @@ export default function PresentationMode() {
       case 'effects-intro':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              💸 Auswirkungen der Inflation
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Banknote size={48} className="text-cyan-400" />
+              Auswirkungen der Inflation
             </h1>
             <div className="grid grid-cols-3 gap-8">
               <div className="bg-red-500/20 rounded-2xl p-8 border border-red-400/30">
-                <div className="text-4xl mb-4">💰</div>
+                <DollarSign size={48} className="text-red-400 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold text-red-400 mb-4">Kaufkraftverlust</h2>
                 <p className="text-red-100">Geld wird weniger wert</p>
               </div>
               <div className="bg-yellow-500/20 rounded-2xl p-8 border border-yellow-400/30">
-                <div className="text-4xl mb-4">💼</div>
+                <Briefcase size={48} className="text-yellow-400 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold text-yellow-400 mb-4">Reallöhne</h2>
                 <p className="text-yellow-100">Löhne vs. Preissteigerung</p>
               </div>
               <div className="bg-blue-500/20 rounded-2xl p-8 border border-blue-400/30">
-                <div className="text-4xl mb-4">🏦</div>
+                <Building2 size={48} className="text-blue-400 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold text-blue-400 mb-4">Sparer</h2>
                 <p className="text-blue-100">Niedrigzinsen = Verluste</p>
               </div>
@@ -318,8 +350,9 @@ export default function PresentationMode() {
       case 'effects-prices':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              🛒 Preisbeispiele: 2020 vs. 2025
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <ShoppingCart size={48} className="text-cyan-400" />
+              Preisbeispiele: 2020 vs. 2025
             </h1>
             <div className="grid grid-cols-2 gap-8">
               {priceExamples.map((example, index) => (
@@ -350,26 +383,27 @@ export default function PresentationMode() {
       case 'measurement-intro':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📊 Wie wird Inflation gemessen?
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <BarChart3 size={48} className="text-cyan-400" />
+              Wie wird Inflation gemessen?
             </h1>
             <div className="grid grid-cols-2 gap-12">
               <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
                 <h2 className="text-3xl font-bold text-cyan-400 mb-6">Verbraucherpreisindex (VPI)</h2>
                 <div className="text-left space-y-4 text-cyan-200">
-                  <p>🛒 <strong>Warenkorb:</strong> 650 repräsentative Güter</p>
-                  <p>⚖️ <strong>Gewichtung:</strong> Nach Ausgabenanteilen</p>
-                  <p>📅 <strong>Messung:</strong> Monatlich durch Destatis</p>
-                  <p>🔢 <strong>Formel:</strong> (VPI heute - VPI vor Jahr) / VPI vor Jahr × 100</p>
+                  <p className="flex items-center gap-2"><ShoppingCart size={20} className="text-cyan-400" /> <strong>Warenkorb:</strong> 650 repräsentative Güter</p>
+                  <p className="flex items-center gap-2"><Scale size={20} className="text-cyan-400" /> <strong>Gewichtung:</strong> Nach Ausgabenanteilen</p>
+                  <p className="flex items-center gap-2"><Calendar size={20} className="text-cyan-400" /> <strong>Messung:</strong> Monatlich durch Destatis</p>
+                  <p className="flex items-center gap-2"><Hash size={20} className="text-cyan-400" /> <strong>Formel:</strong> (VPI heute - VPI vor Jahr) / VPI vor Jahr × 100</p>
                 </div>
               </div>
               <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
                 <h2 className="text-3xl font-bold text-blue-400 mb-6">HVPI (EU-weit)</h2>
                 <div className="text-left space-y-4 text-blue-200">
-                  <p>🇪🇺 <strong>Harmonisiert:</strong> Einheitliche Standards</p>
-                  <p>🏦 <strong>EZB-Basis:</strong> Für Geldpolitik</p>
-                  <p>📊 <strong>Eurostat:</strong> EU-Koordination</p>
-                  <p>🎯 <strong>Ziel:</strong> 2% für Eurozone</p>
+                  <p className="flex items-center gap-2"><Flag size={20} className="text-blue-400" /> <strong>Harmonisiert:</strong> Einheitliche Standards</p>
+                  <p className="flex items-center gap-2"><Building2 size={20} className="text-blue-400" /> <strong>EZB-Basis:</strong> Für Geldpolitik</p>
+                  <p className="flex items-center gap-2"><BarChart3 size={20} className="text-blue-400" /> <strong>Eurostat:</strong> EU-Koordination</p>
+                  <p className="flex items-center gap-2"><Target size={20} className="text-blue-400" /> <strong>Ziel:</strong> 2% für Eurozone</p>
                 </div>
               </div>
             </div>
@@ -379,8 +413,9 @@ export default function PresentationMode() {
       case 'measurement-categories':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📈 Inflation nach Kategorien
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <TrendingUp size={48} className="text-cyan-400" />
+              Inflation nach Kategorien
             </h1>
             <div className="grid grid-cols-1 gap-6">
               {inflationByCategory.map((category, index) => (
@@ -415,39 +450,40 @@ export default function PresentationMode() {
       case 'ecb-policy':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              🏦 EZB-Geldpolitik: Inflation steuern
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Building2 size={48} className="text-cyan-400" />
+              EZB-Geldpolitik: Inflation steuern
             </h1>
             <div className="grid grid-cols-2 gap-12 mb-12">
 
               {/* Inflation zu hoch */}
               <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl p-8 border border-red-400/30">
-                <div className="text-4xl mb-6">📈</div>
+                <TrendingUp size={48} className="text-red-400 mx-auto mb-6" />
                 <h2 className="text-3xl font-bold text-red-400 mb-6">Inflation zu hoch (&gt;2%)</h2>
                 <div className="space-y-4 text-left">
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">🔺</div>
+                    <ChevronUp size={24} className="text-red-400" />
                     <div>
                       <div className="font-bold text-white">Leitzins erhöhen</div>
                       <div className="text-red-200 text-sm">2022: 0% → 4,5%</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">💳</div>
+                    <CreditCard size={24} className="text-red-400" />
                     <div>
                       <div className="font-bold text-white">Kredite teurer</div>
                       <div className="text-red-200 text-sm">Weniger Konsum & Investitionen</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">💰</div>
+                    <DollarSign size={24} className="text-red-400" />
                     <div>
                       <div className="font-bold text-white">Sparen attraktiver</div>
                       <div className="text-red-200 text-sm">Geld aus dem Markt</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">📉</div>
+                    <TrendingDown size={24} className="text-red-400" />
                     <div>
                       <div className="font-bold text-white">Nachfrage sinkt</div>
                       <div className="text-red-200 text-sm">Preise stabilisieren sich</div>
@@ -458,32 +494,32 @@ export default function PresentationMode() {
 
               {/* Inflation zu niedrig */}
               <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl p-8 border border-blue-400/30">
-                <div className="text-4xl mb-6">📉</div>
+                <TrendingDown size={48} className="text-blue-400 mx-auto mb-6" />
                 <h2 className="text-3xl font-bold text-blue-400 mb-6">Inflation zu niedrig (&lt;2%)</h2>
                 <div className="space-y-4 text-left">
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">🔻</div>
+                    <ChevronDown size={24} className="text-blue-400" />
                     <div>
                       <div className="font-bold text-white">Leitzins senken</div>
                       <div className="text-blue-200 text-sm">2020: 0% (Nullzinspolitik)</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">💳</div>
+                    <CreditCard size={24} className="text-blue-400" />
                     <div>
                       <div className="font-bold text-white">Kredite billiger</div>
                       <div className="text-blue-200 text-sm">Mehr Konsum & Investitionen</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">💸</div>
+                    <Banknote size={24} className="text-blue-400" />
                     <div>
                       <div className="font-bold text-white">Sparen unattraktiv</div>
                       <div className="text-blue-200 text-sm">Geld in den Markt</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">📈</div>
+                    <TrendingUp size={24} className="text-blue-400" />
                     <div>
                       <div className="font-bold text-white">Nachfrage steigt</div>
                       <div className="text-blue-200 text-sm">Preise steigen</div>
@@ -495,8 +531,9 @@ export default function PresentationMode() {
 
             {/* Aktuelles Beispiel */}
             <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-8 border border-green-400/30">
-              <h3 className="text-2xl font-bold text-white mb-6">
-                🇩🇪 Deutschland 2020-2025: EZB in Aktion
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-2">
+                <Flag size={28} className="text-green-400" />
+                Deutschland 2020-2025: EZB in Aktion
               </h3>
               <div className="grid grid-cols-4 gap-6">
                 <div className="text-center">
@@ -527,8 +564,9 @@ export default function PresentationMode() {
       case 'history-intro':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              ⚠️ Wenn Inflation außer Kontrolle gerät
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <AlertTriangle size={48} className="text-red-400" />
+              Wenn Inflation außer Kontrolle gerät
             </h1>
             <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl p-12 border border-red-400/30">
               <h2 className="text-3xl font-bold text-white mb-8">Hyperinflation</h2>
@@ -537,17 +575,17 @@ export default function PresentationMode() {
               </p>
               <div className="grid grid-cols-3 gap-8">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">💸</div>
+                  <Banknote size={48} className="text-red-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Ursachen</h3>
                   <p className="text-red-200">Krieg, Politik, Gelddrucken</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl mb-4">📈</div>
+                  <TrendingUp size={48} className="text-red-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Folgen</h3>
                   <p className="text-red-200">Währungskollaps, Armut</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🔄</div>
+                  <RefreshCw size={48} className="text-red-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Lösung</h3>
                   <p className="text-red-200">Neue Währung, Reform</p>
                 </div>
@@ -559,38 +597,40 @@ export default function PresentationMode() {
       case 'key-takeaways':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              🎯 Die wichtigsten Erkenntnisse
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Target size={48} className="text-cyan-400" />
+              Die wichtigsten Erkenntnisse
             </h1>
             <div className="grid grid-cols-2 gap-12">
               <div className="space-y-8">
                 <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl p-8 border border-blue-400/30">
-                  <div className="text-4xl mb-4">💡</div>
+                  <Lightbulb size={48} className="text-blue-400 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-white mb-4">Inflation ist normal</h2>
                   <p className="text-blue-100">2% jährlich zeigt eine gesunde, wachsende Wirtschaft</p>
                 </div>
                 <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-2xl p-8 border border-red-400/30">
-                  <div className="text-4xl mb-4">⚠️</div>
+                  <AlertTriangle size={48} className="text-red-400 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-white mb-4">Extreme sind gefährlich</h2>
                   <p className="text-red-100">Zu hohe oder zu niedrige Inflation schadet der Wirtschaft</p>
                 </div>
               </div>
               <div className="space-y-8">
                 <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-8 border border-green-400/30">
-                  <div className="text-4xl mb-4">🏦</div>
+                  <Building2 size={48} className="text-green-400 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-white mb-4">EZB wacht über uns</h2>
                   <p className="text-green-100">Unabhängige Zentralbank sorgt für Preisstabilität</p>
                 </div>
                 <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-8 border border-purple-400/30">
-                  <div className="text-4xl mb-4">🧠</div>
+                  <Brain size={48} className="text-purple-400 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-white mb-4">Verstehen hilft</h2>
                   <p className="text-purple-100">Wissen über Inflation hilft bei persönlichen Finanzentscheidungen</p>
                 </div>
               </div>
             </div>
             <div className="mt-12 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-2xl p-8 border border-yellow-400/30">
-              <h3 className="text-2xl font-bold text-white mb-4">
-                🇩🇪 Deutschland heute: Auf dem richtigen Weg
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                <Flag size={28} className="text-yellow-400" />
+                Deutschland heute: Auf dem richtigen Weg
               </h3>
               <p className="text-xl text-yellow-100">
                 Von 6,9% (2022) zurück auf 2,2% (2024) - die Inflation normalisiert sich wieder
@@ -602,8 +642,9 @@ export default function PresentationMode() {
       case 'history-timeline':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📜 Historische Hyperinflation
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <FileText size={48} className="text-cyan-400" />
+              Historische Hyperinflation
             </h1>
             <div className="space-y-8">
               {historicalEvents
@@ -641,8 +682,9 @@ export default function PresentationMode() {
       case 'summary':
         return (
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-12">
-              📝 Zusammenfassung
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <FileText size={48} className="text-cyan-400" />
+              Zusammenfassung
             </h1>
             <div className="grid grid-cols-2 gap-12">
               <div className="space-y-6">
@@ -680,15 +722,17 @@ export default function PresentationMode() {
       case 'thanks':
         return (
           <div className="text-center">
-            <h1 className="text-6xl font-bold text-white mb-8">
-              🙏 Vielen Dank!
+            <h1 className="text-6xl font-bold text-white mb-8 flex items-center justify-center gap-4">
+              <ThumbsUp size={64} className="text-cyan-400" />
+              Vielen Dank!
             </h1>
             <p className="text-2xl text-blue-200 mb-12">
               Fragen zur Inflation?
             </p>
             <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-12 border border-blue-400/30">
-              <h2 className="text-3xl font-bold text-white mb-6">
-                💡 Das Wichtigste in Kürze
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
+                <Lightbulb size={36} className="text-cyan-400" />
+                Das Wichtigste in Kürze
               </h2>
               <p className="text-xl text-blue-100 leading-relaxed">
                 Inflation ist ein normaler Teil der Wirtschaft. Die EZB sorgt mit ihrer Geldpolitik
@@ -735,7 +779,10 @@ export default function PresentationMode() {
       {/* Speaker Notes */}
       {showNotes && (
         <div className="fixed top-4 right-4 w-80 bg-black/80 backdrop-blur-sm rounded-lg p-4 text-sm text-white">
-          <h3 className="font-bold mb-2">🗣️ Sprechernotizen:</h3>
+          <h3 className="font-bold mb-2 flex items-center gap-2">
+            <MessageSquare size={16} className="text-cyan-400" />
+            Sprechernotizen:
+          </h3>
           <div className="text-white/80 max-h-60 overflow-y-auto">
             {slides[currentSlide] === 'title' && (
               <div>
