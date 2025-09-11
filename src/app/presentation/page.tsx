@@ -339,11 +339,11 @@ export default function PresentationMode() {
             <div className="mt-12 bg-white/10 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-white mb-4">Reallohn-Entwicklung Deutschland</h3>
               <div className="grid grid-cols-3 gap-6">
-                {realWageData.slice(-3).map((data) => (
+                {(realWageData || []).slice(-3).map((data) => (
                   <div key={data.year} className="text-center">
                     <div className="text-lg text-blue-200">{data.year}</div>
-                    <div className={`text-3xl font-bold ${data.realGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {data.realGrowth > 0 ? '+' : ''}{data.realGrowth}%
+                    <div className={`text-3xl font-bold ${(data.realGrowth || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {(data.realGrowth || 0) > 0 ? '+' : ''}{data.realGrowth || 0}%
                     </div>
                     <div className="text-sm text-blue-300">Reallohn</div>
                   </div>
@@ -361,18 +361,18 @@ export default function PresentationMode() {
               Preisbeispiele: 2020 vs. 2025
             </h1>
             <div className="grid grid-cols-2 gap-8">
-              {priceExamples.map((example, index) => (
+              {(priceExamples || []).map((example, index) => (
                 <div key={index} className="bg-white/5 rounded-2xl p-8 border border-white/10">
                   <h3 className="text-2xl font-bold text-white mb-6">{example.item}</h3>
                   <div className="flex justify-between items-center mb-4">
                     <div className="text-center">
                       <div className="text-sm text-blue-200">2020</div>
-                      <div className="text-2xl font-bold text-blue-400">€{example.price2020.toFixed(2)}</div>
+                      <div className="text-2xl font-bold text-blue-400">€{example.price2020?.toFixed(2) || '0.00'}</div>
                     </div>
                     <div className="text-4xl">→</div>
                     <div className="text-center">
                       <div className="text-sm text-red-200">2025</div>
-                      <div className="text-2xl font-bold text-red-400">€{example.price2025.toFixed(2)}</div>
+                      <div className="text-2xl font-bold text-red-400">€{example.price2025?.toFixed(2) || '0.00'}</div>
                     </div>
                   </div>
                   <div className="text-center">
@@ -424,7 +424,7 @@ export default function PresentationMode() {
               Inflation nach Kategorien
             </h1>
             <div className="grid grid-cols-1 gap-6">
-              {inflationByCategory.map((category, index) => (
+              {(inflationByCategory || []).map((category, index) => (
                 <div key={index} className="bg-white/5 rounded-xl p-6 border border-white/10">
                   <div className="grid grid-cols-4 gap-6 items-center">
                     <div className="text-left">
@@ -440,9 +440,9 @@ export default function PresentationMode() {
                       <div className="text-red-200 text-sm">2022</div>
                     </div>
                     <div className="text-center">
-                      <div className={`text-xl font-bold ${category.rate2025 < category.rate2022 ? 'text-green-400' : 'text-red-400'}`}>
-                        {category.rate2025 < category.rate2022 ? '↓' : '↑'}
-                        {Math.abs(category.rate2025 - category.rate2022).toFixed(1)}pp
+                      <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2022 || 0) ? 'text-green-400' : 'text-red-400'}`}>
+                        {(category.rate2025 || 0) < (category.rate2022 || 0) ? '↓' : '↑'}
+                        {Math.abs((category.rate2025 || 0) - (category.rate2022 || 0)).toFixed(1)}pp
                       </div>
                       <div className="text-blue-200 text-sm">Änderung</div>
                     </div>
@@ -767,8 +767,8 @@ export default function PresentationMode() {
               Historische Hyperinflation
             </h1>
             <div className="space-y-8">
-              {historicalEvents
-                .sort((a, b) => a.year - b.year) // Sortierung von alt zu neu
+              {(historicalEvents || [])
+                .sort((a, b) => (a.year || 0) - (b.year || 0)) // Sortierung von alt zu neu
                 .map((event, index) => (
                 <div key={index} className="bg-white/5 rounded-2xl p-6 border border-white/10">
                   <div className="grid grid-cols-4 gap-6 items-center">
@@ -778,10 +778,10 @@ export default function PresentationMode() {
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold text-red-400">
-                        {event.rate >= 1000000000000 ? `${(event.rate / 1000000000000).toFixed(0)}B%` :
-                         event.rate >= 1000000000 ? `${(event.rate / 1000000000).toFixed(0)}Mrd%` :
-                         event.rate >= 1000000 ? `${(event.rate / 1000000).toFixed(0)}M%` :
-                         `${event.rate}%`}
+                        {(event.rate || 0) >= 1000000000000 ? `${((event.rate || 0) / 1000000000000).toFixed(0)}B%` :
+                         (event.rate || 0) >= 1000000000 ? `${((event.rate || 0) / 1000000000).toFixed(0)}Mrd%` :
+                         (event.rate || 0) >= 1000000 ? `${((event.rate || 0) / 1000000).toFixed(0)}M%` :
+                         `${event.rate || 0}%`}
                       </div>
                       <div className="text-red-200 text-sm">Inflationsrate</div>
                     </div>
