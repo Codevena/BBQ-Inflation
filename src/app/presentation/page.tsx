@@ -28,7 +28,12 @@ import {
   ThumbsUp,
   MessageSquare,
   Calendar,
-  Hash
+  Hash,
+  Settings,
+  ArrowUpDown,
+  PiggyBank,
+  Shield,
+  Clock
 } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler);
@@ -44,6 +49,7 @@ const slides = [
   'measurement-intro',
   'measurement-categories',
   'ecb-policy',
+  'ecb-instruments',
   'history-intro',
   'history-timeline',
   'key-takeaways',
@@ -561,6 +567,120 @@ export default function PresentationMode() {
           </div>
         );
 
+      case 'ecb-instruments':
+        return (
+          <div className="text-center">
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <Settings size={48} className="text-cyan-400" />
+              EZB-Steuerungsinstrumente
+            </h1>
+            <div className="grid grid-cols-2 gap-8 mb-8">
+
+              {/* Hauptrefinanzierungsfazilität */}
+              <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl p-8 border border-blue-400/30">
+                <Building2 size={48} className="text-blue-400 mx-auto mb-6" />
+                <h2 className="text-2xl font-bold text-blue-400 mb-4">Hauptrefinanzierungsfazilität</h2>
+                <div className="text-left space-y-3 text-blue-200">
+                  <p className="flex items-start gap-2">
+                    <ArrowUpDown size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                    <span><strong>Kredite an Banken:</strong> EZB verleiht Geld gegen Wertpapiere als Sicherheit</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <Clock size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                    <span><strong>Laufzeit:</strong> Meist 1 Woche (Wertpapierpensionsgeschäfte)</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <Target size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                    <span><strong>Steuerung:</strong> Über Kreditmenge und Leitzins</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Spitzenrefinanzierungsfazilität */}
+              <div className="bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-2xl p-8 border border-orange-400/30">
+                <Clock size={48} className="text-orange-400 mx-auto mb-6" />
+                <h2 className="text-2xl font-bold text-orange-400 mb-4">Spitzenrefinanzierungsfazilität</h2>
+                <div className="text-left space-y-3 text-orange-200">
+                  <p className="flex items-start gap-2">
+                    <Clock size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                    <span><strong>Über Nacht:</strong> Kurzfristige Kredite an Banken</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <TrendingUp size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                    <span><strong>Höherer Zins:</strong> Spitzenrefinanzierungssatz (SRS)</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <AlertTriangle size={16} className="text-orange-400 mt-1 flex-shrink-0" />
+                    <span><strong>Notfall:</strong> Für kurzfristige Liquiditätsengpässe</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Einlagefazilität */}
+              <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-8 border border-green-400/30">
+                <PiggyBank size={48} className="text-green-400 mx-auto mb-6" />
+                <h2 className="text-2xl font-bold text-green-400 mb-4">Einlagefazilität</h2>
+                <div className="text-left space-y-3 text-green-200">
+                  <p className="flex items-start gap-2">
+                    <PiggyBank size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                    <span><strong>Geld parken:</strong> Banken legen überschüssiges Geld bei EZB an</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <Clock size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                    <span><strong>Über Nacht:</strong> Kurzfristige Geldanlage</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <DollarSign size={16} className="text-green-400 mt-1 flex-shrink-0" />
+                    <span><strong>Einlagesatz:</strong> EZB zahlt Zinsen (oft negativ!)</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Mindestreservepolitik */}
+              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-8 border border-purple-400/30">
+                <Shield size={48} className="text-purple-400 mx-auto mb-6" />
+                <h2 className="text-2xl font-bold text-purple-400 mb-4">Mindestreservepolitik</h2>
+                <div className="text-left space-y-3 text-purple-200">
+                  <p className="flex items-start gap-2">
+                    <Scale size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                    <span><strong>Pflichtreserve:</strong> Banken müssen Anteil ihrer Einlagen bei EZB hinterlegen</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <Hash size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                    <span><strong>Aktuell:</strong> 1% der Kundeneinlagen</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <TrendingDown size={16} className="text-purple-400 mt-1 flex-shrink-0" />
+                    <span><strong>Effekt:</strong> Hohe Reserve = weniger Geld im Markt</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Zusammenfassung */}
+            <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl p-8 border border-cyan-400/30">
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                <Target size={28} className="text-cyan-400" />
+                Geldmengensteuerung im Überblick
+              </h3>
+              <p className="text-xl text-cyan-100 mb-4">
+                Die EZB steuert die Geldmenge über das Bankensystem - mehr Geld bei Banken führt zu mehr Krediten,
+                Investitionen und Konsum, was die Preise und Inflation antreibt.
+              </p>
+              <div className="grid grid-cols-2 gap-6 text-sm">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-green-400">Mehr Geld → Höhere Inflation</div>
+                  <div className="text-green-200">Niedrige Zinsen, lockere Geldpolitik</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-red-400">Weniger Geld → Niedrigere Inflation</div>
+                  <div className="text-red-200">Hohe Zinsen, straffe Geldpolitik</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       case 'history-intro':
         return (
           <div className="text-center">
@@ -846,6 +966,15 @@ export default function PresentationMode() {
                 <p className="mb-2"><strong>Mechanismus:</strong> &quot;Hohe Zinsen = teurer leihen = weniger ausgeben = Preise sinken.&quot;</p>
                 <p className="mb-2"><strong>Aktuell:</strong> &quot;2022 musste EZB von 0% auf 4,5% - drastische Maßnahme!&quot;</p>
                 <p><strong>Erfolg:</strong> &quot;Hat funktioniert: 6,9% → 2,2% in 2 Jahren.&quot;</p>
+              </div>
+            )}
+            {slides[currentSlide] === 'ecb-instruments' && (
+              <div>
+                <p className="mb-2"><strong>4 Hauptinstrumente:</strong> &quot;Die EZB hat ein ganzes Arsenal an Werkzeugen.&quot;</p>
+                <p className="mb-2"><strong>Hauptrefinanzierung:</strong> &quot;Das ist der normale Weg - Banken leihen sich Geld gegen Sicherheiten.&quot;</p>
+                <p className="mb-2"><strong>Spitzenrefinanzierung:</strong> &quot;Notfall über Nacht - teurer, aber sofort verfügbar.&quot;</p>
+                <p className="mb-2"><strong>Einlagefazilität:</strong> &quot;Banken parken überschüssiges Geld - oft mit Strafzinsen!&quot;</p>
+                <p><strong>Mindestreserve:</strong> &quot;1% müssen Banken immer bei der EZB lassen - das bindet Geld.&quot;</p>
               </div>
             )}
             {slides[currentSlide] === 'history-intro' && (
