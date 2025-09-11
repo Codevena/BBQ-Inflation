@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line, Doughnut } from 'react-chartjs-2';
@@ -28,8 +28,6 @@ const slides = [
 export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
-  const [chartAnimationProgress, setChartAnimationProgress] = useState(0);
-  const animationRef = useRef<number | null>(null);
 
   const nextSlide = useCallback(() => {
     if (currentSlide < slides.length - 1) {
@@ -42,53 +40,6 @@ export default function PresentationMode() {
       setCurrentSlide(prev => prev - 1);
     }
   }, [currentSlide]);
-
-  // Animation für Diagramme
-  const startChartAnimation = useCallback(() => {
-    setChartAnimationProgress(0);
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-    }
-
-    const animate = (timestamp: number, startTime?: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const duration = 3000; // 3 Sekunden für dramatischen Effekt
-
-      const progress = Math.min(elapsed / duration, 1);
-      // Easing function für dramatischen Effekt
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-      setChartAnimationProgress(easedProgress);
-
-      if (progress < 1) {
-        animationRef.current = requestAnimationFrame((ts) => animate(ts, startTime));
-      }
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-  }, []);
-
-  // Starte Animation wenn wir zu einer Diagramm-Folie wechseln
-  useEffect(() => {
-    const slideType = slides[currentSlide];
-    if (slideType === 'statistics' || slideType === 'causes-chart') {
-      // Kleine Verzögerung für besseren Effekt
-      const timer = setTimeout(() => {
-        startChartAnimation();
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [currentSlide, startChartAnimation]);
-
-  // Cleanup Animation beim Unmount
-  useEffect(() => {
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -200,30 +151,18 @@ export default function PresentationMode() {
             <h1 className="text-5xl font-bold text-white mb-12">
               📊 Deutschland: Inflationsentwicklung
             </h1>
-            <div className="bg-white/5 rounded-2xl p-8 mb-8 transform transition-all duration-1000"
-                 style={{
-                   opacity: chartAnimationProgress,
-                   transform: `scale(${0.8 + 0.2 * chartAnimationProgress}) translateY(${20 * (1 - chartAnimationProgress)}px)`
-                 }}>
+            <div className="bg-white/5 rounded-2xl p-8 mb-8">
               <div className="h-96">
-                <Line
+                <Line 
                   data={{
                     labels: inflationRatesGermany.map(item => item.year.toString()),
                     datasets: [{
                       label: 'Inflationsrate (%)',
-                      data: inflationRatesGermany.map((item, index) => {
-                        // Animiere die Datenpunkte nacheinander
-                        const pointProgress = Math.max(0, Math.min(1, (chartAnimationProgress * inflationRatesGermany.length) - index));
-                        return item.rate * pointProgress;
-                      }),
+                      data: inflationRatesGermany.map(item => item.rate),
                       borderColor: '#EF4444',
                       backgroundColor: 'rgba(239, 68, 68, 0.1)',
                       borderWidth: 4,
-                      pointRadius: (context: { dataIndex: number }) => {
-                        const index = context.dataIndex;
-                        const pointProgress = Math.max(0, Math.min(1, (chartAnimationProgress * inflationRatesGermany.length) - index));
-                        return 8 * pointProgress;
-                      },
+                      pointRadius: 8,
                       fill: true,
                       tension: 0.4,
                     }]
@@ -231,27 +170,10 @@ export default function PresentationMode() {
                   options={{
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                      legend: { display: false },
-                      tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: 'white',
-                        bodyColor: 'white'
-                      }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
-                      x: {
-                        ticks: { color: 'white', font: { size: 16 } },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                      },
-                      y: {
-                        ticks: { color: 'white', font: { size: 16 } },
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                      }
-                    },
-                    animation: {
-                      duration: 0 // Wir kontrollieren die Animation manuell
+                      x: { ticks: { color: 'white', font: { size: 16 } } },
+                      y: { ticks: { color: 'white', font: { size: 16 } }, beginAtZero: true }
                     }
                   }}
                 />
@@ -303,21 +225,13 @@ export default function PresentationMode() {
               📊 Inflationsursachen im Detail
             </h1>
             <div className="grid grid-cols-2 gap-12 items-center">
-              <div className="bg-white/5 rounded-2xl p-8 transform transition-all duration-1000"
-                   style={{
-                     opacity: chartAnimationProgress,
-                     transform: `scale(${0.7 + 0.3 * chartAnimationProgress}) rotate(${360 * (1 - chartAnimationProgress)}deg)`
-                   }}>
+              <div className="bg-white/5 rounded-2xl p-8">
                 <div className="h-96">
-                  <Doughnut
+                  <Doughnut 
                     data={{
                       labels: inflationCauses.map(cause => cause.category),
                       datasets: [{
-                        data: inflationCauses.map((cause, index) => {
-                          // Animiere die Segmente nacheinander
-                          const segmentProgress = Math.max(0, Math.min(1, (chartAnimationProgress * inflationCauses.length * 1.5) - index));
-                          return cause.percentage * segmentProgress;
-                        }),
+                        data: inflationCauses.map(cause => cause.percentage),
                         backgroundColor: inflationCauses.map(cause => cause.color),
                         borderWidth: 3,
                         borderColor: '#1e293b'
@@ -333,48 +247,29 @@ export default function PresentationMode() {
                           titleColor: 'white',
                           bodyColor: 'white'
                         }
-                      },
-                      animation: {
-                        duration: 0 // Wir kontrollieren die Animation manuell
                       }
                     }}
                   />
                 </div>
               </div>
               <div className="space-y-4">
-                {inflationCauses.map((cause, index) => {
-                  const itemProgress = Math.max(0, Math.min(1, (chartAnimationProgress * inflationCauses.length * 2) - index));
-                  return (
-                    <div key={index}
-                         className="bg-white/5 rounded-xl p-4 border border-white/10 transform transition-all duration-500"
-                         style={{
-                           opacity: itemProgress,
-                           transform: `translateX(${50 * (1 - itemProgress)}px)`,
-                           transitionDelay: `${index * 200}ms`
-                         }}>
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="w-6 h-6 rounded-full transition-all duration-500"
-                          style={{
-                            backgroundColor: cause.color,
-                            transform: `scale(${itemProgress})`
-                          }}
-                        />
-                        <div className="flex-1 text-left">
-                          <h3 className="font-bold text-white text-lg">{cause.category}</h3>
-                          <p className="text-blue-200 text-sm">{cause.description}</p>
-                        </div>
-                        <div className="text-2xl font-bold transition-all duration-500"
-                             style={{
-                               color: cause.color,
-                               transform: `scale(${itemProgress})`
-                             }}>
-                          {Math.round(cause.percentage * itemProgress)}%
-                        </div>
+                {inflationCauses.map((cause, index) => (
+                  <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className="w-6 h-6 rounded-full"
+                        style={{ backgroundColor: cause.color }}
+                      />
+                      <div className="flex-1 text-left">
+                        <h3 className="font-bold text-white text-lg">{cause.category}</h3>
+                        <p className="text-blue-200 text-sm">{cause.description}</p>
+                      </div>
+                      <div className="text-2xl font-bold" style={{ color: cause.color }}>
+                        {cause.percentage}%
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -829,9 +724,7 @@ export default function PresentationMode() {
 
       {/* Controls */}
       <div className="fixed bottom-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-sm text-white">
-        <div className="flex items-center gap-4">
-          <span>Folie {currentSlide + 1} / {slides.length}</span>
-        </div>
+        <span>Folie {currentSlide + 1} / {slides.length}</span>
       </div>
 
       {/* Help */}
