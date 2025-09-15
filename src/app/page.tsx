@@ -10,13 +10,15 @@ import MeasurementSection from '@/components/MeasurementSection';
 import CPIBasketSection from '@/components/CPIBasketSection';
 import ECBPolicySection from '@/components/ECBPolicySection';
 import InflationEverydaySection from '@/components/InflationEverydaySection';
+import FiscalPolicySection from '@/components/FiscalPolicySection';
+import FAQSection from '@/components/FAQSection';
 import GlobalPerspectiveSection from '@/components/GlobalPerspectiveSection';
 import HistorySection from '@/components/HistorySection';
 import GlossarySection from '@/components/GlossarySection';
 import QuizSection from '@/components/QuizSection';
 import Navigation from '@/components/Navigation';
 
-const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#everyday', '#global', '#history', '#glossary', '#quiz'];
+const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#fiscal', '#everyday', '#global', '#history', '#faq', '#glossary', '#quiz'];
 
 export default function Home() {
   // initialize Lenis smooth scroll without binding unused var
@@ -61,9 +63,11 @@ export default function Home() {
       <MeasurementSection />
       <CPIBasketSection />
       <ECBPolicySection />
+      <FiscalPolicySection />
       <InflationEverydaySection />
       <GlobalPerspectiveSection />
       <HistorySection />
+      <FAQSection />
       <GlossarySection />
       <QuizSection />
       </div>

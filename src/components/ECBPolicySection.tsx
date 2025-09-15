@@ -95,7 +95,11 @@ export default function ECBPolicySection() {
           end: 'bottom 20%',
           toggleActions: 'play none none none',
           once: true,
-          onEnter: () => animateChart(),
+          onEnter: (self) => {
+            animateChart();
+            // ensure no further toggling to avoid flicker
+            self.disable();
+          },
         }
       });
 
