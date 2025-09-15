@@ -106,6 +106,7 @@ export default function EffectsSection() {
 
   // Animate chart on first reveal (requestAnimationFrame for robustness)
   const animateChart = useCallback(() => {
+    if (isAnimating) return;
     if (hasAnimatedRef.current || animatingRef.current) return;
     animatingRef.current = true;
     setIsAnimating(true);

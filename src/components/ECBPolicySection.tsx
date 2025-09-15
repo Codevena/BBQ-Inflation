@@ -17,10 +17,10 @@ if (typeof window !== 'undefined') {
 }
 
 const ecbRateHistory = [
-  { year: '2019', rate: 0.0, event: 'Einlagefazilität negativ (vereinfachte Darstellung)' },
-  { year: '2020', rate: 0.0, event: 'Corona-Krise' },
-  { year: '2021', rate: 0.0, event: 'Anhaltend sehr niedrig' },
-  { year: '2022 Q1', rate: 0.0, event: 'Vor der ersten Zinserhöhung' },
+  { year: '2019', rate: -0.5, event: 'Einlagefazilität negativ (-0,5%)' },
+  { year: '2020', rate: -0.5, event: 'Corona-Krise (Einlagefazilität -0,5%)' },
+  { year: '2021', rate: -0.5, event: 'Anhaltend negativ (-0,5%)' },
+  { year: '2022 Q1', rate: -0.5, event: 'Vor erster Anhebung (-0,5%)' },
   { year: '2022 Q3', rate: 0.75, event: 'Erste Anhebung (Einlagesatz)' },
   { year: '2022 Q4', rate: 2.0, event: 'Schnelle Straffung' },
   { year: '2023 Q3', rate: 4.0, event: 'Peak Einlagesatz' },
@@ -44,13 +44,14 @@ export default function ECBPolicySection() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const animateChart = useCallback(() => {
+    if (isAnimating) return;
     if (hasAnimatedRef.current || animatingRef.current) return;
     animatingRef.current = true;
     setIsAnimating(true);
     const originalData = ecbRateHistory.map(item => item.rate);
     const n = originalData.length;
     const start = performance.now();
-    const duration = 1800;
+    const duration = 2600; // langsamer für mehr Effekt
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2);
@@ -195,7 +196,8 @@ export default function ECBPolicySection() {
             return n.toLocaleString('de-DE') + '%';
           }
         },
-        beginAtZero: true,
+        beginAtZero: false,
+        min: -0.6,
         max: 5,
       }
     },

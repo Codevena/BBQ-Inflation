@@ -149,7 +149,7 @@ export const useScrollTrigger = (
 };
 
 export const useIntersectionObserver = (
-  elementRef: React.RefObject<Element>,
+  elementRef: React.RefObject<Element | null>,
   callback: (isIntersecting: boolean) => void,
   options?: IntersectionObserverInit
 ) => {
@@ -168,7 +168,7 @@ export const useIntersectionObserver = (
 };
 
 export const useAnimationOnScroll = (
-  elementRef: React.RefObject<Element>,
+  elementRef: React.RefObject<Element | null>,
   animationFn: (element: Element) => void,
   threshold: number = 0.1
 ) => {
