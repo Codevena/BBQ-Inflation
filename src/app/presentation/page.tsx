@@ -1073,7 +1073,7 @@ export default function PresentationMode() {
                 Deutschland heute: Auf dem richtigen Weg
               </h3>
               <p className="text-xl text-yellow-100">
-                Von 6,9% (2022) zurück auf 2,2% (2025) – Stand: Aug 2025 – die Inflation normalisiert sich wieder
+                Von 6,9% (2022) zurück auf 2,2% (2025) – Stand: {DATA_STAND_SHORT} – die Inflation normalisiert sich wieder
               </p>
             </div>
           </div>
@@ -1242,7 +1242,7 @@ export default function PresentationMode() {
               <div>
                 <p className="mb-2"><strong>Grafik erklären:</strong> &quot;2019-2021 normal, dann 2022 Schock durch Ukraine-Krieg.&quot;</p>
                 <p className="mb-2"><strong>Energiekrise:</strong> &quot;Gas- und Ölpreise explodierten → alles wurde teurer.&quot;</p>
-                <p><strong>Erholung:</strong> &quot;2025 wieder bei 2,2% (Stand Aug 2025).&quot;</p>
+                <p><strong>Erholung:</strong> &quot;2025 wieder bei 2,2% (Stand {DATA_STAND_SHORT}).&quot;</p>
               </div>
             )}
             {slides[currentSlide] === 'causes-intro' && (

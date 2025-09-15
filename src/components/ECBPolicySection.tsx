@@ -26,7 +26,7 @@ const ecbRateHistory = [
   { year: '2022 Q4', rate: 2.0, event: 'Schnelle Straffung' },
   { year: '2023 Q3', rate: 4.0, event: 'Peak Einlagesatz' },
   { year: '2024', rate: 3.75, event: 'Beginn der Senkungen' },
-  { year: '2025', rate: 2.0, event: 'Derzeitiger Stand (11.09.2025)' }
+  { year: '2025', rate: 2.0, event: `Derzeitiger Stand (${DATA_STAND_SHORT})` }
 ];
 
 export default function ECBPolicySection() {
