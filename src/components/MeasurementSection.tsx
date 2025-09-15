@@ -216,7 +216,7 @@ export default function MeasurementSection() {
               </h4>
               <p className="text-cyan-200 text-sm leading-relaxed">
                 Misst die Preisentwicklung <span className="text-white font-medium">ohne Energie und Nahrungsmittel</span>,
-                um besonders volatile Komponenten auszublenden. Nützlich, um <span className="text-white font-medium">mittelfristige Trends</span>
+                um besonders volatile Komponenten auszublenden. Nützlich, um <span className="text-white font-medium">mittelfristige Trends </span>
                 zu erkennen – ersetzt aber nicht die Gesamtinflation.
               </p>
             </div>

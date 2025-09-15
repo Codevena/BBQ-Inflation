@@ -7,7 +7,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb, Info } from 'lucide-react';
-import { useAnimationOnScroll } from '@/lib/hooks';
+// removed useAnimationOnScroll to avoid double triggering animations
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
 import { DATA_STAND_SHORT } from '@/data/constants';
 
@@ -185,7 +185,7 @@ export default function EffectsSection() {
   }, [animateChart]);
 
   // Sichtbarkeitsgesteuert: setzt Daten sobald der Abschnitt im Viewport ist
-  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+  // Removed secondary on-scroll trigger to avoid double animation
 
   // Cleanup any pending rAF on unmount
   useEffect(() => {
