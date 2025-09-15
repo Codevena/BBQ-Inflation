@@ -105,6 +105,9 @@ export default function ECBPolicySection() {
         ease: 'power2.out'
       }, '-=0.5');
 
+      // Fallback: ensure data shows even if scroll trigger doesn't fire immediately
+      animateChart();
+
     }, sectionRef);
 
     return () => ctx.revert();

@@ -159,6 +159,9 @@ export default function EffectsSection() {
         ease: 'power2.out'
       }, '-=0.3');
 
+      // Fallback: ensure data is populated even if scroll trigger doesn't fire yet
+      animateChart();
+
     }, sectionRef);
 
     return () => ctx.revert();

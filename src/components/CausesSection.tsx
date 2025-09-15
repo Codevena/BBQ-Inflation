@@ -123,6 +123,9 @@ export default function CausesSection() {
         ease: 'power2.out'
       }, '-=0.5');
 
+      // Fallback: kick off once in case scroll trigger doesn't fire yet
+      animateChart();
+
     }, sectionRef);
 
     return () => ctx.revert();
