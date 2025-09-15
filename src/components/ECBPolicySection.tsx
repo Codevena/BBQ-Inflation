@@ -34,6 +34,9 @@ export default function ECBPolicySection() {
   const simulatorRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const hasAnimatedRef = useRef(false);
+  const animatingRef = useRef(false);
 
   const [selectedRate, setSelectedRate] = useState(2.0);
   const [showImpact, setShowImpact] = useState(false);
@@ -41,12 +44,27 @@ export default function ECBPolicySection() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const animateChart = useCallback(() => {
-    if (isAnimating) return;
+    if (hasAnimatedRef.current || animatingRef.current) return;
+    animatingRef.current = true;
     setIsAnimating(true);
     const originalData = ecbRateHistory.map(item => item.rate);
-    setAnimatedData(originalData);
-    setTimeout(() => setIsAnimating(false), 0);
-  }, [isAnimating]);
+    const start = performance.now();
+    const duration = 1200;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      setAnimatedData(originalData.map(v => v * eased));
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setIsAnimating(false);
+        rafRef.current = null;
+        hasAnimatedRef.current = true;
+        animatingRef.current = false;
+      }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -98,6 +116,10 @@ export default function ECBPolicySection() {
 
     return () => ctx.revert();
   }, [animateChart]);
+
+  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
 
   // Setzt Daten robust, sobald der Bereich sichtbar ist
   useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);

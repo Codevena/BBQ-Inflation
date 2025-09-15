@@ -23,6 +23,9 @@ export default function EffectsSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const priceGridRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const hasAnimatedRef = useRef(false);
+  const animatingRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
   
   const [inflationRate, setInflationRate] = useState(2.3);
   const [animatedData, setAnimatedData] = useState(inflationRatesGermany.map(() => 0));
@@ -104,7 +107,8 @@ export default function EffectsSection() {
 
   // Animate chart on first reveal (requestAnimationFrame for robustness)
   const animateChart = useCallback(() => {
-    if (isAnimating) return;
+    if (hasAnimatedRef.current || animatingRef.current) return;
+    animatingRef.current = true;
     setIsAnimating(true);
     const originalData = inflationRatesGermany.map(item => item.rate);
     const start = performance.now();
@@ -119,10 +123,12 @@ export default function EffectsSection() {
       } else {
         setIsAnimating(false);
         rafRef.current = null;
+        hasAnimatedRef.current = true;
+        animatingRef.current = false;
       }
     };
     rafRef.current = requestAnimationFrame(step);
-  }, [isAnimating]);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -162,8 +168,7 @@ export default function EffectsSection() {
         ease: 'power2.out'
       }, '-=0.3');
 
-      // Fallback: ensure data is populated even if scroll trigger doesn't fire yet
-      animateChart();
+      // Datenbefüllung wird durch IntersectionObserver ausgelöst
 
     }, sectionRef);
 
