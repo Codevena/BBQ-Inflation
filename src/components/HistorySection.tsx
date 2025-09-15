@@ -158,7 +158,7 @@ export default function HistorySection() {
                   onClick={() => setSelectedEvent(selectedEvent === index ? null : index)}
                 >
                   {/* Year Badge */}
-                  <div className={`inline-block px-4 py-2 rounded-full text-sm font-bold mb-4 bg-gradient-to-r ${getEventColor(event.rate)} text-white`}>
+                  <div className={`inline-block px-4 py-2 rounded-full text-sm font-bold mb-4 bg-gradient-to-r ${index % 2 === 0 ? 'from-red-600 to-red-800' : 'from-blue-500 to-blue-700'} text-white`}>
                     {event.year}
                   </div>
 
@@ -208,7 +208,7 @@ export default function HistorySection() {
                 </div>
 
                 {/* Timeline Dot */}
-                <div className={`absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full border-4 border-white bg-gradient-to-r ${getEventColor(event.rate)} z-10 ${
+                <div className={`absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full border-4 border-white bg-gradient-to-r ${index % 2 === 0 ? 'from-red-600 to-red-800' : 'from-blue-500 to-blue-700'} z-10 ${
                   animatedEvents[index] ? 'animate-pulse' : ''
                 }`} />
 

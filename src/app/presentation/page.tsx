@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
+import { DATA_STAND_SHORT } from '@/data/constants';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { gsap } from 'gsap';
 import { Line, Doughnut } from 'react-chartjs-2';
@@ -325,7 +326,7 @@ export default function PresentationMode() {
                 />
               </div>
               <p className="text-center text-blue-300 text-xs mt-4">
-                Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: Aug 2025. Quelle: Statistisches Bundesamt (Destatis).
+                Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: {DATA_STAND_SHORT}. Quelle: Statistisches Bundesamt (Destatis).
               </p>
             </div>
             <p className="text-xl text-blue-200">

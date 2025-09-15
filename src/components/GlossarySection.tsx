@@ -231,6 +231,7 @@ export default function GlossarySection() {
     return () => ctx.revert();
   }, []);
 
+  const [showAll, setShowAll] = useState(false);
   const filteredTerms = glossaryTerms.filter(term => {
     const matchesCategory = selectedCategory === 'Alle' || term.category === selectedCategory;
     const matchesSearch = term.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -296,7 +297,7 @@ export default function GlossarySection() {
 
           {/* Terms Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredTerms.map((term, index) => (
+            {(showAll ? filteredTerms : filteredTerms.slice(0, 8)).map((term, index) => (
               <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="text-xl font-bold text-white">{term.term}</h4>
@@ -317,6 +318,17 @@ export default function GlossarySection() {
               </div>
             ))}
           </div>
+
+          {filteredTerms.length > 8 && (
+            <div className="text-center mt-8">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-white transition-colors"
+              >
+                {showAll ? 'Weniger anzeigen' : `Mehr anzeigen (${filteredTerms.length - 8} weitere)`}
+              </button>
+            </div>
+          )}
 
           {filteredTerms.length === 0 && (
             <div className="text-center py-12">

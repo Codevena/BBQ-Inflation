@@ -9,6 +9,7 @@ import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb } from 'lucide-react';
 import { useAnimationOnScroll } from '@/lib/hooks';
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
+import { DATA_STAND_SHORT } from '@/data/constants';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -228,7 +229,7 @@ export default function EffectsSection() {
                   2019-2025 (aktuelle Daten)
                 </p>
                 <p className="text-xs text-blue-300 mt-1">
-                  Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: Aug 2025. Quelle: Statistisches Bundesamt (Destatis).
+                  Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: {DATA_STAND_SHORT}. Quelle: Statistisches Bundesamt (Destatis).
                 </p>
               </div>
             </div>

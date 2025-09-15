@@ -7,6 +7,7 @@ import IntroSection from '@/components/IntroSection';
 import CausesSection from '@/components/CausesSection';
 import EffectsSection from '@/components/EffectsSection';
 import MeasurementSection from '@/components/MeasurementSection';
+import CPIBasketSection from '@/components/CPIBasketSection';
 import ECBPolicySection from '@/components/ECBPolicySection';
 import InflationEverydaySection from '@/components/InflationEverydaySection';
 import GlobalPerspectiveSection from '@/components/GlobalPerspectiveSection';
@@ -58,6 +59,7 @@ export default function Home() {
       <CausesSection />
       <EffectsSection />
       <MeasurementSection />
+      <CPIBasketSection />
       <ECBPolicySection />
       <InflationEverydaySection />
       <GlobalPerspectiveSection />

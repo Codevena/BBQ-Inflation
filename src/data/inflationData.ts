@@ -125,6 +125,18 @@ export const historicalEvents: HistoricalEvent[] = [
   }
 ];
 
+// Beispielhafte VPI-Gewichte Deutschland (vereinfachte Struktur)
+export const cpiWeightsGermany = [
+  { category: 'Wohnen/Energie', weight: 32, color: '#60A5FA' },
+  { category: 'Verkehr', weight: 13, color: '#F472B6' },
+  { category: 'Nahrungsmittel/Alkohol/Tobak', weight: 10, color: '#34D399' },
+  { category: 'Freizeit/Kultur', weight: 12, color: '#F59E0B' },
+  { category: 'Gaststätten/Hotels', weight: 5, color: '#A78BFA' },
+  { category: 'Gesundheit', weight: 5, color: '#10B981' },
+  { category: 'Bekleidung/Schuhe', weight: 4, color: '#EF4444' },
+  { category: 'Sonstiges', weight: 19, color: '#22D3EE' }
+];
+
 export const quizQuestions = [
   {
     id: 1,

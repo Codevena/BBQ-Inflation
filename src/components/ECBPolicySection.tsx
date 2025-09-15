@@ -7,6 +7,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
+import { DATA_STAND_SHORT } from '@/data/constants';
 import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle } from 'lucide-react';
 import { useAnimationOnScroll } from '@/lib/hooks';
 
@@ -257,7 +258,7 @@ export default function ECBPolicySection() {
               Von Nullzinspolitik zur Inflationsbekämpfung
             </p>
                 <p className="text-center text-blue-300 mt-1 text-xs">
-                  Operativer Leitzins = Einlagefazilität. Stand: 11.09.2025. Quelle: EZB/Tagesschau.
+                  Operativer Leitzins = Einlagefazilität. Stand: {DATA_STAND_SHORT}. Quelle: EZB.
                 </p>
 
           </div>
@@ -445,7 +446,7 @@ export default function ECBPolicySection() {
               </div>
             </div>
             <p className="text-center text-green-100 mt-6 text-xs">
-              Zinsstände: MRO 2,65% · Spitzenrefinanzierung 2,90% · Stand: 11.09.2025 · Quelle: EZB/Tagesschau
+              Zinsstände: MRO 2,65% · Spitzenrefinanzierung 2,90% · Stand: {DATA_STAND_SHORT} · Quelle: EZB
             </p>
           </div>
         </div>
