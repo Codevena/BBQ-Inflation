@@ -138,7 +138,7 @@ export default function TimeTravelSimulator() {
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
+            className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
           >
             {inflationYears.map((year) => (
               <option key={year} value={year} className="bg-gray-800">
@@ -158,7 +158,7 @@ export default function TimeTravelSimulator() {
               type="number"
               value={amount}
               onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
+              className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400 appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="1000"
               min="1"
               max="1000000"
@@ -200,7 +200,7 @@ export default function TimeTravelSimulator() {
               Deine Zeitreise-Ergebnisse
             </h4>
             <p className="text-green-200">
-              Von {selectedYear} bis heute (2024)
+              Von {selectedYear} bis heute (2025)
             </p>
           </div>
 

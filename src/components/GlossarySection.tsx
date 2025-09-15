@@ -57,6 +57,90 @@ const glossaryTerms = [
     definition: 'Inflationsrate verändert sich durch niedrige Vorjahreswerte',
     example: '2021: Hohe Inflation durch niedrige Corona-Preise 2020',
     category: 'Messung'
+  },
+  {
+    term: 'Kerninflation',
+    definition: 'Inflation ohne Energie- und Nahrungsmittelpreise (volatilere Komponenten)',
+    example: 'Eurozone 2025: Kerninflation teils höher als Gesamtinflation',
+    category: 'Messung'
+  },
+  {
+    term: 'HVPI',
+    definition: 'Harmonisierter Verbraucherpreisindex der EU – Grundlage für EZB-Entscheidungen',
+    example: 'Vergleichbarkeit zwischen EU-Ländern; abweichend vom deutschen VPI',
+    category: 'Messung'
+  },
+  {
+    term: 'BIP-Deflator',
+    definition: 'Preisniveauindikator für alle im Inland produzierten Güter/Dienstleistungen',
+    example: 'Breiter als der VPI, nützlich für makroökonomische Analysen',
+    category: 'Messung'
+  },
+  {
+    term: 'Lohn-Preis-Spirale',
+    definition: 'Höhere Preise → höhere Löhne → wiederum höhere Preise',
+    example: 'Starke Tarifrunden können Preisdruck verfestigen',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Second-Round-Effekte',
+    definition: 'Zweit-/Drittrundeneffekte (z. B. Löhne) nach initialen Preisschocks',
+    example: 'Energieschock 2022 → spätere Lohnanpassungen',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Erwartungsanker',
+    definition: 'Geldpolitik stabilisiert Inflationserwartungen (Kommunikation/Guidance)',
+    example: 'Klares 2%-Ziel verankert Preissetzung und Lohnverhandlungen',
+    category: 'Geldpolitik'
+  },
+  {
+    term: 'Neutralzins (r*)',
+    definition: 'Realzins, der weder stimuliert noch bremst (Gleichgewicht)',
+    example: 'Dient als Referenz für restriktive/expansive Politik',
+    category: 'Geldpolitik'
+  },
+  {
+    term: 'Forward Guidance',
+    definition: 'Ankündigungen zur künftigen Zinspfad-Erwartung',
+    example: 'Wirkt über Erwartungen bereits vor Zinsschritten',
+    category: 'Geldpolitik'
+  },
+  {
+    term: 'QT (Bilanzabbau)',
+    definition: 'Quantitative Tightening: Rückführung von Anleihebeständen',
+    example: 'Reduziert Liquidität und dämpft Inflation',
+    category: 'Geldpolitik'
+  },
+  {
+    term: 'TLTRO',
+    definition: 'Gezielte Langfristkredite der EZB an Banken',
+    example: 'Pandemie: günstige Konditionen zur Stützung der Kreditvergabe',
+    category: 'Geldpolitik'
+  },
+  {
+    term: 'M1/M2/M3',
+    definition: 'Geldmengenaggregate: enge/weitere Definitionen (Bargeld, Sicht-/Termineinlagen)',
+    example: 'Starkes M3-Wachstum kann Preisdruck signalisieren',
+    category: 'Finanzen'
+  },
+  {
+    term: 'Importierte Inflation',
+    definition: 'Preisdruck durch teurere Importgüter / Wechselkurs',
+    example: 'Teureres Gas/Öl erhöht Verbraucherpreise',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Kaufkraftparität (KKP)',
+    definition: 'Wechselkurse gleichen langfristig Preisniveaus an',
+    example: 'Big Mac Index als anschauliche Approximation',
+    category: 'Wirtschaftstheorie'
+  },
+  {
+    term: 'Output-Gap',
+    definition: 'Abweichung tatsächlicher von potenzieller Wirtschaftsleistung',
+    example: 'Positives Gap → Überhitzung → Preisdruck',
+    category: 'Wirtschaftstheorie'
   }
 ];
 
