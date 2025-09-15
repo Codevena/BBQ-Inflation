@@ -94,7 +94,7 @@ export default function IntroSection() {
       className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden"
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 z-0 pointer-events-none select-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.3),transparent_50%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_49%,rgba(255,255,255,0.03)_50%,transparent_51%)] bg-[length:20px_20px]" />
       </div>
@@ -102,7 +102,7 @@ export default function IntroSection() {
       {/* World Map Background */}
       <div 
         ref={worldMapRef}
-        className="absolute inset-0 flex items-center justify-center opacity-20"
+        className="absolute inset-0 flex items-center justify-center opacity-20 z-0 pointer-events-none select-none"
       >
         <svg 
           viewBox="0 0 1000 500" 
@@ -125,7 +125,8 @@ export default function IntroSection() {
 
       {/* Main Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <div ref={titleRef}>
+        {/* Reserve space to avoid layout shift during typing */}
+        <div ref={titleRef} className="min-h-[120px] md:min-h-[160px]">
           <SequentialTypewriter
             texts={[
               'Inflation verstehen',

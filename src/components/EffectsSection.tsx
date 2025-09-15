@@ -110,12 +110,20 @@ export default function EffectsSection() {
     animatingRef.current = true;
     setIsAnimating(true);
     const originalData = inflationRatesGermany.map(item => item.rate);
+    const n = originalData.length;
     const start = performance.now();
-    const duration = 1200; // ms
+    const duration = 1600; // ms
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2); // easeOutQuad
-      const newData = originalData.map(v => v * eased);
+      const prog = eased * (n - 1);
+      const idx = Math.floor(prog);
+      const frac = prog - idx;
+      const newData = originalData.map((v, i) => {
+        if (i < idx) return v;
+        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        return 0;
+      });
       setAnimatedData(newData);
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
