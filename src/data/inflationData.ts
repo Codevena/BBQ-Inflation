@@ -84,12 +84,12 @@ export const historicalEvents: HistoricalEvent[] = [
     impact: "Preise verdoppelten sich alle 15 Stunden. 100 Quintillionen Pengő-Scheine"
   },
   {
-    year: 1979,
+    year: 1980,
     country: "USA",
-    rate: 13.3, // Korrigiert: 1979, nicht 1980
-    title: "Stagflation der 1970er",
-    description: "Ölkrisen 1973 und 1979 plus expansive Geldpolitik",
-    impact: "Fed-Chef Volcker hob Zinsen auf über 20% an"
+    rate: 13.5, // BLS CPI-U Jahresrate 1980 (Höchststand der Periode)
+    title: "Stagflation der 1970er/80er",
+    description: "Ölkrisen 1973/1979, Lohn-Preis-Spiralen und anhaltender Preisdruck",
+    impact: "Fed-Chef Volcker hob Leitzinsen >20% an; Rezession zur Inflationsbekämpfung"
   },
   {
     year: 1989,
