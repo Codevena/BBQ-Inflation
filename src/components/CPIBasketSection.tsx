@@ -19,11 +19,21 @@ export default function CPIBasketSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [animatedWeights, setAnimatedWeights] = useState<number[]>(cpiWeightsGermany.map(() => 0));
+  const rafRef = useRef<number | null>(null);
+  const hasAnimatedRef = useRef(false);
+  const animatingRef = useRef(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([titleRef.current], { opacity: 0, y: 30 });
-      gsap.to(titleRef.current, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } });
+      gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', onEnter: () => animateDoughnut() }
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -32,7 +42,7 @@ export default function CPIBasketSection() {
     labels: cpiWeightsGermany.map(i => i.category),
     datasets: [
       {
-        data: cpiWeightsGermany.map(i => i.weight),
+        data: animatedWeights,
         backgroundColor: cpiWeightsGermany.map(i => i.color),
         borderColor: '#1e293b',
         borderWidth: 3,
@@ -70,6 +80,36 @@ export default function CPIBasketSection() {
     },
   };
 
+  const animateDoughnut = () => {
+    if (hasAnimatedRef.current || animatingRef.current) return;
+    animatingRef.current = true;
+    const original = cpiWeightsGermany.map(i => i.weight);
+    const n = original.length;
+    const start = performance.now();
+    const duration = 1600;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      const prog = eased * (n - 1);
+      const idx = Math.floor(prog);
+      const frac = prog - idx;
+      const arr = original.map((v, i) => {
+        if (i < idx) return v;
+        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        return 0;
+      });
+      setAnimatedWeights(arr);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        animatingRef.current = false;
+        hasAnimatedRef.current = true;
+        rafRef.current = null;
+      }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  };
+
   return (
     <section ref={sectionRef} className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-16">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -105,11 +145,11 @@ export default function CPIBasketSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <div className="h-72 md:h-80 bg-white/5 rounded-xl p-6 border border-white/10">
+          <div className="relative h-96 bg-white/5 rounded-xl p-6 border border-white/10">
             <Doughnut data={data} options={options} />
           </div>
           {/* Interaktive Liste wie bei Ursachen */}
-          <div className="space-y-2">
+          <div className="bg-white/5 rounded-xl p-4 border border-white/10 h-96 overflow-auto space-y-2">
             {cpiWeightsGermany.map((i, idx) => (
               <div key={i.category} className={`p-4 rounded-lg border transition-all duration-300 cursor-pointer ${
                 hoveredIndex === idx ? 'bg-white/10 border-white/30 scale-[1.01]' : 'bg-white/5 border-white/10 hover:bg-white/8'
