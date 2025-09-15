@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { gsap } from 'gsap';
-import { DollarSign, BarChart3, TrendingUp, TrendingDown, Target, Lightbulb, Banknote, Calendar, Briefcase } from 'lucide-react';
+import { DollarSign, BarChart3, TrendingUp, TrendingDown, Lightbulb, Banknote, Calendar, Briefcase } from 'lucide-react';
 
 // Consistent number formatting function to avoid hydration issues
 const formatCurrency = (amount: number, decimals: number = 0): string => {

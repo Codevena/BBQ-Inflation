@@ -33,7 +33,7 @@ const historicalInflation = {
 };
 
 // Beispielprodukte mit historischen Preisen
-const productExamples = {
+const productExamples: Record<number, Product> = {
   1990: { name: 'Brot (1kg)', price: 2.20, currency: 'DM' },
   1995: { name: 'Benzin (1L)', price: 1.15, currency: 'DM' },
   2000: { name: 'Kino-Ticket', price: 7.50, currency: '€' },
@@ -89,7 +89,7 @@ export default function TimeTravelSimulator() {
         }
         
         // Beispielprodukt für das Jahr
-        const example = productExamples[selectedYear as keyof typeof productExamples];
+        const example: Product = productExamples[selectedYear];
         const exampleToday = example.price * inflationFactor;
         
         setResult({
