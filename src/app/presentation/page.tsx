@@ -214,6 +214,9 @@ export default function PresentationMode() {
                   }}
                 />
               </div>
+              <p className="text-center text-blue-300 text-xs mt-4">
+                Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: Aug 2025. Quelle: Statistisches Bundesamt (Destatis).
+              </p>
             </div>
             <p className="text-xl text-blue-200">
               <strong className="text-red-400">2022:</strong> Ukraine-Krieg führte zu Energiekrise → 6,9% Inflation
@@ -350,6 +353,9 @@ export default function PresentationMode() {
                   </div>
                 ))}
               </div>
+              <p className="text-blue-300 text-xs mt-4">
+                Reallöhne = Nominallöhne minus Inflation. Quelle: Destatis (Reallohnindex), vereinfachte Darstellung.
+              </p>
             </div>
           </div>
         );
@@ -368,12 +374,12 @@ export default function PresentationMode() {
                   <div className="flex justify-between items-center mb-4">
                     <div className="text-center">
                       <div className="text-sm text-blue-200">2020</div>
-                      <div className="text-2xl font-bold text-blue-400">€{example.price2020?.toFixed(2) || '0.00'}</div>
+                      <div className="text-2xl font-bold text-blue-400">€{(example.price2020 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     </div>
                     <div className="text-4xl">→</div>
                     <div className="text-center">
                       <div className="text-sm text-red-200">2025</div>
-                      <div className="text-2xl font-bold text-red-400">€{example.price2025?.toFixed(2) || '0.00'}</div>
+                      <div className="text-2xl font-bold text-red-400">€{(example.price2025 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                     </div>
                   </div>
                   <div className="text-center">
@@ -384,6 +390,9 @@ export default function PresentationMode() {
                 </div>
               ))}
             </div>
+            <p className="text-blue-300 text-xs mt-6">
+              Hinweis: Beispielwerte für die Präsentation. Reale Preisentwicklung variiert nach Region und Kategorie.
+            </p>
           </div>
         );
 
@@ -443,7 +452,7 @@ export default function PresentationMode() {
                     <div className="text-center">
                       <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2022 || 0) ? 'text-green-400' : 'text-red-400'}`}>
                         {(category.rate2025 || 0) < (category.rate2022 || 0) ? '↓' : '↑'}
-                        {Math.abs((category.rate2025 || 0) - (category.rate2022 || 0)).toFixed(1)}pp
+                        {Math.abs((category.rate2025 || 0) - (category.rate2022 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}pp
                       </div>
                       <div className="text-blue-200 text-sm">Änderung</div>
                     </div>
@@ -632,7 +641,7 @@ export default function PresentationMode() {
                   </p>
                   <p className="flex items-start gap-2">
                     <DollarSign size={16} className="text-green-400 mt-1 flex-shrink-0" />
-                    <span><strong>Einlagesatz:</strong> EZB zahlt Zinsen (oft negativ!)</span>
+                    <span><strong>Einlagesatz:</strong> Je nach Phase positiv oder negativ; aktuell positiv (EZB vergütet Einlagen)</span>
                   </p>
                 </div>
               </div>
@@ -907,10 +916,10 @@ export default function PresentationMode() {
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold text-red-400">
-                        {(event.rate || 0) >= 1000000000000 ? `${((event.rate || 0) / 1000000000000).toFixed(0)}B%` :
-                         (event.rate || 0) >= 1000000000 ? `${((event.rate || 0) / 1000000000).toFixed(0)}Mrd%` :
-                         (event.rate || 0) >= 1000000 ? `${((event.rate || 0) / 1000000).toFixed(0)}M%` :
-                         `${event.rate || 0}%`}
+                        {(event.rate || 0) >= 1000000000000 ? `${Math.round((event.rate || 0) / 1000000000000).toLocaleString('de-DE')}B%` :
+                         (event.rate || 0) >= 1000000000 ? `${Math.round((event.rate || 0) / 1000000000).toLocaleString('de-DE')}Mrd%` :
+                         (event.rate || 0) >= 1000000 ? `${Math.round((event.rate || 0) / 1000000).toLocaleString('de-DE')}M%` :
+                         `${(event.rate || 0).toLocaleString('de-DE')}%`}
                       </div>
                       <div className="text-red-200 text-sm">Inflationsrate</div>
                     </div>
@@ -1102,7 +1111,7 @@ export default function PresentationMode() {
                 <p className="mb-2"><strong>4 Hauptinstrumente:</strong> &quot;Die EZB hat ein ganzes Arsenal an Werkzeugen.&quot;</p>
                 <p className="mb-2"><strong>Hauptrefinanzierung:</strong> &quot;Das ist der normale Weg - Banken leihen sich Geld gegen Sicherheiten.&quot;</p>
                 <p className="mb-2"><strong>Spitzenrefinanzierung:</strong> &quot;Notfall über Nacht - teurer, aber sofort verfügbar.&quot;</p>
-                <p className="mb-2"><strong>Einlagefazilität:</strong> &quot;Banken parken überschüssiges Geld - oft mit Strafzinsen!&quot;</p>
+                <p className="mb-2"><strong>Einlagefazilität:</strong> &quot;Banken parken überschüssiges Geld – je nach Phase positiv oder negativ; aktuell positiv (Einlagen werden vergütet).&quot;</p>
                 <p><strong>Mindestreserve:</strong> &quot;1% müssen Banken immer bei der EZB lassen - das bindet Geld.&quot;</p>
               </div>
             )}
