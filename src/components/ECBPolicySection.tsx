@@ -128,12 +128,11 @@ export default function ECBPolicySection() {
     return () => ctx.revert();
   }, [animateChart]);
 
-  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+  // Removed extra on-scroll trigger to avoid double animation; GSAP onEnter handles it
 
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
 
-  // Setzt Daten robust, sobald der Bereich sichtbar ist
-  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+  // Removed duplicate visibility trigger
 
   const chartData = {
     labels: ecbRateHistory.map(item => item.year),
