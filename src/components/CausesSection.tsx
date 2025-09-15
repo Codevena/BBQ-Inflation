@@ -27,6 +27,7 @@ export default function CausesSection() {
 
   const [animatedData, setAnimatedData] = useState(inflationCauses.map(() => 0));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
 
   const chartData: ChartData<'doughnut', number[], string> = {
     labels: inflationCauses.map(cause => cause.category),
@@ -165,6 +166,25 @@ export default function CausesSection() {
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-800 via-slate-900 to-blue-900 py-20"
     >
       <div className="container mx-auto px-6 max-w-6xl">
+        {/* Title and description spanning full width */}
+        <div className="text-center mb-10">
+          <h2 
+            ref={titleRef}
+            className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4"
+          >
+            Was verursacht
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 block">
+              Inflation?
+            </span>
+          </h2>
+          <p
+            ref={descriptionRef}
+            className="text-xl text-blue-200 leading-relaxed max-w-3xl mx-auto"
+          >
+            Inflation entsteht durch verschiedene Mechanismen. Einordnung hilft: Nachfrage vs. Angebot,
+            importierte Komponenten, Lohn‑Preis‑Dynamiken und Erwartungen.
+          </p>
+        </div>
         {/* Explanations row above chart + legend */}
         <div className="mb-10">
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
@@ -173,42 +193,78 @@ export default function CausesSection() {
               Inflationsarten – kurz erklärt
             </h4>
             <div className="space-y-3">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Nachfrageinflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Nachfrageinflation' ? null : 'Nachfrageinflation')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Nachfrageinflation' ? null : 'Nachfrageinflation'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-red-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Nachfrageinflation:</strong>
                   <span className="text-blue-200"> Gesamtnachfrage {'>'} Angebot (z. B. Nachholeffekte).</span>
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Angebots-/Kosteninflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Angebots-/Kosteninflation' ? null : 'Angebots-/Kosteninflation')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Angebots-/Kosteninflation' ? null : 'Angebots-/Kosteninflation'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-amber-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Angebots-/Kosteninflation:</strong>
                   <span className="text-blue-200"> Kosten steigen (Energie, Löhne, Lieferketten).</span>
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Importierte Inflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Importierte Inflation' ? null : 'Importierte Inflation')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Importierte Inflation' ? null : 'Importierte Inflation'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-violet-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Importierte Inflation:</strong>
                   <span className="text-blue-200"> Wechselkurs und Weltmarktpreise verteuern Importe.</span>
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Lohn-Preis-Spirale' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Lohn-Preis-Spirale' ? null : 'Lohn-Preis-Spirale')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Lohn-Preis-Spirale' ? null : 'Lohn-Preis-Spirale'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Lohn‑Preis‑Spirale:</strong>
                   <span className="text-blue-200"> Löhne ↑ → Preise ↑ → erneute Lohnforderungen.</span>
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Tempo' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Tempo' ? null : 'Tempo')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Tempo' ? null : 'Tempo'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-sky-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Tempo:</strong>
                   <span className="text-blue-200"> schleichend (0–3%), trabend (3–10%), galoppierend ({'>'}10%), Hyper.</span>
                 </div>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+              <div
+                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Gegenstücke' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedType(selectedType==='Gegenstücke' ? null : 'Gegenstücke')}
+                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Gegenstücke' ? null : 'Gegenstücke'); }}
+              >
                 <div className="w-2 h-2 rounded-full bg-fuchsia-400 mt-2" />
                 <div className="text-sm leading-relaxed">
                   <strong className="text-white">Gegenstücke:</strong>
@@ -216,35 +272,28 @@ export default function CausesSection() {
                 </div>
               </div>
             </div>
+
+            {/* Detail panel */}
+            {selectedType && (
+              <div className="mt-6 bg-blue-500/10 border border-blue-400/30 rounded-xl p-5">
+                <h5 className="text-white font-semibold mb-2">{selectedType}</h5>
+                <p className="text-blue-100 text-sm leading-relaxed">
+                  {selectedType === 'Nachfrageinflation' && 'Entsteht, wenn die gesamtwirtschaftliche Nachfrage das Angebot übersteigt. Typische Treiber: expansiver Kreditzyklus, fiskalische Impulse, optimistische Erwartungen. Preisanpassungen erfolgen oft breit über viele Güter.'}
+                  {selectedType === 'Angebots-/Kosteninflation' && 'Kostensteigerungen (Energie, Löhne, Vorprodukte) werden an Endpreise weitergegeben. Angebotsschocks (z. B. Energiekrise, Naturereignisse, Regulierung) drücken die Produktion und erhöhen die Preise.'}
+                  {selectedType === 'Importierte Inflation' && 'Aufwertung ausländischer Güterpreise oder Abwertung der heimischen Währung verteuern Importe. Besonders sichtbar bei Energie, Rohstoffen und konsumnahen Importen.'}
+                  {selectedType === 'Lohn-Preis-Spirale' && 'Höhere Löhne erhöhen Kosten; Unternehmen passen Preise an; Reallöhne sollen gesichert werden, was weitere Lohnforderungen auslöst. Erwartungen bestimmen die Dynamik.'}
+                  {selectedType === 'Tempo' && 'Schleichend (0–3%), trabend (3–10%), galoppierend (>10%) und Hyperinflation (extrem). Je schneller, desto größer die Verzerrungen (Verträge, Planung, Verteilung).'}
+                  {selectedType === 'Gegenstücke' && 'Deflation (allgemeines Preisfallen) belastet Nachfrage und Schuldenlast; Stagflation kombiniert hohe Inflation mit schwachem Wachstum und stellt Politik vor Zielkonflikte.'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
-          {/* Left Column - Text Content */}
+          {/* Left Column - Categories / Legend */}
           <div className="space-y-8">
-            <h2 
-              ref={titleRef}
-              className="text-4xl md:text-5xl font-bold text-white leading-tight"
-            >
-              Was verursacht
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 block">
-                Inflation?
-              </span>
-            </h2>
-            
-            <p
-              ref={descriptionRef}
-              className="text-xl text-blue-200 leading-relaxed"
-            >
-              Inflation entsteht durch komplexe wirtschaftliche Mechanismen. Ökonomen unterscheiden
-              zwischen <strong className="text-white">Nachfrageinflation</strong> (zu viel Geld jagt zu wenige Güter)
-              und <strong className="text-white">Angebotsinflation</strong> (Produktionskosten steigen).
-              Die aktuelle Inflation wurde hauptsächlich durch externe Schocks ausgelöst:
-            </p>
-
-            {/* Hinweis: Inflationsarten oben als horizontale Strips ausgelagert */}
-
             {/* Interactive Legend */}
             <div ref={legendRef} className="space-y-4">
               {inflationCauses.map((cause, index) => (
