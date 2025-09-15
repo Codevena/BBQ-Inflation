@@ -102,6 +102,8 @@ export default function CPIBasketSection() {
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
+        // finalize to full weights to ensure all slices visible
+        setAnimatedWeights(original);
         animatingRef.current = false;
         hasAnimatedRef.current = true;
         rafRef.current = null;

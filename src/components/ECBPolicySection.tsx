@@ -9,7 +9,7 @@ import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
 import { DATA_STAND_SHORT } from '@/data/constants';
 import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle, Info } from 'lucide-react';
-import { useAnimationOnScroll } from '@/lib/hooks';
+// removed useAnimationOnScroll to avoid double triggers
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -68,6 +68,8 @@ export default function ECBPolicySection() {
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
+        // finalize to full data so last point isn't 0%
+        setAnimatedData(originalData);
         setIsAnimating(false);
         rafRef.current = null;
         hasAnimatedRef.current = true;

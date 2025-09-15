@@ -128,6 +128,8 @@ export default function EffectsSection() {
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
+        // ensure final frame shows full original data (fix last point = 0%)
+        setAnimatedData(originalData);
         rafRef.current = null;
         hasAnimatedRef.current = true;
         animatingRef.current = false;
