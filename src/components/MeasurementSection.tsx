@@ -136,6 +136,19 @@ export default function MeasurementSection() {
                 </div>
               </div>
             </div>
+
+            {/* Info Box moved here under HVPI */}
+            <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-6 border border-indigo-400/30">
+              <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <Lightbulb size={20} className="text-yellow-400" />
+                Warum verschiedene Raten?
+              </h4>
+              <p className="text-indigo-200 text-sm leading-relaxed">
+                Verschiedene Gütergruppen entwickeln sich unterschiedlich. Während Energiepreise 
+                stark schwanken, sind Dienstleistungen meist stabiler. Die Gesamtinflation ist 
+                der gewichtete Durchschnitt aller Kategorien.
+              </p>
+            </div>
           </div>
 
           {/* Right Column - Categories */}
@@ -182,18 +195,7 @@ export default function MeasurementSection() {
               </div>
             ))}
 
-            {/* Info Box */}
-            <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-6 border border-indigo-400/30">
-              <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <Lightbulb size={20} className="text-yellow-400" />
-                Warum verschiedene Raten?
-              </h4>
-              <p className="text-indigo-200 text-sm leading-relaxed">
-                Verschiedene Gütergruppen entwickeln sich unterschiedlich. Während Energiepreise 
-                stark schwanken, sind Dienstleistungen meist stabiler. Die Gesamtinflation ist 
-                der gewichtete Durchschnitt aller Kategorien.
-              </p>
-            </div>
+            
           </div>
         </div>
 

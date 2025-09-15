@@ -61,6 +61,15 @@ const slides = [
 export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
+  const formatHugePercent = (rate: number) => {
+    const r = Number(rate) || 0;
+    const fmt = (v: number) => v.toLocaleString('de-DE', { maximumFractionDigits: 1 });
+    if (r >= 1e15) return `${fmt(r/1e15)} Billiarden %`;
+    if (r >= 1e12) return `${fmt(r/1e12)} Billionen %`;
+    if (r >= 1e9)  return `${fmt(r/1e9)} Milliarden %`;
+    if (r >= 1e6)  return `${fmt(r/1e6)} Millionen %`;
+    return `${r.toLocaleString('de-DE')}%`;
+  };
 
   const nextSlide = useCallback(() => {
     if (currentSlide < slides.length - 1) {
@@ -915,12 +924,7 @@ export default function PresentationMode() {
                       <div className="text-blue-200">{event.country}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-red-400">
-                        {(event.rate || 0) >= 1000000000000 ? `${Math.round((event.rate || 0) / 1000000000000).toLocaleString('de-DE')}B%` :
-                         (event.rate || 0) >= 1000000000 ? `${Math.round((event.rate || 0) / 1000000000).toLocaleString('de-DE')}Mrd%` :
-                         (event.rate || 0) >= 1000000 ? `${Math.round((event.rate || 0) / 1000000).toLocaleString('de-DE')}M%` :
-                         `${(event.rate || 0).toLocaleString('de-DE')}%`}
-                      </div>
+                      <div className="text-3xl font-bold text-red-400">{formatHugePercent(event.rate || 0)}</div>
                       <div className="text-red-200 text-sm">Inflationsrate</div>
                     </div>
                     <div className="text-left">

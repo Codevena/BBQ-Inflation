@@ -15,15 +15,15 @@ if (typeof window !== 'undefined') {
 }
 
 const ecbRateHistory = [
-  { year: '2019', rate: 0.0, event: 'Nullzinspolitik' },
+  { year: '2019', rate: 0.0, event: 'Einlagefazilität negativ (vereinfachte Darstellung)' },
   { year: '2020', rate: 0.0, event: 'Corona-Krise' },
-  { year: '2021', rate: 0.0, event: 'Wirtschaftserholung' },
-  { year: '2022 Q1', rate: 0.0, event: 'Ukraine-Krieg beginnt' },
-  { year: '2022 Q3', rate: 1.25, event: 'Erste Zinserhöhung' },
-  { year: '2022 Q4', rate: 2.5, event: 'Aggressive Erhöhung' },
-  { year: '2023 Q2', rate: 4.0, event: 'Weitere Straffung' },
-  { year: '2024', rate: 4.5, event: 'Höchststand erreicht' },
-  { year: '2025', rate: 3.75, event: 'Normalisierung' }
+  { year: '2021', rate: 0.0, event: 'Anhaltend sehr niedrig' },
+  { year: '2022 Q1', rate: 0.0, event: 'Vor der ersten Zinserhöhung' },
+  { year: '2022 Q3', rate: 0.75, event: 'Erste Anhebung (Einlagesatz)' },
+  { year: '2022 Q4', rate: 2.0, event: 'Schnelle Straffung' },
+  { year: '2023 Q3', rate: 4.0, event: 'Peak Einlagesatz' },
+  { year: '2024', rate: 3.75, event: 'Beginn der Senkungen' },
+  { year: '2025', rate: 2.0, event: 'Derzeitiger Stand (11.09.2025)' }
 ];
 
 export default function ECBPolicySection() {
@@ -113,7 +113,7 @@ export default function ECBPolicySection() {
     labels: ecbRateHistory.map(item => item.year),
     datasets: [
       {
-        label: 'EZB Leitzins (%)',
+        label: 'Einlagefazilität (operativer Leitzins) (%)',
         data: animatedData,
         borderColor: '#3B82F6',
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -167,7 +167,7 @@ export default function ECBPolicySection() {
         ticks: {
           color: 'rgba(255, 255, 255, 0.7)',
           callback: function(value: any) {
-            return value + '%';
+            return Number(value).toLocaleString('de-DE') + '%';
           }
         },
         beginAtZero: true,
@@ -192,8 +192,8 @@ export default function ECBPolicySection() {
   };
 
   return (
-    <section 
-      id="ecb-policy" 
+    <section
+      id="ecb-policy"
       ref={sectionRef}
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-indigo-900 py-20"
     >
@@ -221,7 +221,7 @@ export default function ECBPolicySection() {
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <h3 className="text-2xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
               <LineChart size={28} className="text-blue-400" />
-              EZB-Leitzins 2019-2025
+              Einlagefazilität (operativer Leitzins) 2019-2025
             </h3>
             <div className="h-80">
               <Line data={chartData} options={chartOptions} />
@@ -229,6 +229,10 @@ export default function ECBPolicySection() {
             <p className="text-center text-blue-200 mt-4">
               Von Nullzinspolitik zur Inflationsbekämpfung
             </p>
+                <p className="text-center text-blue-300 mt-1 text-xs">
+                  Operativer Leitzins = Einlagefazilität. Stand: 11.09.2025. Quelle: EZB/Tagesschau.
+                </p>
+
           </div>
         </div>
 
@@ -245,9 +249,9 @@ export default function ECBPolicySection() {
               <div className="space-y-6">
                 <div className="text-center">
                   <div className={`text-4xl font-bold mb-2 ${getImpactColor(selectedRate)}`}>
-                    {selectedRate.toFixed(1)}%
+                    {Number(selectedRate).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                   </div>
-                  <div className="text-blue-200 mb-4">EZB Leitzins</div>
+                  <div className="text-blue-200 mb-4">Operativer Leitzins (Einlagefazilität)</div>
                 </div>
 
                 <input
@@ -278,14 +282,14 @@ export default function ECBPolicySection() {
                   <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                     <span className="text-blue-200">Kreditzinsen</span>
                     <span className={`font-bold ${getImpactColor(selectedRate)}`}>
-                      {(selectedRate + 1.5).toFixed(1)}%
+                      {(selectedRate + 1.5).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                     <span className="text-blue-200">Sparzinsen</span>
                     <span className={`font-bold ${getImpactColor(selectedRate)}`}>
-                      {(selectedRate * 0.8).toFixed(1)}%
+                      {(selectedRate * 0.8).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                     </span>
                   </div>
 
@@ -311,7 +315,7 @@ export default function ECBPolicySection() {
 
         {/* Policy Mechanism */}
         <div ref={timelineRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
+
           {/* High Inflation Response */}
           <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-8 border border-red-400/30">
             <div className="text-center mb-6">
@@ -319,7 +323,7 @@ export default function ECBPolicySection() {
               <h3 className="text-2xl font-bold text-red-400">Inflation zu hoch</h3>
               <p className="text-red-200 text-sm">&gt; 2% Ziel der EZB</p>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
@@ -328,7 +332,7 @@ export default function ECBPolicySection() {
                   <div className="text-red-200 text-sm">Geld wird teurer</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
                 <div>
@@ -336,7 +340,7 @@ export default function ECBPolicySection() {
                   <div className="text-red-200 text-sm">Weniger Investitionen</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
                 <div>
@@ -354,7 +358,7 @@ export default function ECBPolicySection() {
               <h3 className="text-2xl font-bold text-blue-400">Inflation zu niedrig</h3>
               <p className="text-blue-200 text-sm">&lt; 2% Ziel der EZB</p>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
@@ -363,7 +367,7 @@ export default function ECBPolicySection() {
                   <div className="text-blue-200 text-sm">Geld wird billiger</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
                 <div>
@@ -371,7 +375,7 @@ export default function ECBPolicySection() {
                   <div className="text-blue-200 text-sm">Mehr Investitionen</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
                 <div>
@@ -402,17 +406,20 @@ export default function ECBPolicySection() {
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-400">
-                  <CountUpNumber endValue={4.5} decimals={1} suffix="%" duration={2200} />
+                  <CountUpNumber endValue={2.0} decimals={1} suffix="%" duration={2200} />
                 </div>
-                <div className="text-green-200">Leitzins heute</div>
+                <div className="text-green-200">Einlagefazilität aktuell</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-400">
                   <CountUpNumber endValue={2.2} decimals={1} suffix="%" duration={2400} />
                 </div>
-                <div className="text-green-200">Inflation 2024</div>
+                <div className="text-green-200">Inflation 2025</div>
               </div>
             </div>
+            <p className="text-center text-green-100 mt-6 text-xs">
+              Zinsstände: MRO 2,65% · Spitzenrefinanzierung 2,90% · Stand: 11.09.2025 · Quelle: EZB/Tagesschau
+            </p>
           </div>
         </div>
 
@@ -523,7 +530,7 @@ export default function ECBPolicySection() {
                   <DollarSign size={16} className="text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <div className="font-semibold text-white">Einlagesatz</div>
-                    <div className="text-sm">Oft negativ = Strafzinsen für Banken!</div>
+                    <div className="text-sm">Je nach Phase positiv oder negativ; aktuell positiv (EZB vergütet Einlagen).</div>
                   </div>
                 </div>
               </div>
