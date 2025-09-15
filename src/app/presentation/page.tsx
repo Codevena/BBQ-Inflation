@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+import { gsap } from 'gsap';
 import { Line, Doughnut } from 'react-chartjs-2';
 import {
   TrendingUp,
@@ -55,13 +56,13 @@ const slides = [
   'history-intro',
   'history-timeline',
   'key-takeaways',
-  'summary',
   'thanks'
 ];
 
 export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
+  const roadmapRefs = useState<Array<HTMLDivElement | null>>([null, null, null])[0];
   const formatHugePercent = (rate: number) => {
     const r = Number(rate) || 0;
     const fmt = (v: number) => v.toLocaleString('de-DE', { maximumFractionDigits: 1 });
@@ -122,6 +123,15 @@ export default function PresentationMode() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide, showNotes]);
 
+  // Auto-animate roadmap cards when slide becomes active (no mouse needed)
+  useEffect(() => {
+    if (slides[currentSlide] !== 'roadmap') return;
+    const cards = (roadmapRefs as any).filter((c: HTMLDivElement | null) => c);
+    if (!cards || cards.length === 0) return;
+    gsap.set(cards, { opacity: 0, y: 30 });
+    gsap.to(cards, { opacity: 1, y: 0, duration: 0.7, stagger: 0.25, ease: 'power2.out' });
+  }, [currentSlide, roadmapRefs]);
+
   const renderSlide = () => {
     const slideType = slides[currentSlide];
 
@@ -170,7 +180,11 @@ export default function PresentationMode() {
                 { title: '2. Ursachen & Auswirkungen', icon: <Search size={24} className="text-cyan-300" />, items: ['Nachfrage vs. Angebot', 'Reallöhne & Preise'] },
                 { title: '3. EZB & Geschichte', icon: <Building2 size={24} className="text-cyan-300" />, items: ['EZB-Tools & Leitzins', 'Historische Episoden'] },
               ].map((block, i) => (
-                <div key={i} className="group relative bg-white/5 rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10">
+                <div
+                  key={i}
+                  ref={(el) => { (roadmapRefs as any)[i] = el; }}
+                  className="group relative bg-white/5 rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10"
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                   <div className="flex items-center justify-center gap-2 mb-4">
                     {block.icon}
@@ -1106,7 +1120,7 @@ export default function PresentationMode() {
               <div>
                 <p className="mb-2"><strong>Grafik erklären:</strong> &quot;2019-2021 normal, dann 2022 Schock durch Ukraine-Krieg.&quot;</p>
                 <p className="mb-2"><strong>Energiekrise:</strong> &quot;Gas- und Ölpreise explodierten → alles wurde teurer.&quot;</p>
-                <p><strong>Erholung:</strong> &quot;2024 wieder fast normal bei 2,2%.&quot;</p>
+                <p><strong>Erholung:</strong> &quot;2025 wieder bei 2,2% (Stand Aug 2025).&quot;</p>
               </div>
             )}
             {slides[currentSlide] === 'causes-intro' && (
@@ -1125,7 +1139,7 @@ export default function PresentationMode() {
             )}
             {slides[currentSlide] === 'effects-intro' && (
               <div>
-                <p className="mb-2"><strong>Reallöhne:</strong> &quot;2022: -4,3% bedeutet Löhne stiegen weniger als Preise.&quot;</p>
+                <p className="mb-2"><strong>Reallöhne:</strong> &quot;Tiefpunkt 2022: −4,3%. 2024 wieder Erholung bei +1,6%.&quot;</p>
                 <p className="mb-2"><strong>Sparer:</strong> &quot;Bei 0,1% Zinsen und 6% Inflation verliert man 5,9% pro Jahr.&quot;</p>
                 <p><strong>Erholung:</strong> &quot;2024 wieder positive Reallöhne mit +1,6%.&quot;</p>
               </div>
