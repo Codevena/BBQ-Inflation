@@ -142,7 +142,7 @@ export default function HistorySection() {
 
           {/* Events */}
           <div className="space-y-16">
-            {historicalEvents.map((event, index) => (
+            {[...historicalEvents].sort((a, b) => (a.year || 0) - (b.year || 0)).map((event, index) => (
               <div
                 key={event.year}
                 ref={el => { if (el) eventsRef.current[index] = el; }}
@@ -173,14 +173,11 @@ export default function HistorySection() {
                   {/* Inflation Rate */}
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-sm text-purple-200">Inflationsrate:</span>
-                    <span className={`text-2xl font-bold bg-gradient-to-r ${getEventColor(event.rate)} bg-clip-text text-transparent`}>
-                      {formatInflationRate(event.rate)}
-                    </span>
                     <span
-                      className="text-xs text-purple-300 cursor-help"
+                      className={`text-2xl font-bold bg-gradient-to-r ${getEventColor(event.rate)} bg-clip-text text-transparent`}
                       title="Sehr große Raten werden als Millionen/Milliarden/Billionen/Billiarden % dargestellt, um die Größenordnung verständlich zu machen."
                     >
-                      ?
+                      {formatInflationRate(event.rate)}
                     </span>
                   </div>
 

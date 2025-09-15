@@ -383,12 +383,12 @@ export default function PresentationMode() {
                   <div className="flex justify-between items-center mb-4">
                     <div className="text-center">
                       <div className="text-sm text-blue-200">2020</div>
-                      <div className="text-2xl font-bold text-blue-400">€{(example.price2020 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                      <div className="text-2xl font-bold text-blue-400">{(example.price2020 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</div>
                     </div>
                     <div className="text-4xl">→</div>
                     <div className="text-center">
                       <div className="text-sm text-red-200">2025</div>
-                      <div className="text-2xl font-bold text-red-400">€{(example.price2025 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                      <div className="text-2xl font-bold text-red-400">{(example.price2025 ?? 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</div>
                     </div>
                   </div>
                   <div className="text-center">
@@ -924,14 +924,11 @@ export default function PresentationMode() {
                       <div className="text-blue-200">{event.country}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-red-400 inline-flex items-center gap-2">
+                      <div
+                        className="text-3xl font-bold text-red-400"
+                        title="Sehr große Raten werden als Millionen/Milliarden/Billionen/Billiarden % dargestellt, um die Größenordnung verständlich zu machen."
+                      >
                         {formatHugePercent(event.rate || 0)}
-                        <span
-                          className="text-xs text-purple-300 align-middle cursor-help"
-                          title="Sehr große Raten werden als Millionen/Milliarden/Billionen/Billiarden % dargestellt, um die Größenordnung verständlich zu machen."
-                        >
-                          ?
-                        </span>
                       </div>
                       <div className="text-red-200 text-sm">Inflationsrate</div>
                     </div>
