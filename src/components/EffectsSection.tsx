@@ -7,7 +7,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb, Info } from 'lucide-react';
-import SalaryInflationTracker from './SalaryInflationTracker';
 // removed useAnimationOnScroll to avoid double triggering animations
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
 import { DATA_STAND_SHORT } from '@/data/constants';
@@ -396,10 +395,7 @@ export default function EffectsSection() {
           </div>
         </div>
 
-        {/* Salary Inflation Tracker */}
-        <div className="mt-12">
-          <SalaryInflationTracker />
-        </div>
+        {/* Salary Inflation Tracker removed per request */}
       </div>
     </section>
   );

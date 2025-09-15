@@ -94,6 +94,7 @@ export default function ECBPolicySection() {
           start: 'top 80%',
           end: 'bottom 20%',
           toggleActions: 'play none none none',
+          once: true,
           onEnter: () => animateChart(),
         }
       });
@@ -126,6 +127,17 @@ export default function ECBPolicySection() {
       // Kein Fallback nötig – IntersectionObserver setzt Daten bei Sichtbarkeit
 
     }, sectionRef);
+
+      // Fallback: ensure animation starts if section is already visible
+      if (sectionRef.current) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            animateChart();
+            io.disconnect();
+          }
+        }, { threshold: 0.3 });
+        io.observe(sectionRef.current);
+      }
 
     return () => ctx.revert();
   }, [animateChart]);
