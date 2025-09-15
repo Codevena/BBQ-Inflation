@@ -40,6 +40,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcEleme
 
 const slides = [
   'title',
+  'roadmap',
   'definition',
   'statistics',
   'causes-intro',
@@ -151,6 +152,39 @@ export default function PresentationMode() {
               <div className="bg-white/10 rounded-xl p-6">
                 <div className="text-3xl font-bold text-green-400">+1.6%</div>
                 <div className="text-blue-200">Reallöhne 2024</div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'roadmap':
+        return (
+          <div className="text-center">
+            <h1 className="text-5xl font-bold text-white mb-12 flex items-center justify-center gap-4">
+              <FileText size={48} className="text-cyan-400" />
+              Roadmap
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-bold text-white mb-3">1. Grundlagen</h2>
+                <ul className="text-blue-200 text-sm space-y-1">
+                  <li>• Was ist Inflation?</li>
+                  <li>• Deutschland: Entwicklung</li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-bold text-white mb-3">2. Ursachen & Auswirkungen</h2>
+                <ul className="text-blue-200 text-sm space-y-1">
+                  <li>• Nachfrage vs. Angebot</li>
+                  <li>• Reallöhne & Preise</li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <h2 className="text-xl font-bold text-white mb-3">3. EZB & Geschichte</h2>
+                <ul className="text-blue-200 text-sm space-y-1">
+                  <li>• EZB-Tools & Leitzins</li>
+                  <li>• Historische Episoden</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -903,7 +937,7 @@ export default function PresentationMode() {
                 Deutschland heute: Auf dem richtigen Weg
               </h3>
               <p className="text-xl text-yellow-100">
-                Von 6,9% (2022) zurück auf 2,2% (2024) - die Inflation normalisiert sich wieder
+                Von 6,9% (2022) zurück auf 2,2% (2025) – Stand: Aug 2025 – die Inflation normalisiert sich wieder
               </p>
             </div>
           </div>
