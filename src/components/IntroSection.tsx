@@ -18,6 +18,7 @@ export default function IntroSection() {
   const worldMapRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
+  // no external need for completion flag; kept local-only
   const [typewriterComplete, setTypewriterComplete] = useState(false);
 
   useEffect(() => {

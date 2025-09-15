@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Search, Lightbulb, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star, Sparkles } from 'lucide-react';
+import { Globe, Search, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star, Sparkles } from 'lucide-react';
 import CountUpNumber from './CountUpNumber';
 import { globalInflationData, inflationMythsFacts } from '@/data/inflationData';
 

@@ -1,11 +1,10 @@
 import { ImageResponse } from 'next/og'
-import { NextRequest } from 'next/server'
 
 // Route segment config
 export const runtime = 'edge'
 
 // Image generation
-export default function Icon({ params }: { params: { size?: string } }) {
+export default function Icon() {
   const searchParams = new URLSearchParams()
   const sizeParam = searchParams.get('size') || '32'
   const size = parseInt(sizeParam)

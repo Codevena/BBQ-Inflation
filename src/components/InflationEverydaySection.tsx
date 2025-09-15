@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { DollarSign, Home, TrendingUp, CreditCard, Target, BarChart3, Shield, TrendingUp as TrendingUpIcon, Calculator, Lightbulb, Coins } from 'lucide-react';
+import { DollarSign, Home, TrendingUp, CreditCard, Shield, Calculator, Lightbulb, Coins } from 'lucide-react';
 import TimeTravelSimulator from './TimeTravelSimulator';
 
 // Consistent number formatting function to avoid hydration issues

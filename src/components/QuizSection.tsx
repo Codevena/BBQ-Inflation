@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Target, Home, Lightbulb, BookOpen } from 'lucide-react';
+import { Target, Home } from 'lucide-react';
 import { quizQuestions } from '@/data/inflationData';
 
 if (typeof window !== 'undefined') {

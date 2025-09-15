@@ -18,7 +18,8 @@ import Navigation from '@/components/Navigation';
 const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#everyday', '#global', '#history', '#glossary', '#quiz'];
 
 export default function Home() {
-  const { lenis } = useLenis();
+  // initialize Lenis smooth scroll without binding unused var
+  useLenis();
   const { currentSection, navigateToSection } = useKeyboardNavigation(sections);
 
   useEffect(() => {

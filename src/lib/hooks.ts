@@ -53,7 +53,7 @@ export const useKeyboardNavigation = (sections: string[], onNavigate?: (index: n
       scrollTo(sections[index], { duration: 1 });
       onNavigate?.(index);
     }
-  }, [sections, scrollTo, onNavigate]);
+  }, [sections, sections.length, scrollTo, onNavigate]);
 
   // Scroll detection to update current section
   useEffect(() => {
