@@ -24,11 +24,21 @@ export default function CausesSection() {
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const legendRef = useRef<HTMLDivElement>(null);
+  const driversRef = useRef<HTMLDivElement>(null);
 
   const [animatedData, setAnimatedData] = useState(inflationCauses.map(() => 0));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const selectedCause = selectedType ? inflationCauses.find(c => c.category === selectedType) || null : null;
+
+  // Rich explanations for selected category (deeper than legend blurb)
+  const causeDetails: Record<string, string> = {
+    'Nachfrageinflation': 'Entsteht, wenn gesamtwirtschaftliche Nachfrage das Produktionspotenzial übersteigt. Typische Muster: aufholender Konsum nach Krisen, Kreditboom, expansive Fiskalpolitik. Unternehmen reagieren mit breiten Preisanpassungen; Kapazitätsengpässe (Arbeitsmarkt, Logistik) verstärken den Effekt.',
+    'Angebotsinflation': 'Preisdruck von der Kostenseite: Energie‑ und Rohstoffschocks, Lieferkettenstörungen, Lohnanstiege bei knappen Fachkräften, neue Regulierungen. Produktion wird teurer oder fällt aus; Unternehmen geben Kosten an Verbraucher weiter – oft sichtbar in Energie, Transport und Grundnahrungsmitteln.',
+    'Geldpolitik': 'Lockerere Finanzierungsbedingungen (niedrige Zinsen, QE) erhöhen Kredit und Nachfrage, was mittelbar die Preise hebt. Umgekehrt dämpfen restriktive Bedingungen die Inflation mit Verzögerung. Erwartungsmanagement (Guidance) stabilisiert Preissetzung und Lohnrunden.',
+    'Lohn-Preis-Spirale': 'Löhne steigen zur Sicherung der Kaufkraft; höhere Kosten führen zu weiteren Preiserhöhungen, die wiederum neue Lohnforderungen auslösen. Ob sich eine Spirale etabliert, hängt stark von Erwartungen, Produktivität und Wettbewerb ab.',
+    'Importierte Inflation': 'Wechselkursabwertung und globale Preisanstiege (insbes. Energie, Metalle, Nahrungsmittel) verteuern Importe. Je höher der Importanteil und je geringer die Substitutionsmöglichkeiten, desto stärker schlägt dies in Verbraucherpreisen durch.'
+  };
 
   const chartData: ChartData<'doughnut', number[], string> = {
     labels: inflationCauses.map(cause => cause.category),
@@ -90,6 +100,9 @@ export default function CausesSection() {
         opacity: 0,
         y: 50
       });
+      if (driversRef.current) {
+        gsap.set(driversRef.current, { opacity: 0, y: 50 });
+      }
 
       // Main animation timeline - optimized for better performance
       const tl = gsap.timeline({
@@ -128,6 +141,20 @@ export default function CausesSection() {
       }, '-=0.5');
 
       // IntersectionObserver unten setzt die Daten bei Sichtbarkeit
+
+      // Drivers row: reveal when it scrolls into view
+      if (driversRef.current) {
+        gsap.to(driversRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: driversRef.current,
+            start: 'top 80%'
+          }
+        });
+      }
 
     }, sectionRef);
 
@@ -234,7 +261,9 @@ export default function CausesSection() {
                   <h5 className="text-white font-semibold">{selectedCause.category}</h5>
                   <span className="text-blue-300 text-sm">Anteil: {selectedCause.percentage}%</span>
                 </div>
-                <p className="text-blue-100 text-sm leading-relaxed">{selectedCause.description}</p>
+                <p className="text-blue-100 text-sm leading-relaxed">
+                  {causeDetails[selectedCause.category] || selectedCause.description}
+                </p>
               </div>
             )}
           </div>
@@ -276,7 +305,7 @@ export default function CausesSection() {
         </div>
 
         {/* Treiber & Mechanismen */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div ref={driversRef} className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
             <div className="flex items-center gap-2 mb-2">
               <DollarSign size={18} className="text-blue-400" />
