@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -31,6 +31,20 @@ export default function CountUpNumber({
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef<HTMLSpanElement>(null);
 
+  const startCountUp = useCallback(() => {
+    setCurrentValue(0);
+    
+    gsap.to({ value: 0 }, {
+      value: endValue,
+      duration: duration / 1000,
+      ease: "power2.out",
+      onUpdate: function() {
+        const value = (this.targets() as Array<{ value: number }>)[0].value;
+        setCurrentValue(value);
+      }
+    });
+  }, [endValue, duration]);
+
   useEffect(() => {
     if (!elementRef.current) return;
 
@@ -56,20 +70,6 @@ export default function CountUpNumber({
       observer.unobserve(element);
     };
   }, [endValue, duration, hasAnimated, triggerOnce, startCountUp]);
-
-  const startCountUp = () => {
-    setCurrentValue(0);
-    
-    gsap.to({ value: 0 }, {
-      value: endValue,
-      duration: duration / 1000,
-      ease: "power2.out",
-      onUpdate: function() {
-        const value = this.targets()[0].value;
-        setCurrentValue(value);
-      }
-    });
-  };
 
   const formatValue = (value: number) => {
     // Use consistent formatting to avoid hydration issues

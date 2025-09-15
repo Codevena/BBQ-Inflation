@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { gsap } from 'gsap';
 import { ShoppingCart, DollarSign, Target, BarChart3, Lightbulb, Clock, Calendar, Rocket } from 'lucide-react';
 
@@ -43,7 +43,7 @@ const productExamples = {
   2020: { name: 'Netflix Abo', price: 7.99, currency: '€' },
 };
 
-type YearData = { rate: number; currency: 'DM' | '€'; factor: number };
+// type YearData = { rate: number; currency: 'DM' | '€'; factor: number };
 type Product = { name: string; price: number; currency: 'DM' | '€' };
 interface TimeTravelResult {
   originalAmount: number;
