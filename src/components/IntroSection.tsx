@@ -167,10 +167,10 @@ export default function IntroSection() {
 
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
             <div className="text-3xl font-bold text-green-400 mb-2">
-              <CountUpNumber endValue={-4.3} decimals={1} suffix="%" duration={2400} />
+              <CountUpNumber endValue={1.6} decimals={1} suffix="%" duration={2400} />
             </div>
-            <div className="text-blue-200">Reallöhne 2022</div>
-            <div className="text-sm text-white/60 mt-1">Kaufkraftverlust</div>
+            <div className="text-blue-200">Reallöhne 2024</div>
+            <div className="text-sm text-white/60 mt-1">Erholung der Kaufkraft</div>
           </div>
         </div>
 

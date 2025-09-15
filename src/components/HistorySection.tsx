@@ -97,13 +97,13 @@ export default function HistorySection() {
   };
 
   const formatInflationRate = (rate: number) => {
-    if (rate >= 1000000) {
-      return `${(rate / 1000000).toFixed(0)}M%`;
-    } else if (rate >= 1000) {
-      return `${(rate / 1000).toFixed(0)}K%`;
-    } else {
-      return `${rate}%`;
-    }
+    const r = Number(rate) || 0;
+    const fmt = (v: number) => v.toLocaleString('de-DE', { maximumFractionDigits: 1 });
+    if (r >= 1e15) return `${fmt(r/1e15)} Billiarden %`;
+    if (r >= 1e12) return `${fmt(r/1e12)} Billionen %`;
+    if (r >= 1e9)  return `${fmt(r/1e9)} Milliarden %`;
+    if (r >= 1e6)  return `${fmt(r/1e6)} Millionen %`;
+    return `${r.toLocaleString('de-DE')}%`;
   };
 
   const getEventColor = (rate: number) => {
