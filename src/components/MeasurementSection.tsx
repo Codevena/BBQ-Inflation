@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BarChart3, ShoppingCart, Target, TrendingUp, Lightbulb, Flag, Building2, Calculator, Landmark } from 'lucide-react';
@@ -15,6 +15,11 @@ export default function MeasurementSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
+
+  // Basiseffekt-Simulator state (einfach, lokal, keine Tooltips)
+  const [basePrev, setBasePrev] = useState<number>(100);
+  const [baseCurr, setBaseCurr] = useState<number>(102);
+  const baseEffectRate = ((baseCurr / Math.max(1, basePrev)) - 1) * 100;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -196,6 +201,109 @@ export default function MeasurementSection() {
             ))}
 
             
+          </div>
+        </div>
+
+        {/* Measurement Add-ons: Kerninflation, BIP-Deflator, Basiseffekt, Biases */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mb-16">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {/* Kerninflation */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <Target size={20} className="text-cyan-400" />
+                Kerninflation
+              </h4>
+              <p className="text-cyan-200 text-sm leading-relaxed">
+                Misst die Preisentwicklung <span className="text-white font-medium">ohne Energie und Nahrungsmittel</span>,
+                um besonders volatile Komponenten auszublenden. Nützlich, um <span className="text-white font-medium">mittelfristige Trends</span>
+                zu erkennen – ersetzt aber nicht die Gesamtinflation.
+              </p>
+            </div>
+
+            {/* BIP-Deflator */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <BarChart3 size={20} className="text-cyan-400" />
+                BIP‑Deflator
+              </h4>
+              <p className="text-cyan-200 text-sm leading-relaxed">
+                Breitestes Preismaß: alle <span className="text-white font-medium">im Inland produzierten</span> Güter und Dienstleistungen.
+                Anders als der VPI ist der Deflator <span className="text-white font-medium">keine feste Warenkorbgröße</span>,
+                sondern bildet die gesamte <span className="text-white font-medium">Inlandsproduktion</span> ab – hilfreich für Makro‑Analysen.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* Basiseffekt-Simulator */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <Calculator size={20} className="text-cyan-400" />
+                Basiseffekt‑Simulator
+              </h4>
+              <p className="text-cyan-200 text-sm leading-relaxed mb-4">
+                Vergleiche einen <span className="text-white font-medium">Indexstand im Vorjahr</span> mit dem <span className="text-white font-medium">aktuellen Index</span>.
+                Ein <span className="text-white font-medium">sehr niedriger Vorjahreswert</span> kann die Jahresrate künstlich erhöhen – und umgekehrt.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-cyan-200 text-sm mb-2">Index Vorjahr</label>
+                  <input
+                    type="range"
+                    min={80}
+                    max={120}
+                    step={1}
+                    value={basePrev}
+                    onChange={(e) => setBasePrev(parseInt(e.target.value))}
+                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="text-right text-white text-sm mt-1">{basePrev}</div>
+                </div>
+
+                <div>
+                  <label className="block text-cyan-200 text-sm mb-2">Index aktuell</label>
+                  <input
+                    type="range"
+                    min={80}
+                    max={130}
+                    step={1}
+                    value={baseCurr}
+                    onChange={(e) => setBaseCurr(parseInt(e.target.value))}
+                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="text-right text-white text-sm mt-1">{baseCurr}</div>
+                </div>
+              </div>
+
+              <div className="mt-4 bg-cyan-500/10 border border-cyan-400/30 rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-cyan-200 text-sm">Jahresrate</span>
+                  <span className={`text-xl font-bold ${baseEffectRate >= 4 ? 'text-red-400' : baseEffectRate >= 2 ? 'text-yellow-400' : 'text-green-400'}`}>
+                    {baseEffectRate.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
+                  </span>
+                </div>
+                <div className="text-cyan-300/80 text-xs mt-2">
+                  Formel: ((Index aktuell / Index Vorjahr) − 1) × 100
+                </div>
+              </div>
+            </div>
+
+            {/* Messfehler & Verzerrungen */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <Lightbulb size={20} className="text-yellow-400" />
+                Messfehler & Verzerrungen
+              </h4>
+              <ul className="list-disc list-inside text-cyan-200 text-sm space-y-1">
+                <li><span className="text-white font-medium">Substitution:</span> Verbraucher weichen auf günstigere Güter aus.</li>
+                <li><span className="text-white font-medium">Qualitätsanpassungen (Hedonics):</span> Verbesserungen fließen als „Preisrückgang“ ein.</li>
+                <li><span className="text-white font-medium">Neue Produkte:</span> Verzögerte Aufnahme in den Warenkorb.</li>
+                <li><span className="text-white font-medium">Outlet‑Bias:</span> Veränderte Einkaufsorte (Online/Discount) werden verzerrt abgebildet.</li>
+              </ul>
+            </div>
           </div>
         </div>
 

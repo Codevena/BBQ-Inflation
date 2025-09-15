@@ -8,7 +8,7 @@ import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
 import { DATA_STAND_SHORT } from '@/data/constants';
-import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle } from 'lucide-react';
+import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle, Info } from 'lucide-react';
 import { useAnimationOnScroll } from '@/lib/hooks';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
@@ -254,8 +254,11 @@ export default function ECBPolicySection() {
             <div className="h-80">
               <Line data={chartData} options={chartOptions} />
             </div>
-            <p className="text-center text-blue-200 mt-4">
-              Von Nullzinspolitik zur Inflationsbekämpfung
+            <p className="text-center text-blue-200 mt-4 flex items-center justify-center gap-2">
+              <span>Von Nullzinspolitik zur Inflationsbekämpfung</span>
+              <span title="Operativer Leitzins = Einlagefazilität (Übernachtzins für Bankeinlagen bei der EZB).">
+                <Info size={14} className="text-blue-300" />
+              </span>
             </p>
                 <p className="text-center text-blue-300 mt-1 text-xs">
                   Operativer Leitzins = Einlagefazilität. Stand: {DATA_STAND_SHORT}. Quelle: EZB.

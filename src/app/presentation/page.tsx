@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import Link from 'next/link';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
 import { DATA_STAND_SHORT } from '@/data/constants';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
@@ -34,7 +35,8 @@ import {
   ArrowUpDown,
   PiggyBank,
   Shield,
-  Clock
+  Clock,
+  LineChart
 } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler);
@@ -68,8 +70,8 @@ export default function PresentationMode() {
   const [statsData, setStatsData] = useState<number[]>(inflationRatesGermany.map(() => 0));
   const statsRaf = useRef<number | null>(null);
   // ECB curve (presentation)
-  const ecbYears = ['2019','2020','2021','2022 Q1','2022 Q3','2022 Q4','2023 Q3','2024','2025'];
-  const ecbRates = [-0.5,-0.5,-0.5,-0.5,0.75,2.0,4.0,3.75,2.0];
+  const ecbYears = useMemo(() => ['2019','2020','2021','2022 Q1','2022 Q3','2022 Q4','2023 Q3','2024','2025'], []);
+  const ecbRates = useMemo(() => [-0.5,-0.5,-0.5,-0.5,0.75,2.0,4.0,3.75,2.0], []);
   const [ecbAnimated, setEcbAnimated] = useState(false);
   const [ecbData, setEcbData] = useState<number[]>(ecbRates.map(() => 0));
   const ecbRaf = useRef<number | null>(null);
@@ -159,7 +161,7 @@ export default function PresentationMode() {
       removes.forEach(id => window.clearTimeout(id));
       cards.forEach(glowOff);
     };
-  }, [currentSlide, roadmapRefs]);
+  }, [currentSlide]);
 
   // Animate statistics curve (trailing reveal) when slide becomes active
   useEffect(() => {
@@ -218,7 +220,7 @@ export default function PresentationMode() {
     };
     ecbRaf.current = requestAnimationFrame(step);
     return () => { if (ecbRaf.current) cancelAnimationFrame(ecbRaf.current); };
-  }, [currentSlide, ecbAnimated]);
+  }, [currentSlide, ecbAnimated, ecbRates]);
 
   const renderSlide = () => {
     const slideType = slides[currentSlide];
@@ -289,6 +291,9 @@ export default function PresentationMode() {
                 </div>
               ))}
             </div>
+            <p className="text-sm text-blue-300 mt-6">
+              Mehr Details im <Link href="/#glossary" className="underline decoration-dotted underline-offset-2 hover:text-blue-200">Glossar</Link>.
+            </p>
           </div>
         );
 

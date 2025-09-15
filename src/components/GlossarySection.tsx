@@ -141,6 +141,24 @@ const glossaryTerms = [
     definition: 'Abweichung tatsächlicher von potenzieller Wirtschaftsleistung',
     example: 'Positives Gap → Überhitzung → Preisdruck',
     category: 'Wirtschaftstheorie'
+  },
+  {
+    term: 'Shrinkflation',
+    definition: 'Unveränderter Preis bei verkleinerter Packungsgröße/Inhalt',
+    example: '200g statt 250g bei gleichem Preis – effektiv teurer',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Skimpflation',
+    definition: 'Gleicher Preis bei geringerer Qualität/Leistung/Service',
+    example: 'Weniger Service/Features bei unverändertem Preis',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: '„Greedflation“-Debatte',
+    definition: 'Diskussion, ob Unternehmen ihre Margen überproportional ausweiten',
+    example: 'Strittig; Evidenz variiert je Branche/Zeit',
+    category: 'Grundbegriffe'
   }
 ];
 
@@ -170,6 +188,14 @@ const furtherResources = [
     type: 'Global'
   }
 ];
+
+function slugify(term: string) {
+  return term
+    .toLowerCase()
+    .replace(/"|„|“|\(|\)|\*/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '');
+}
 
 export default function GlossarySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -298,7 +324,11 @@ export default function GlossarySection() {
           {/* Terms Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {(showAll ? filteredTerms : filteredTerms.slice(0, 8)).map((term, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <div
+                key={index}
+                id={`glossary-${slugify(term.term)}`}
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300"
+              >
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="text-xl font-bold text-white">{term.term}</h4>
                   <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full">

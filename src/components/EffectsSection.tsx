@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { BarChart3, Lightbulb } from 'lucide-react';
+import { BarChart3, Lightbulb, Info } from 'lucide-react';
 import { useAnimationOnScroll } from '@/lib/hooks';
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
 import { DATA_STAND_SHORT } from '@/data/constants';
@@ -228,8 +228,13 @@ export default function EffectsSection() {
                 <p className="text-sm text-blue-200">
                   2019-2025 (aktuelle Daten)
                 </p>
-                <p className="text-xs text-blue-300 mt-1">
-                  Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: {DATA_STAND_SHORT}. Quelle: Statistisches Bundesamt (Destatis).
+                <p className="text-xs text-blue-300 mt-1 flex items-center justify-center gap-2">
+                  <span>
+                    Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: {DATA_STAND_SHORT}. Quelle: Statistisches Bundesamt (Destatis).
+                  </span>
+                  <span title="VPI: Warenkorb (~650 Güter), Laspeyres‑Idee, Basisjahr; monatliche Erhebung durch Destatis.">
+                    <Info size={14} className="text-blue-300" />
+                  </span>
                 </p>
               </div>
             </div>
@@ -324,9 +329,11 @@ export default function EffectsSection() {
                         <div className="text-sm text-blue-200">2020 → 2025</div>
                         <div className={`text-lg font-bold ${increase > 30 ? 'text-red-400' : increase > 15 ? 'text-yellow-400' : 'text-green-400'}`}>
                           +{increase.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
-                        </div>
-                      </div>
-                    </div>
+              </div>
+            </div>
+
+            {/* Hinweis entfernt: keine Tooltips/Badges für Sonderphänomene */}
+          </div>
                     
                     <div className="flex items-center justify-between">
                       <div className="text-blue-200">
