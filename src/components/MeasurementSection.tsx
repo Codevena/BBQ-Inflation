@@ -219,18 +219,6 @@ export default function MeasurementSection() {
               </p>
             </div>
 
-          {/* BIP-Deflator (links unten) */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                <BarChart3 size={20} className="text-cyan-400" />
-                BIP‑Deflator
-              </h4>
-              <p className="text-cyan-200 text-sm leading-relaxed">
-                Breitestes Preismaß: alle <span className="text-white font-medium">im Inland produzierten</span> Güter und Dienstleistungen.
-                Anders als der VPI ist der Deflator <span className="text-white font-medium">keine feste Warenkorbgröße</span>,
-                sondern bildet die gesamte <span className="text-white font-medium">Inlandsproduktion</span> ab – hilfreich für Makro‑Analysen.
-              </p>
-            </div>
           {/* Basiseffekt-Simulator (rechts, über zwei Reihen) */}
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:row-span-2 flex flex-col">
               <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
@@ -284,6 +272,19 @@ export default function MeasurementSection() {
                 </div>
               </div>
           </div>
+
+          {/* BIP-Deflator (links unten) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <BarChart3 size={20} className="text-cyan-400" />
+                BIP‑Deflator
+              </h4>
+              <p className="text-cyan-200 text-sm leading-relaxed">
+                Breitestes Preismaß: alle <span className="text-white font-medium">im Inland produzierten</span> Güter und Dienstleistungen.
+                Anders als der VPI ist der Deflator <span className="text-white font-medium">keine feste Warenkorbgröße</span>,
+                sondern bildet die gesamte <span className="text-white font-medium">Inlandsproduktion</span> ab – hilfreich für Makro‑Analysen.
+              </p>
+            </div>
         </div>
 
         {/* Messfehler & Verzerrungen – volle Breite */}
