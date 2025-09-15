@@ -33,7 +33,7 @@ export default function SequentialTypewriter({
     setIsMounted(true);
   }, []);
 
-  // Observe visibility to start typing only when in view
+  // Observe visibility to start typing only when in view (start earlier; add fallback)
   useEffect(() => {
     if (!isMounted) return;
     const el = containerRef.current;
@@ -48,9 +48,18 @@ export default function SequentialTypewriter({
         setIsVisible(true);
         observer.disconnect();
       }
-    }, { threshold: 0.2 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10%' });
     observer.observe(el);
     return () => observer.disconnect();
+  }, [isMounted]);
+
+  // Safety fallback: start regardless after short delay if not yet started (avoid freeze when scrolling upward)
+  useEffect(() => {
+    if (!isMounted || startedRef.current) return;
+    const t = window.setTimeout(() => {
+      if (!startedRef.current) setIsVisible(true);
+    }, 1200);
+    return () => window.clearTimeout(t);
   }, [isMounted]);
 
   useEffect(() => {

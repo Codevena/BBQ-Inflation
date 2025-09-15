@@ -63,6 +63,10 @@ export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
   const roadmapRefs = useState<Array<HTMLDivElement | null>>([null, null, null])[0];
+  // Statistics slide animated data
+  const [statsAnimated, setStatsAnimated] = useState(false);
+  const [statsData, setStatsData] = useState<number[]>(inflationRatesGermany.map(() => 0));
+  const statsRaf = useRef<number | null>(null);
   const formatHugePercent = (rate: number) => {
     const r = Number(rate) || 0;
     const fmt = (v: number) => v.toLocaleString('de-DE', { maximumFractionDigits: 1 });
@@ -123,14 +127,63 @@ export default function PresentationMode() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide, showNotes]);
 
-  // Auto-animate roadmap cards when slide becomes active (no mouse needed)
+  // Auto-highlight roadmap cards sequentially (mimic hover glow; no mouse needed)
   useEffect(() => {
     if (slides[currentSlide] !== 'roadmap') return;
-    const cards = (roadmapRefs as any).filter((c: HTMLDivElement | null) => c);
+    const cards: Array<HTMLDivElement> = (roadmapRefs as any).filter((c: HTMLDivElement | null) => c);
     if (!cards || cards.length === 0) return;
-    gsap.set(cards, { opacity: 0, y: 30 });
-    gsap.to(cards, { opacity: 1, y: 0, duration: 0.7, stagger: 0.25, ease: 'power2.out' });
+    const adds: number[] = [];
+    const removes: number[] = [];
+    const glowOn = (el: HTMLDivElement) => {
+      el.classList.add('bg-white/10','scale-[1.02]','ring-1','ring-cyan-400/30');
+    };
+    const glowOff = (el: HTMLDivElement) => {
+      el.classList.remove('bg-white/10','scale-[1.02]','ring-1','ring-cyan-400/30');
+    };
+    cards.forEach((el, idx) => {
+      const addId = window.setTimeout(() => {
+        glowOn(el);
+        const remId = window.setTimeout(() => glowOff(el), 700);
+        removes.push(remId);
+      }, idx * 900);
+      adds.push(addId);
+    });
+    return () => {
+      adds.forEach(id => window.clearTimeout(id));
+      removes.forEach(id => window.clearTimeout(id));
+      cards.forEach(glowOff);
+    };
   }, [currentSlide, roadmapRefs]);
+
+  // Animate statistics curve (trailing reveal) when slide becomes active
+  useEffect(() => {
+    if (slides[currentSlide] !== 'statistics' || statsAnimated) return;
+    const original = inflationRatesGermany.map(i => i.rate);
+    const n = original.length;
+    const start = performance.now();
+    const duration = 1500;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      const prog = eased * (n - 1);
+      const idx = Math.floor(prog);
+      const frac = prog - idx;
+      const data = original.map((v, i) => {
+        if (i < idx) return v;
+        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        return 0;
+      });
+      setStatsData(data);
+      if (t < 1) {
+        statsRaf.current = requestAnimationFrame(step);
+      } else {
+        setStatsAnimated(true);
+        statsRaf.current = null;
+      }
+    };
+    statsRaf.current = requestAnimationFrame(step);
+    return () => { if (statsRaf.current) cancelAnimationFrame(statsRaf.current); };
+  }, [currentSlide, statsAnimated]);
 
   const renderSlide = () => {
     const slideType = slides[currentSlide];
@@ -251,7 +304,7 @@ export default function PresentationMode() {
                     labels: inflationRatesGermany.map(item => item.year.toString()),
                     datasets: [{
                       label: 'Inflationsrate (%)',
-                      data: inflationRatesGermany.map(item => item.rate),
+                      data: statsData,
                       borderColor: '#EF4444',
                       backgroundColor: 'rgba(239, 68, 68, 0.1)',
                       borderWidth: 4,

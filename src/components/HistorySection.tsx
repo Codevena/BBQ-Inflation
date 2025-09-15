@@ -215,8 +215,8 @@ export default function HistorySection() {
                 {/* Connection Line */}
                 <div className={`absolute top-1/2 w-8 h-0.5 bg-gradient-to-r ${getEventColor(event.rate)} ${
                   index % 2 === 0 
-                    ? 'left-1/2 ml-3' 
-                    : 'right-1/2 mr-3'
+                    ? 'right-1/2 mr-3'  /* Karte links → Linie zeigt nach links */
+                    : 'left-1/2 ml-3'   /* Karte rechts → Linie zeigt nach rechts */
                 }`} />
               </div>
             ))}
