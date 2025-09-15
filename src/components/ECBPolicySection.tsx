@@ -8,6 +8,7 @@ import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
 import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle } from 'lucide-react';
+import { useAnimationOnScroll } from '@/lib/hooks';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -42,23 +43,9 @@ export default function ECBPolicySection() {
   const animateChart = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-
     const originalData = ecbRateHistory.map(item => item.rate);
-
-    gsap.to({ progress: 0 }, {
-      progress: 1,
-      duration: 3,
-      ease: 'power2.out',
-      onUpdate: function() {
-        const progress = (this.targets() as Array<{ progress: number }>)[0].progress;
-        const newData = originalData.map((value, index) => {
-          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
-          return value * pointProgress;
-        });
-        setAnimatedData([...newData]);
-      },
-      onComplete: () => setIsAnimating(false)
-    });
+    setAnimatedData(originalData);
+    setTimeout(() => setIsAnimating(false), 0);
   }, [isAnimating]);
 
   useEffect(() => {
@@ -105,13 +92,15 @@ export default function ECBPolicySection() {
         ease: 'power2.out'
       }, '-=0.5');
 
-      // Fallback: ensure data shows even if scroll trigger doesn't fire immediately
-      animateChart();
+      // Kein Fallback nötig – IntersectionObserver setzt Daten bei Sichtbarkeit
 
     }, sectionRef);
 
     return () => ctx.revert();
   }, [animateChart]);
+
+  // Setzt Daten robust, sobald der Bereich sichtbar ist
+  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
 
   const chartData = {
     labels: ecbRateHistory.map(item => item.year),

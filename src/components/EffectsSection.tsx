@@ -7,6 +7,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb } from 'lucide-react';
+import { useAnimationOnScroll } from '@/lib/hooks';
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
@@ -21,6 +22,7 @@ export default function EffectsSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const priceGridRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   
   const [inflationRate, setInflationRate] = useState(2.3);
   const [animatedData, setAnimatedData] = useState(inflationRatesGermany.map(() => 0));
@@ -100,25 +102,26 @@ export default function EffectsSection() {
     return basePrice * Math.pow(1 + rate / 100, years);
   };
 
-  // Animate chart on first reveal
+  // Animate chart on first reveal (requestAnimationFrame for robustness)
   const animateChart = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     const originalData = inflationRatesGermany.map(item => item.rate);
-    gsap.to({ progress: 0 }, {
-      progress: 1,
-      duration: 3,
-      ease: 'power2.out',
-      onUpdate: function() {
-        const progress = (this.targets() as Array<{ progress: number }>)[0].progress;
-        const newData = originalData.map((value, index) => {
-          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
-          return value * pointProgress;
-        });
-        setAnimatedData([...newData]);
-      },
-      onComplete: () => setIsAnimating(false)
-    });
+    const start = performance.now();
+    const duration = 1200; // ms
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2); // easeOutQuad
+      const newData = originalData.map(v => v * eased);
+      setAnimatedData(newData);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setIsAnimating(false);
+        rafRef.current = null;
+      }
+    };
+    rafRef.current = requestAnimationFrame(step);
   }, [isAnimating]);
 
   useEffect(() => {
@@ -166,6 +169,16 @@ export default function EffectsSection() {
 
     return () => ctx.revert();
   }, [animateChart]);
+
+  // Sichtbarkeitsgesteuert: setzt Daten sobald der Abschnitt im Viewport ist
+  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+
+  // Cleanup any pending rAF on unmount
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   return (
     <section 

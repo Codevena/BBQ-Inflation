@@ -7,6 +7,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEvent, ActiveElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
+import { useAnimationOnScroll } from '@/lib/hooks';
+import { useAnimationOnScroll } from '@/lib/hooks';
 import { Search } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -17,6 +19,7 @@ if (typeof window !== 'undefined') {
 
 export default function CausesSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number | null>(null);
   const chartRef = useRef<ChartType<'doughnut'> | null>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -123,8 +126,7 @@ export default function CausesSection() {
         ease: 'power2.out'
       }, '-=0.5');
 
-      // Fallback: kick off once in case scroll trigger doesn't fire yet
-      animateChart();
+      // IntersectionObserver unten setzt die Daten bei Sichtbarkeit
 
     }, sectionRef);
 
@@ -133,18 +135,29 @@ export default function CausesSection() {
 
   const animateChart = () => {
     const originalData = inflationCauses.map(cause => cause.percentage);
-    
-    gsap.to({ progress: 0 }, {
-      progress: 1,
-      duration: 2,
-      ease: 'power2.out',
-      onUpdate: function() {
-        const progress = this.targets()[0].progress;
-        const newData = originalData.map(value => value * progress);
-        setAnimatedData([...newData]);
+    const start = performance.now();
+    const duration = 1000;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      setAnimatedData(originalData.map(v => v * eased));
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        rafRef.current = null;
       }
-    });
+    };
+    rafRef.current = requestAnimationFrame(step);
   };
+
+  // Sichtbarkeitsgesteuert befüllen
+  useAnimationOnScroll(sectionRef, () => animateChart(), 0.3);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   return (
     <section 
