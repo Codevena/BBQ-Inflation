@@ -8,7 +8,7 @@ import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEve
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
 import { useAnimationOnScroll } from '@/lib/hooks';
-import { Search } from 'lucide-react';
+import { Search, Globe, ArrowLeftRight, Brain, DollarSign, Activity } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -195,14 +195,30 @@ export default function CausesSection() {
                 <Search size={18} className="text-blue-400" />
                 Inflationsarten im Detail:
               </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <strong className="text-white">Nachfrageinflation:</strong>
-                  <p className="text-blue-200 mt-1">Entsteht, wenn die Gesamtnachfrage das Angebot übersteigt. Beispiel: Post-Corona-Nachholeffekte 2021.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 text-sm">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Nachfrageinflation</strong>
+                  <p className="text-blue-200 mt-1">Gesamtnachfrage {'>'} Angebot. Beispiel: Post‑Corona Nachholeffekte 2021.</p>
                 </div>
-                <div>
-                  <strong className="text-white">Angebotsinflation:</strong>
-                  <p className="text-blue-200 mt-1">Entsteht durch steigende Produktionskosten. Beispiel: Energiekrise 2022 durch Ukraine-Krieg.</p>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Angebots-/Kosteninflation</strong>
+                  <p className="text-blue-200 mt-1">Höhere Produktionskosten (Energie, Löhne, Lieferketten).</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Importierte Inflation</strong>
+                  <p className="text-blue-200 mt-1">Wechselkurs & Weltmarktpreise treiben Importkosten.</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Lohn‑Preis‑Spirale</strong>
+                  <p className="text-blue-200 mt-1">Höhere Löhne → höhere Preise → erneute Lohnforderungen.</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Tempo</strong>
+                  <p className="text-blue-200 mt-1">Schleichend (0‑3%), trabend (3‑10%), galoppierend ({'>'}10%), Hyper.</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <strong className="text-white">Gegenstücke</strong>
+                  <p className="text-blue-200 mt-1">Deflation (fallende Preise) & Stagflation (hohe Inflation + Schwäche).</p>
                 </div>
               </div>
             </div>
@@ -273,6 +289,38 @@ export default function CausesSection() {
             {/* Decorative Elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-500/20 rounded-full animate-pulse" />
             <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-blue-500/20 rounded-full animate-pulse" />
+          </div>
+        </div>
+
+        {/* Treiber & Mechanismen */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="flex items-center gap-2 mb-2">
+              <DollarSign size={18} className="text-blue-400" />
+              <h4 className="text-white font-semibold">Geld & Kredit (MV=PY)</h4>
+            </div>
+            <p className="text-blue-200 text-sm">Mehr Geld/Kredit oder höhere Umlaufgeschwindigkeit (V) bei gleichbleibender Leistung (Y) → Preisdruck (P).</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="flex items-center gap-2 mb-2">
+              <Activity size={18} className="text-blue-400" />
+              <h4 className="text-white font-semibold">Fiskalische Impulse</h4>
+            </div>
+            <p className="text-blue-200 text-sm">Staatsausgaben, Transfers, Steuern (z. B. MWSt‑Änderungen) bewegen Nachfrage und Preisniveau.</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="flex items-center gap-2 mb-2">
+              <Globe size={18} className="text-blue-400" />
+              <h4 className="text-white font-semibold">Wechselkurse & Globalisierung</h4>
+            </div>
+            <p className="text-blue-200 text-sm">Importpreise, Lieferketten, Handelskosten; schwächerer Euro verteuert Importe.</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+            <div className="flex items-center gap-2 mb-2">
+              <Brain size={18} className="text-blue-400" />
+              <h4 className="text-white font-semibold">Erwartungen</h4>
+            </div>
+            <p className="text-blue-200 text-sm">Kommunikation und Ziele verankern Preissetzung und Lohnrunden; Glaubwürdigkeit senkt Volatilität.</p>
           </div>
         </div>
       </div>
