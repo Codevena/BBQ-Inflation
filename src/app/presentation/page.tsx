@@ -924,7 +924,15 @@ export default function PresentationMode() {
                       <div className="text-blue-200">{event.country}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-red-400">{formatHugePercent(event.rate || 0)}</div>
+                      <div className="text-3xl font-bold text-red-400 inline-flex items-center gap-2">
+                        {formatHugePercent(event.rate || 0)}
+                        <span
+                          className="text-xs text-purple-300 align-middle cursor-help"
+                          title="Sehr große Raten werden als Millionen/Milliarden/Billionen/Billiarden % dargestellt, um die Größenordnung verständlich zu machen."
+                        >
+                          ?
+                        </span>
+                      </div>
                       <div className="text-red-200 text-sm">Inflationsrate</div>
                     </div>
                     <div className="text-left">

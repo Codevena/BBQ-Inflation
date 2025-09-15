@@ -176,6 +176,12 @@ export default function HistorySection() {
                     <span className={`text-2xl font-bold bg-gradient-to-r ${getEventColor(event.rate)} bg-clip-text text-transparent`}>
                       {formatInflationRate(event.rate)}
                     </span>
+                    <span
+                      className="text-xs text-purple-300 cursor-help"
+                      title="Sehr große Raten werden als Millionen/Milliarden/Billionen/Billiarden % dargestellt, um die Größenordnung verständlich zu machen."
+                    >
+                      ?
+                    </span>
                   </div>
 
                   {/* Description */}
