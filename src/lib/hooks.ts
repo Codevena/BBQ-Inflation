@@ -121,7 +121,7 @@ export const useKeyboardNavigation = (sections: string[], onNavigate?: (index: n
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSection, navigateToSection]);
+  }, [currentSection, navigateToSection, sections.length]);
 
   return { currentSection, navigateToSection };
 };

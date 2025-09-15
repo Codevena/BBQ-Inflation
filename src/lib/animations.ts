@@ -122,7 +122,7 @@ export const horizontalScroll = (container: string | Element, sections: string |
       pin: true,
       scrub: 1,
       snap: 1 / (sectionsArray.length - 1),
-      end: () => "+=" + (containerEl as Element).offsetWidth
+      end: () => "+=" + (containerEl as HTMLElement).offsetWidth
     }
   });
 };
