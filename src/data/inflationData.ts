@@ -106,6 +106,22 @@ export const historicalEvents: HistoricalEvent[] = [
     title: "Zimbabwe-Dollar Hyperinflation",
     description: "Landreformen, politische Krise und Wirtschaftsmismanagement",
     impact: "100-Billionen-Dollar-Scheine. US-Dollar wurde de facto Währung"
+  },
+  {
+    year: 2018,
+    country: "Venezuela",
+    rate: 130060, // ca. 130.060% (Y/Y), stark zitierte Schätzung
+    title: "Bolívar-Hyperinflation",
+    description: "Ölpreisverfall, Staatsfinanzierung über Notenbank, Vertrauensverlust",
+    impact: "Währungsreformen, Dollarisierungstendenzen im Alltag, massive Verarmung"
+  },
+  {
+    year: 1993,
+    country: "Ukraine",
+    rate: 10155, // ~10.155% (Y/Y) – frühe 90er Transformationskrise
+    title: "Frühphase nach der Sowjetunion",
+    description: "Transformationsschock, Preisfreigaben, fiskalische Instabilität",
+    impact: "Hrywnja-Einführung, Stabilisierungspolitiken zur Preisberuhigung"
   }
 ];
 
