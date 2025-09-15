@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Landmark, Banknote, Scale, AlertTriangle, Settings, BarChart3, Clock, Globe } from 'lucide-react';
+import { Landmark, Banknote, Scale, AlertTriangle, Settings, BarChart3, Clock, Globe, CheckCircle } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -166,6 +166,54 @@ export default function FiscalPolicySection() {
               <li><span className="text-white font-medium">Energiepreisbremsen 2022/23:</span> kurzfristige Entlastung, aber fiskalische Kosten und Verzerrungsrisiken.</li>
               <li><span className="text-white font-medium">Gezielte Transfers:</span> bessere Treffsicherheit bei geringerer Marktverzerrung im Vergleich zu Preisdeckeln.</li>
             </ul>
+          </div>
+
+          {/* Checklisten (full width) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:col-span-3">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-white">Checklisten</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <CheckCircle size={18} className="text-emerald-400" /> Temporäre Hilfen
+                </h4>
+                <ul className="text-emerald-200 text-sm space-y-2 list-disc list-inside">
+                  <li>Ziele und Zielgruppe klar definiert</li>
+                  <li>Expliziter Exit‑Pfad/Enddatum</li>
+                  <li>Budgetwirkung transparent</li>
+                  <li>Marktverzerrungen minimieren</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <CheckCircle size={18} className="text-emerald-400" /> Preisregulierung
+                </h4>
+                <ul className="text-emerald-200 text-sm space-y-2 list-disc list-inside">
+                  <li>Befristung und Monitoring</li>
+                  <li>Kosten kompensieren (gezielt)</li>
+                  <li>Angebotsseite parallel stärken</li>
+                  <li>Exit‑Kommunikation frühzeitig</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <CheckCircle size={18} className="text-emerald-400" /> Dauerhafte Programme
+                </h4>
+                <ul className="text-emerald-200 text-sm space-y-2 list-disc list-inside">
+                  <li>Gegenfinanzierung gesichert</li>
+                  <li>Wirkungs‑Evaluierung vorgesehen</li>
+                  <li>Anreizkompatibel gestaltet</li>
+                  <li>Koordination mit Geldpolitik</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-6 text-center text-emerald-200 text-sm">
+              Mehr im Glossar:
+              <a href="#glossary-importierte-inflation" className="underline decoration-dotted underline-offset-2 text-emerald-300 hover:text-emerald-200 ml-1">Importierte Inflation</a>,
+              <a href="#glossary-deflation" className="underline decoration-dotted underline-offset-2 text-emerald-300 hover:text-emerald-200 ml-1">Deflation</a>,
+              <a href="#glossary-forward-guidance" className="underline decoration-dotted underline-offset-2 text-emerald-300 hover:text-emerald-200 ml-1">Forward Guidance</a>
+            </div>
           </div>
 
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:col-span-3">
