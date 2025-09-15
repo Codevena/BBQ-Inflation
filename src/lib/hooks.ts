@@ -9,8 +9,6 @@ export const useLenis = () => {
     const lenis = new Lenis({
       duration: 0.6,  // Reduziert von 1.2 für direkteres Gefühl
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      smoothTouch: false,
     });
 
     lenisRef.current = lenis;
