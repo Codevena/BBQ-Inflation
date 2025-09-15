@@ -137,7 +137,7 @@ export default function EffectsSection() {
       }
     };
     rafRef.current = requestAnimationFrame(step);
-  }, []);
+  }, [isAnimating]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {

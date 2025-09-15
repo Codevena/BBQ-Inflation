@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples, inflationByCategory, realWageData } from '@/data/inflationData';
 import { DATA_STAND_SHORT } from '@/data/constants';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
-import { gsap } from 'gsap';
 import { Line, Doughnut } from 'react-chartjs-2';
 import {
   TrendingUp,
@@ -63,11 +62,17 @@ const slides = [
 export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
-  const roadmapRefs = useState<Array<HTMLDivElement | null>>([null, null, null])[0];
+  const roadmapRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
   // Statistics slide animated data
   const [statsAnimated, setStatsAnimated] = useState(false);
   const [statsData, setStatsData] = useState<number[]>(inflationRatesGermany.map(() => 0));
   const statsRaf = useRef<number | null>(null);
+  // ECB curve (presentation)
+  const ecbYears = ['2019','2020','2021','2022 Q1','2022 Q3','2022 Q4','2023 Q3','2024','2025'];
+  const ecbRates = [-0.5,-0.5,-0.5,-0.5,0.75,2.0,4.0,3.75,2.0];
+  const [ecbAnimated, setEcbAnimated] = useState(false);
+  const [ecbData, setEcbData] = useState<number[]>(ecbRates.map(() => 0));
+  const ecbRaf = useRef<number | null>(null);
   const formatHugePercent = (rate: number) => {
     const r = Number(rate) || 0;
     const fmt = (v: number) => v.toLocaleString('de-DE', { maximumFractionDigits: 1 });
@@ -131,7 +136,7 @@ export default function PresentationMode() {
   // Auto-highlight roadmap cards sequentially (mimic hover glow; no mouse needed)
   useEffect(() => {
     if (slides[currentSlide] !== 'roadmap') return;
-    const cards: Array<HTMLDivElement> = (roadmapRefs as any).filter((c: HTMLDivElement | null) => c);
+    const cards: Array<HTMLDivElement> = roadmapRefs.current.filter((c): c is HTMLDivElement => Boolean(c));
     if (!cards || cards.length === 0) return;
     const adds: number[] = [];
     const removes: number[] = [];
@@ -186,6 +191,35 @@ export default function PresentationMode() {
     return () => { if (statsRaf.current) cancelAnimationFrame(statsRaf.current); };
   }, [currentSlide, statsAnimated]);
 
+  // Animate ECB curve on policy slide
+  useEffect(() => {
+    if (slides[currentSlide] !== 'ecb-policy' || ecbAnimated) return;
+    const n = ecbRates.length;
+    const start = performance.now();
+    const duration = 1800;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      const prog = eased * (n - 1);
+      const idx = Math.floor(prog);
+      const frac = prog - idx;
+      const data = ecbRates.map((v, i) => {
+        if (i < idx) return v;
+        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        return 0;
+      });
+      setEcbData(data);
+      if (t < 1) {
+        ecbRaf.current = requestAnimationFrame(step);
+      } else {
+        setEcbAnimated(true);
+        ecbRaf.current = null;
+      }
+    };
+    ecbRaf.current = requestAnimationFrame(step);
+    return () => { if (ecbRaf.current) cancelAnimationFrame(ecbRaf.current); };
+  }, [currentSlide, ecbAnimated]);
+
   const renderSlide = () => {
     const slideType = slides[currentSlide];
 
@@ -236,7 +270,7 @@ export default function PresentationMode() {
               ].map((block, i) => (
                 <div
                   key={i}
-                  ref={(el) => { (roadmapRefs as any)[i] = el; }}
+                  ref={(el) => { roadmapRefs.current[i] = el; }}
                   className="group relative bg-white/5 rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
@@ -653,6 +687,40 @@ export default function PresentationMode() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Einlagefazilität – Kurve (Präsentation) */}
+            <div className="bg-white/5 rounded-2xl p-8 mb-12 border border-white/10">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+                <LineChart size={28} className="text-blue-400" />
+                Einlagefazilität 2019–2025
+              </h3>
+              <div className="h-64">
+                <Line
+                  data={{
+                    labels: ecbYears,
+                    datasets: [{
+                      label: 'Einlagefazilität (%)',
+                      data: ecbData,
+                      borderColor: '#3B82F6',
+                      backgroundColor: 'rgba(59,130,246,0.1)',
+                      borderWidth: 4,
+                      pointRadius: 6,
+                      fill: true,
+                      tension: 0.35,
+                    }]
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                      y: { min: -0.6, max: 5, ticks: { color: 'white' } },
+                      x: { ticks: { color: 'white' } },
+                    },
+                  }}
+                />
               </div>
             </div>
 

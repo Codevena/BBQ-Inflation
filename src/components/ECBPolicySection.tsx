@@ -75,7 +75,7 @@ export default function ECBPolicySection() {
       }
     };
     rafRef.current = requestAnimationFrame(step);
-  }, []);
+  }, [isAnimating]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
