@@ -197,6 +197,9 @@ export default function EffectsSection() {
                 <p className="text-sm text-blue-200">
                   2019-2025 (aktuelle Daten)
                 </p>
+                <p className="text-xs text-blue-300 mt-1">
+                  Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: Aug 2025. Quelle: Statistisches Bundesamt (Destatis).
+                </p>
               </div>
             </div>
 
@@ -258,11 +261,11 @@ export default function EffectsSection() {
               <p className="text-blue-200 text-sm leading-relaxed">
                 Bei {inflationRate}% Inflation verlieren €1.000 in 4 Jahren etwa{' '}
                 <span className="font-bold text-red-400">
-                  €{(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toFixed(0)}
+                  €{(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toLocaleString('de-DE')}
                 </span>{' '}
                 ihrer Kaufkraft. Das entspricht einem realen Wert von nur noch{' '}
                 <span className="font-bold text-yellow-400">
-                  €{(1000 / Math.pow(1 + inflationRate / 100, 4)).toFixed(0)}
+                  €{(1000 / Math.pow(1 + inflationRate / 100, 4)).toLocaleString('de-DE')}
                 </span>.
               </p>
             </div>
@@ -276,7 +279,7 @@ export default function EffectsSection() {
             
             <div className="grid gap-4">
               {priceExamples.map((example, index) => {
-                const newPrice = calculatePriceIncrease(example.price2020, inflationRate);
+                const newPrice = calculatePriceIncrease(example.price2020, inflationRate, 5);
                 const increase = ((newPrice - example.price2020) / example.price2020) * 100;
                 
                 return (
@@ -289,7 +292,7 @@ export default function EffectsSection() {
                       <div className="text-right">
                         <div className="text-sm text-blue-200">2020 → 2025</div>
                         <div className={`text-lg font-bold ${increase > 30 ? 'text-red-400' : increase > 15 ? 'text-yellow-400' : 'text-green-400'}`}>
-                          +{increase.toFixed(1)}%
+                          +{increase.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                         </div>
                       </div>
                     </div>
@@ -297,11 +300,11 @@ export default function EffectsSection() {
                     <div className="flex items-center justify-between">
                       <div className="text-blue-200">
                         <span className="text-sm">2020: </span>
-                        <span className="font-semibold">€{example.price2020.toFixed(2)}</span>
+                        <span className="font-semibold">€{example.price2020.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                       <div className="text-white">
                         <span className="text-sm">2025: </span>
-                        <span className="font-semibold text-red-400">€{newPrice.toFixed(2)}</span>
+                        <span className="font-semibold text-red-400">€{newPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                     </div>
                     
