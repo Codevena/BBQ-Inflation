@@ -8,7 +8,7 @@ import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEve
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
 import { useAnimationOnScroll } from '@/lib/hooks';
-import { Search, Globe, ArrowLeftRight, Brain, DollarSign, Activity } from 'lucide-react';
+import { Search, Globe, Brain, DollarSign, Activity } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -165,7 +165,61 @@ export default function CausesSection() {
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-800 via-slate-900 to-blue-900 py-20"
     >
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Explanations row above chart + legend */}
+        <div className="mb-10">
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <h4 className="font-semibold text-blue-300 mb-4 flex items-center gap-2">
+              <Search size={18} className="text-blue-400" />
+              Inflationsarten – kurz erklärt
+            </h4>
+            <div className="space-y-3">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-red-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Nachfrageinflation:</strong>
+                  <span className="text-blue-200"> Gesamtnachfrage {'>'} Angebot (z. B. Nachholeffekte).</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-amber-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Angebots-/Kosteninflation:</strong>
+                  <span className="text-blue-200"> Kosten steigen (Energie, Löhne, Lieferketten).</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-violet-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Importierte Inflation:</strong>
+                  <span className="text-blue-200"> Wechselkurs und Weltmarktpreise verteuern Importe.</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Lohn‑Preis‑Spirale:</strong>
+                  <span className="text-blue-200"> Löhne ↑ → Preise ↑ → erneute Lohnforderungen.</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-sky-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Tempo:</strong>
+                  <span className="text-blue-200"> schleichend (0–3%), trabend (3–10%), galoppierend ({'>'}10%), Hyper.</span>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-fuchsia-400 mt-2" />
+                <div className="text-sm leading-relaxed">
+                  <strong className="text-white">Gegenstücke:</strong>
+                  <span className="text-blue-200"> Deflation (Preise ↓) und Stagflation (hohe Inflation + schwaches Wachstum).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
           {/* Left Column - Text Content */}
           <div className="space-y-8">
@@ -189,39 +243,7 @@ export default function CausesSection() {
               Die aktuelle Inflation wurde hauptsächlich durch externe Schocks ausgelöst:
             </p>
 
-            {/* Zusätzliche Erklärung */}
-            <div className="bg-blue-500/10 border border-blue-400/30 rounded-xl p-6 mt-6">
-              <h4 className="font-semibold text-blue-300 mb-3 flex items-center gap-2">
-                <Search size={18} className="text-blue-400" />
-                Inflationsarten im Detail:
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 text-sm">
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Nachfrageinflation</strong>
-                  <p className="text-blue-200 mt-1">Gesamtnachfrage {'>'} Angebot. Beispiel: Post‑Corona Nachholeffekte 2021.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Angebots-/Kosteninflation</strong>
-                  <p className="text-blue-200 mt-1">Höhere Produktionskosten (Energie, Löhne, Lieferketten).</p>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Importierte Inflation</strong>
-                  <p className="text-blue-200 mt-1">Wechselkurs & Weltmarktpreise treiben Importkosten.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Lohn‑Preis‑Spirale</strong>
-                  <p className="text-blue-200 mt-1">Höhere Löhne → höhere Preise → erneute Lohnforderungen.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Tempo</strong>
-                  <p className="text-blue-200 mt-1">Schleichend (0‑3%), trabend (3‑10%), galoppierend ({'>'}10%), Hyper.</p>
-                </div>
-                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                  <strong className="text-white">Gegenstücke</strong>
-                  <p className="text-blue-200 mt-1">Deflation (fallende Preise) & Stagflation (hohe Inflation + Schwäche).</p>
-                </div>
-              </div>
-            </div>
+            {/* Hinweis: Inflationsarten oben als horizontale Strips ausgelagert */}
 
             {/* Interactive Legend */}
             <div ref={legendRef} className="space-y-4">
