@@ -8,7 +8,7 @@ import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEve
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
 import { useAnimationOnScroll } from '@/lib/hooks';
-import { Search, Globe, Brain, DollarSign, Activity } from 'lucide-react';
+import { Globe, Brain, DollarSign, Activity } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -28,6 +28,7 @@ export default function CausesSection() {
   const [animatedData, setAnimatedData] = useState(inflationCauses.map(() => 0));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const selectedCause = selectedType ? inflationCauses.find(c => c.category === selectedType) || null : null;
 
   const chartData: ChartData<'doughnut', number[], string> = {
     labels: inflationCauses.map(cause => cause.category),
@@ -185,110 +186,7 @@ export default function CausesSection() {
             importierte Komponenten, Lohn‑Preis‑Dynamiken und Erwartungen.
           </p>
         </div>
-        {/* Explanations row above chart + legend */}
-        <div className="mb-10">
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-            <h4 className="font-semibold text-blue-300 mb-4 flex items-center gap-2">
-              <Search size={18} className="text-blue-400" />
-              Inflationsarten – kurz erklärt
-            </h4>
-            <div className="space-y-3">
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Nachfrageinflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Nachfrageinflation' ? null : 'Nachfrageinflation')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Nachfrageinflation' ? null : 'Nachfrageinflation'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-red-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Nachfrageinflation:</strong>
-                  <span className="text-blue-200"> Gesamtnachfrage {'>'} Angebot (z. B. Nachholeffekte).</span>
-                </div>
-              </div>
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Angebots-/Kosteninflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Angebots-/Kosteninflation' ? null : 'Angebots-/Kosteninflation')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Angebots-/Kosteninflation' ? null : 'Angebots-/Kosteninflation'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-amber-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Angebots-/Kosteninflation:</strong>
-                  <span className="text-blue-200"> Kosten steigen (Energie, Löhne, Lieferketten).</span>
-                </div>
-              </div>
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Importierte Inflation' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Importierte Inflation' ? null : 'Importierte Inflation')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Importierte Inflation' ? null : 'Importierte Inflation'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-violet-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Importierte Inflation:</strong>
-                  <span className="text-blue-200"> Wechselkurs und Weltmarktpreise verteuern Importe.</span>
-                </div>
-              </div>
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Lohn-Preis-Spirale' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Lohn-Preis-Spirale' ? null : 'Lohn-Preis-Spirale')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Lohn-Preis-Spirale' ? null : 'Lohn-Preis-Spirale'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Lohn‑Preis‑Spirale:</strong>
-                  <span className="text-blue-200"> Löhne ↑ → Preise ↑ → erneute Lohnforderungen.</span>
-                </div>
-              </div>
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Tempo' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Tempo' ? null : 'Tempo')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Tempo' ? null : 'Tempo'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-sky-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Tempo:</strong>
-                  <span className="text-blue-200"> schleichend (0–3%), trabend (3–10%), galoppierend ({'>'}10%), Hyper.</span>
-                </div>
-              </div>
-              <div
-                className={`p-4 rounded-lg bg-white/5 border ${selectedType==='Gegenstücke' ? 'border-blue-300 ring-1 ring-blue-400/30' : 'border-white/10 hover:bg-white/10'} flex items-start gap-3 cursor-pointer`}
-                role="button"
-                tabIndex={0}
-                onClick={() => setSelectedType(selectedType==='Gegenstücke' ? null : 'Gegenstücke')}
-                onKeyDown={(e) => { if (e.key==='Enter') setSelectedType(selectedType==='Gegenstücke' ? null : 'Gegenstücke'); }}
-              >
-                <div className="w-2 h-2 rounded-full bg-fuchsia-400 mt-2" />
-                <div className="text-sm leading-relaxed">
-                  <strong className="text-white">Gegenstücke:</strong>
-                  <span className="text-blue-200"> Deflation (Preise ↓) und Stagflation (hohe Inflation + schwaches Wachstum).</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Detail panel */}
-            {selectedType && (
-              <div className="mt-6 bg-blue-500/10 border border-blue-400/30 rounded-xl p-5">
-                <h5 className="text-white font-semibold mb-2">{selectedType}</h5>
-                <p className="text-blue-100 text-sm leading-relaxed">
-                  {selectedType === 'Nachfrageinflation' && 'Entsteht, wenn die gesamtwirtschaftliche Nachfrage das Angebot übersteigt. Typische Treiber: expansiver Kreditzyklus, fiskalische Impulse, optimistische Erwartungen. Preisanpassungen erfolgen oft breit über viele Güter.'}
-                  {selectedType === 'Angebots-/Kosteninflation' && 'Kostensteigerungen (Energie, Löhne, Vorprodukte) werden an Endpreise weitergegeben. Angebotsschocks (z. B. Energiekrise, Naturereignisse, Regulierung) drücken die Produktion und erhöhen die Preise.'}
-                  {selectedType === 'Importierte Inflation' && 'Aufwertung ausländischer Güterpreise oder Abwertung der heimischen Währung verteuern Importe. Besonders sichtbar bei Energie, Rohstoffen und konsumnahen Importen.'}
-                  {selectedType === 'Lohn-Preis-Spirale' && 'Höhere Löhne erhöhen Kosten; Unternehmen passen Preise an; Reallöhne sollen gesichert werden, was weitere Lohnforderungen auslöst. Erwartungen bestimmen die Dynamik.'}
-                  {selectedType === 'Tempo' && 'Schleichend (0–3%), trabend (3–10%), galoppierend (>10%) und Hyperinflation (extrem). Je schneller, desto größer die Verzerrungen (Verträge, Planung, Verteilung).'}
-                  {selectedType === 'Gegenstücke' && 'Deflation (allgemeines Preisfallen) belastet Nachfrage und Schuldenlast; Stagflation kombiniert hohe Inflation mit schwachem Wachstum und stellt Politik vor Zielkonflikte.'}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Removed separate explanation strips; explanations live within categories/legend */}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
@@ -299,9 +197,12 @@ export default function CausesSection() {
               {inflationCauses.map((cause, index) => (
                 <div
                   key={cause.category}
+                  onClick={() => setSelectedType(selectedType === cause.category ? null : cause.category)}
                   className={`p-4 rounded-lg border transition-all duration-300 cursor-pointer ${
                     hoveredIndex === index
                       ? 'bg-white/10 border-white/30 scale-105'
+                      : selectedType === cause.category
+                      ? 'bg-white/10 border-blue-300 ring-1 ring-blue-400/30'
                       : 'bg-white/5 border-white/10 hover:bg-white/8'
                   }`}
                   onMouseEnter={() => setHoveredIndex(index)}
@@ -325,6 +226,17 @@ export default function CausesSection() {
                 </div>
               ))}
             </div>
+
+            {/* Detail panel bound to selected category */}
+            {selectedCause && (
+              <div className="mt-4 bg-blue-500/10 border border-blue-400/30 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h5 className="text-white font-semibold">{selectedCause.category}</h5>
+                  <span className="text-blue-300 text-sm">Anteil: {selectedCause.percentage}%</span>
+                </div>
+                <p className="text-blue-100 text-sm leading-relaxed">{selectedCause.description}</p>
+              </div>
+            )}
           </div>
 
           {/* Right Column - Chart */}
