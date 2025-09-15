@@ -8,18 +8,19 @@ interface NavigationProps {
   sections: string[];
 }
 
-const sectionNames = [
-  'Einführung',
-  'Ursachen',
-  'Auswirkungen',
-  'Messung',
-  'EZB-Politik',
-  'Alltag',
-  'Global',
-  'Geschichte',
-  'Glossar',
-  'Quiz'
-];
+const nameMap: Record<string, string> = {
+  '#intro': 'Einführung',
+  '#causes': 'Ursachen',
+  '#effects': 'Auswirkungen',
+  '#measurement': 'Messung',
+  '#ecb-policy': 'EZB-Politik',
+  '#fiscal': 'Fiskalpolitik',
+  '#everyday': 'Alltag',
+  '#global': 'Global',
+  '#history': 'Geschichte',
+  '#glossary': 'Glossar',
+  '#quiz': 'Quiz',
+};
 
 export default function Navigation({ currentSection, onNavigate, sections }: NavigationProps) {
 
@@ -47,7 +48,7 @@ export default function Navigation({ currentSection, onNavigate, sections }: Nav
                   ? 'bg-blue-500 scale-125'
                   : 'bg-white/30 hover:bg-white/50 hover:scale-110'
               }`}
-              aria-label={`Gehe zu ${sectionNames[index]}`}
+              aria-label={`Gehe zu ${nameMap[section] || 'Sektion'}`}
             >
               {/* Tooltip */}
               <div className={`absolute right-6 top-1/2 -translate-y-1/2 px-3 py-1 bg-black/80 backdrop-blur-sm rounded-lg text-sm text-white whitespace-nowrap transition-all duration-200 ${
@@ -55,7 +56,7 @@ export default function Navigation({ currentSection, onNavigate, sections }: Nav
                   ? 'opacity-100 translate-x-0' 
                   : 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
               }`}>
-                {sectionNames[index]}
+                {nameMap[section] || 'Sektion'}
                 <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-black/80" />
               </div>
             </button>

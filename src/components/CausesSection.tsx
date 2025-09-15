@@ -164,7 +164,7 @@ export default function CausesSection() {
   const animateChart = () => {
     const originalData = inflationCauses.map(cause => cause.percentage);
     const start = performance.now();
-    const duration = 2400; // noch langsamerer Aufbau
+    const duration = 4800; // doppelt so lang für dramatischen Effekt
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2);

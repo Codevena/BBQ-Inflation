@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Landmark, Banknote, Scale, AlertTriangle } from 'lucide-react';
+import { Landmark, Banknote, Scale, AlertTriangle, Settings, BarChart3, Clock, Globe } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -110,6 +110,62 @@ export default function FiscalPolicySection() {
             <p className="text-emerald-200 text-sm leading-relaxed">
               <span className="text-white font-medium">Gezielte Transfers/Subventionen</span> schonen das Budget und mindern Verzerrungen – besser als breite Preisbremsen.
             </p>
+          </div>
+
+          {/* Politikmix mit Geldpolitik */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="text-center mb-4">
+              <Settings size={36} className="text-emerald-400 mx-auto" />
+              <h3 className="text-xl font-bold text-white mt-2">Politikmix mit Geldpolitik</h3>
+            </div>
+            <p className="text-emerald-200 text-sm leading-relaxed">
+              Fiskal‑ und Geldpolitik sollten <span className="text-white font-medium">koordiniert</span> agieren: Bei hoher Inflation keine gegenläufige fiskalische Expansion; in Schwächephasen zielgerichtet stützen.
+            </p>
+          </div>
+
+          {/* r − g und Schuldentragfähigkeit */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="text-center mb-4">
+              <BarChart3 size={36} className="text-emerald-400 mx-auto" />
+              <h3 className="text-xl font-bold text-white mt-2">r − g & Tragfähigkeit</h3>
+            </div>
+            <p className="text-emerald-200 text-sm leading-relaxed">
+              Ist der Zins <span className="text-white font-medium">r</span> dauerhaft kleiner als das Wachstum <span className="text-white font-medium">g</span>, fällt die Schuldenquote leichter. Umgekehrt sind Defizitgrenzen wichtiger.
+            </p>
+          </div>
+
+          {/* Temporär vs. dauerhaft */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="text-center mb-4">
+              <Clock size={36} className="text-emerald-400 mx-auto" />
+              <h3 className="text-xl font-bold text-white mt-2">Temporär vs. dauerhaft</h3>
+            </div>
+            <p className="text-emerald-200 text-sm leading-relaxed">
+              Temporäre Hilfen mit <span className="text-white font-medium">klarem Ausstiegspfad</span> vermeiden Erwartungsfehler und Pfadabhängigkeiten. Dauerhafte Programme benötigen Gegenfinanzierung und Evaluierung.
+            </p>
+          </div>
+
+          {/* Offene Volkswirtschaft */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="text-center mb-4">
+              <Globe size={36} className="text-emerald-400 mx-auto" />
+              <h3 className="text-xl font-bold text-white mt-2">Offene Volkswirtschaft</h3>
+            </div>
+            <p className="text-emerald-200 text-sm leading-relaxed">
+              Fiskalimpulse erhöhen über Importe oft die <span className="text-white font-medium">Außennachfrage</span>. Wechselkurs und <span className="text-white font-medium">importierte Inflation</span> beeinflussen die Wirksamkeit.
+            </p>
+          </div>
+
+          {/* Praxisbeispiele (full width) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:col-span-3">
+            <div className="text-center mb-3">
+              <h3 className="text-xl font-bold text-white">Praxisbeispiele</h3>
+            </div>
+            <ul className="text-emerald-200 text-sm space-y-2 list-disc list-inside">
+              <li><span className="text-white font-medium">MWSt‑Senkung 2020 (DE):</span> temporäre Dämpfung der Preise; heterogener Pass‑through je Branche.</li>
+              <li><span className="text-white font-medium">Energiepreisbremsen 2022/23:</span> kurzfristige Entlastung, aber fiskalische Kosten und Verzerrungsrisiken.</li>
+              <li><span className="text-white font-medium">Gezielte Transfers:</span> bessere Treffsicherheit bei geringerer Marktverzerrung im Vergleich zu Preisdeckeln.</li>
+            </ul>
           </div>
 
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:col-span-3">
