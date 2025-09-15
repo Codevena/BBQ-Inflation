@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface SequentialTypewriterProps {
   texts: string[];
@@ -15,23 +15,54 @@ export default function SequentialTypewriter({
   delays = [500, 1000],
   onComplete 
 }: SequentialTypewriterProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayTexts, setDisplayTexts] = useState<string[]>(new Array(texts.length).fill(''));
   const [isComplete, setIsComplete] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Runtime guards to avoid double-start (React StrictMode) and to clean timers
+  const startedRef = useRef(false);
+  const timeoutsRef = useRef<number[]>([]);
+  const intervalsRef = useRef<number[]>([]);
+  const completedRef = useRef(false);
 
   // Warte auf Client-Side Hydration
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // Observe visibility to start typing only when in view
   useEffect(() => {
-    if (!isMounted || isComplete) return;
+    if (!isMounted) return;
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      // Fallback: start immediately if IO not available
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMounted]);
+
+  useEffect(() => {
+    if (!isMounted || isComplete || startedRef.current || !isVisible) return;
 
     const typeText = (textIndex: number) => {
       if (textIndex >= texts.length) {
-        setIsComplete(true);
-        onComplete?.();
+        if (!completedRef.current) {
+          completedRef.current = true;
+          setIsComplete(true);
+          onComplete?.();
+        }
         return;
       }
 
@@ -40,9 +71,9 @@ export default function SequentialTypewriter({
       const speed = speeds[textIndex] || 50;
       const delay = delays[textIndex] || 0;
 
-      setTimeout(() => {
+      const startTimeout = window.setTimeout(() => {
         let index = 0;
-        const interval = setInterval(() => {
+        const interval = window.setInterval(() => {
           if (index <= text.length) {
             setDisplayTexts(prev => {
               const newTexts = [...prev];
@@ -51,21 +82,33 @@ export default function SequentialTypewriter({
             });
             index++;
           } else {
-            clearInterval(interval);
+            window.clearInterval(interval);
+            intervalsRef.current = intervalsRef.current.filter(i => i !== interval);
             // Nächsten Text nach kurzer Pause (verkürzt)
-            setTimeout(() => {
+            const nextTimeout = window.setTimeout(() => {
               typeText(textIndex + 1);
             }, 100);
+            timeoutsRef.current.push(nextTimeout);
           }
         }, speed);
+        intervalsRef.current.push(interval);
       }, delay);
+      timeoutsRef.current.push(startTimeout);
     };
 
+    startedRef.current = true;
     typeText(0);
-  }, [isMounted, texts, speeds, delays, isComplete, onComplete]);
+    return () => {
+      // Cleanup timers on unmount
+      timeoutsRef.current.forEach(t => window.clearTimeout(t));
+      intervalsRef.current.forEach(i => window.clearInterval(i));
+      timeoutsRef.current = [];
+      intervalsRef.current = [];
+    };
+  }, [isMounted, isVisible, texts, speeds, delays, isComplete, onComplete]);
 
   return (
-    <>
+    <div ref={containerRef}>
       <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
         {displayTexts[0]}
         {currentTextIndex === 0 && !isComplete && <span className="animate-pulse">|</span>}
@@ -76,6 +119,6 @@ export default function SequentialTypewriter({
         {currentTextIndex === 1 && !isComplete && <span className="animate-pulse">|</span>}
         {isComplete && <span className="animate-pulse">|</span>}
       </p>
-    </>
+    </div>
   );
 }
