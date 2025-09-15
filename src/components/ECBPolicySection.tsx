@@ -82,7 +82,8 @@ export default function ECBPolicySection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup
-      gsap.set([titleRef.current, simulatorRef.current, timelineRef.current, chartRef.current], {
+      // Do not hide the chart container to avoid flicker; only animate data
+      gsap.set([titleRef.current, simulatorRef.current, timelineRef.current], {
         opacity: 0,
         y: 50
       });
@@ -115,12 +116,7 @@ export default function ECBPolicySection() {
         duration: 1,
         ease: 'power2.out'
       }, '-=0.5')
-      .to(chartRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out'
-      }, '-=0.3')
+      // Chart container stays visible; data animates via animatedData
       .to(timelineRef.current, {
         opacity: 1,
         y: 0,
