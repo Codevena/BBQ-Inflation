@@ -149,8 +149,8 @@ export default function PresentationMode() {
                 <div className="text-blue-200">Deutschland 2024</div>
               </div>
               <div className="bg-white/10 rounded-xl p-6">
-                <div className="text-3xl font-bold text-orange-400">-4.3%</div>
-                <div className="text-blue-200">Reallöhne 2022</div>
+                <div className="text-3xl font-bold text-green-400">+1.6%</div>
+                <div className="text-blue-200">Reallöhne 2024</div>
               </div>
             </div>
           </div>
@@ -582,6 +582,9 @@ export default function PresentationMode() {
                   <div className="text-xs text-green-300">Mission erfolgreich!</div>
                 </div>
               </div>
+              <p className="text-xs text-green-200 mt-4">
+                Hinweis: „0% Zinsen“ bezieht sich auf den Hauptrefinanzierungssatz (MRO). Die Einlagefazilität lag bis Mitte 2022 bei −0,5%.
+              </p>
             </div>
           </div>
         );
