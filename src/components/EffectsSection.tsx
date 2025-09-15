@@ -25,7 +25,6 @@ export default function EffectsSection() {
   const rafRef = useRef<number | null>(null);
   const hasAnimatedRef = useRef(false);
   const animatingRef = useRef(false);
-  const rafRef = useRef<number | null>(null);
   
   const [inflationRate, setInflationRate] = useState(2.3);
   const [animatedData, setAnimatedData] = useState(inflationRatesGermany.map(() => 0));
