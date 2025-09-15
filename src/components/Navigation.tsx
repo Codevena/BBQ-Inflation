@@ -15,6 +15,7 @@ const nameMap: Record<string, string> = {
   '#measurement': 'Messung',
   '#ecb-policy': 'EZB-Politik',
   '#fiscal': 'Fiskalpolitik',
+  '#business': 'Unternehmen',
   '#everyday': 'Alltag',
   '#global': 'Global',
   '#history': 'Geschichte',
