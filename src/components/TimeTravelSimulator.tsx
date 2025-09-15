@@ -203,7 +203,7 @@ export default function TimeTravelSimulator() {
                 Ursprünglich: {formatNumber(result.originalAmount)} {result.originalCurrency}
               </p>
               <p className="text-sm text-gray-300">
-                Wertsteigerung: +{result.purchasingPowerLoss.toFixed(1)}%
+                Wertsteigerung: +{result.purchasingPowerLoss.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
               </p>
             </div>
 
@@ -238,11 +238,11 @@ export default function TimeTravelSimulator() {
               </div>
               <div>
                 <span className="text-gray-400">Ø Inflation:</span>
-                <div className="text-white font-semibold">{result.avgInflation.toFixed(1)}%</div>
+                <div className="text-white font-semibold">{result.avgInflation.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%</div>
               </div>
               <div>
                 <span className="text-gray-400">Faktor:</span>
-                <div className="text-white font-semibold">{result.inflationFactor.toFixed(2)}x</div>
+                <div className="text-white font-semibold">{result.inflationFactor.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}x</div>
               </div>
               <div>
                 <span className="text-gray-400">Währung:</span>
@@ -257,7 +257,7 @@ export default function TimeTravelSimulator() {
               <Lightbulb size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong>Fun Fact:</strong> Dein Geld hätte sich in {result.yearsDiff} Jahren
-                um {result.purchasingPowerLoss.toFixed(0)}% &quot;vermehrt&quot; - aber nur nominal!
+                um {result.purchasingPowerLoss.toLocaleString('de-DE')}% &quot;vermehrt&quot; - aber nur nominal!
                 Real hat es die gleiche Kaufkraft wie damals.
               </span>
             </p>

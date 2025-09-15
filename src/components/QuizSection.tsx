@@ -153,7 +153,7 @@ export default function QuizSection() {
           >
             Quiz zum Thema
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 block">
-              Inflation!
+              Inflation
             </span>
           </h2>
           <p className="text-xl text-green-200">

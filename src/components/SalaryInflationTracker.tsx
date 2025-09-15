@@ -193,7 +193,7 @@ export default function SalaryInflationTracker() {
                 {result.isWinner ? '🎉' : '😔'} Dein Reallohn-Ergebnis
               </h4>
               <p className={`text-lg ${result.isWinner ? 'text-green-300' : 'text-red-300'}`}>
-                Du verdienst real <strong>{Math.abs(result.realWageChange).toFixed(1)}%</strong> {result.isWinner ? 'mehr' : 'weniger'}
+                Du verdienst real <strong>{Math.abs(result.realWageChange).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%</strong> {result.isWinner ? 'mehr' : 'weniger'}
               </p>
             </div>
 
@@ -207,7 +207,7 @@ export default function SalaryInflationTracker() {
                 </div>
                 <div className="text-sm text-gray-300">Reallohn-Änderung</div>
                 <div className={`text-xl font-bold ${result.isWinner ? 'text-green-400' : 'text-red-400'}`}>
-                  {result.realWageChange > 0 ? '+' : ''}{result.realWageChange.toFixed(1)}%
+                  {result.realWageChange > 0 ? '+' : ''}{result.realWageChange.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                 </div>
               </div>
 
@@ -255,7 +255,7 @@ export default function SalaryInflationTracker() {
                   <div className="flex justify-between border-t border-white/20 pt-2">
                     <span className="text-gray-300">Nominale Steigerung:</span>
                     <span className="text-green-400 font-semibold">
-                      +{((result.currentSalary / result.salary2020 - 1) * 100).toFixed(1)}%
+                      +{((result.currentSalary / result.salary2020 - 1) * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                     </span>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export default function SalaryInflationTracker() {
                   <div className="flex justify-between border-t border-white/20 pt-2">
                     <span className="text-gray-300">Kumuliert:</span>
                     <span className="text-red-400 font-semibold">
-                      +{result.cumulativeInflation.toFixed(1)}%
+                      +{result.cumulativeInflation.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                     </span>
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export default function SalaryInflationTracker() {
                   'Investiere dein zusätzliches Einkommen in inflationsgeschützte Anlagen wie Aktien oder Immobilien!'
                 ) : (
                   'Verhandle eine Gehaltserhöhung von mindestens ' + 
-                  Math.abs(result.realWageChange).toFixed(0) + 
+                  Math.abs(result.realWageChange).toLocaleString('de-DE') +
                   '% oder wechsle den Job. Parallel solltest du in Sachwerte investieren.'
                 )}
               </p>

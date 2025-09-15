@@ -259,13 +259,13 @@ export default function EffectsSection() {
                 Kaufkraftverlust
               </h4>
               <p className="text-blue-200 text-sm leading-relaxed">
-                Bei {inflationRate}% Inflation verlieren €1.000 in 4 Jahren etwa{' '}
+                Bei {inflationRate}% Inflation verlieren 1.000 € in 4 Jahren etwa{' '}
                 <span className="font-bold text-red-400">
-                  €{(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toLocaleString('de-DE')}
+                  {(1000 - (1000 / Math.pow(1 + inflationRate / 100, 4))).toLocaleString('de-DE')} €
                 </span>{' '}
                 ihrer Kaufkraft. Das entspricht einem realen Wert von nur noch{' '}
                 <span className="font-bold text-yellow-400">
-                  €{(1000 / Math.pow(1 + inflationRate / 100, 4)).toLocaleString('de-DE')}
+                  {(1000 / Math.pow(1 + inflationRate / 100, 4)).toLocaleString('de-DE')} €
                 </span>.
               </p>
             </div>
@@ -300,11 +300,11 @@ export default function EffectsSection() {
                     <div className="flex items-center justify-between">
                       <div className="text-blue-200">
                         <span className="text-sm">2020: </span>
-                        <span className="font-semibold">€{example.price2020.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="font-semibold">{example.price2020.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
                       </div>
                       <div className="text-white">
                         <span className="text-sm">2025: </span>
-                        <span className="font-semibold text-red-400">€{newPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="font-semibold text-red-400">{newPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
                       </div>
                     </div>
                     
