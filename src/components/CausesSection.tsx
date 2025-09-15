@@ -8,7 +8,6 @@ import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEve
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
 import { useAnimationOnScroll } from '@/lib/hooks';
-import { useAnimationOnScroll } from '@/lib/hooks';
 import { Search } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
