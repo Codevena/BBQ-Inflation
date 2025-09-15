@@ -25,7 +25,7 @@ export default function Icon() {
           boxShadow: size > 64 ? '0 4px 20px rgba(0,0,0,0.3)' : 'none',
         }}
       >
-        📊
+        BBQ
       </div>
     ),
     {

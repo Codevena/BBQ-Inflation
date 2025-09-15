@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Search, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star, Sparkles } from 'lucide-react';
+import { Globe, Search, Laptop, Thermometer, Brain, Map, CheckCircle, Bot, Star, Sparkles, Lightbulb } from 'lucide-react';
 import CountUpNumber from './CountUpNumber';
 import { globalInflationData, inflationMythsFacts } from '@/data/inflationData';
 
@@ -124,7 +124,7 @@ export default function GlobalPerspectiveSection() {
                 onClick={() => setSelectedCountry(selectedCountry === index ? null : index)}
               >
                 <div className="text-center">
-                  <div className="text-3xl mb-2">{country.flag}</div>
+                  <Globe size={24} className="mx-auto mb-2 text-blue-300" />
                   <h4 className="font-bold text-white text-sm mb-2">{country.country}</h4>
                   <div className={`text-2xl font-bold mb-1 ${getInflationColor(country.rate2025)}`}>
                     <CountUpNumber
@@ -212,7 +212,7 @@ export default function GlobalPerspectiveSection() {
 
                 {showMyth === index && (
                   <div className="mt-4 p-4 bg-purple-500/20 border border-purple-400/30 rounded-lg animate-fadeIn">
-                    <h5 className="font-bold text-purple-300 mb-2">💡 Erklärung:</h5>
+                    <h5 className="font-bold text-purple-300 mb-2 flex items-center gap-2"><Lightbulb size={16} className="text-purple-300" /> Erklärung:</h5>
                     <p className="text-purple-100 text-sm">{item.explanation}</p>
                   </div>
                 )}

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Target, Home } from 'lucide-react';
+import { Target, Home, Lightbulb } from 'lucide-react';
 import { quizQuestions } from '@/data/inflationData';
 
 if (typeof window !== 'undefined') {
@@ -131,9 +131,9 @@ export default function QuizSection() {
 
   const getScoreMessage = (score: number, total: number) => {
     const percentage = (score / total) * 100;
-    if (percentage >= 80) return 'Ausgezeichnet! Du verstehst Inflation sehr gut! 🎉';
-    if (percentage >= 60) return 'Gut gemacht! Du hast ein solides Verständnis. 👍';
-    return 'Nicht schlecht, aber da ist noch Luft nach oben! 📖';
+    if (percentage >= 80) return 'Ausgezeichnet! Du verstehst Inflation sehr gut!';
+    if (percentage >= 60) return 'Gut gemacht! Du hast ein solides Verständnis.';
+    return 'Nicht schlecht, aber da ist noch Luft nach oben!';
   };
 
   const currentQuestion = quizQuestions[quizState.currentQuestion];
@@ -233,7 +233,9 @@ export default function QuizSection() {
               {/* Explanation */}
               {showExplanation && (
                 <div className="mb-8 p-6 bg-blue-500/10 border border-blue-400/30 rounded-xl animate-fadeIn">
-                  <h4 className="font-semibold text-blue-300 mb-2">💡 Erklärung:</h4>
+                  <h4 className="font-semibold text-blue-300 mb-2 flex items-center gap-2">
+                    <Lightbulb size={18} className="text-blue-300" /> Erklärung
+                  </h4>
                   <p className="text-blue-100 leading-relaxed">
                     {currentQuestion.explanation}
                   </p>

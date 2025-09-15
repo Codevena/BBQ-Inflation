@@ -164,28 +164,28 @@ export default function PresentationMode() {
               <FileText size={48} className="text-cyan-400" />
               Roadmap
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                <h2 className="text-xl font-bold text-white mb-3">1. Grundlagen</h2>
-                <ul className="text-blue-200 text-sm space-y-1">
-                  <li>• Was ist Inflation?</li>
-                  <li>• Deutschland: Entwicklung</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                <h2 className="text-xl font-bold text-white mb-3">2. Ursachen & Auswirkungen</h2>
-                <ul className="text-blue-200 text-sm space-y-1">
-                  <li>• Nachfrage vs. Angebot</li>
-                  <li>• Reallöhne & Preise</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                <h2 className="text-xl font-bold text-white mb-3">3. EZB & Geschichte</h2>
-                <ul className="text-blue-200 text-sm space-y-1">
-                  <li>• EZB-Tools & Leitzins</li>
-                  <li>• Historische Episoden</li>
-                </ul>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { title: '1. Grundlagen', icon: <BarChart3 size={24} className="text-cyan-300" />, items: ['Was ist Inflation?', 'Deutschland: Entwicklung'] },
+                { title: '2. Ursachen & Auswirkungen', icon: <Search size={24} className="text-cyan-300" />, items: ['Nachfrage vs. Angebot', 'Reallöhne & Preise'] },
+                { title: '3. EZB & Geschichte', icon: <Building2 size={24} className="text-cyan-300" />, items: ['EZB-Tools & Leitzins', 'Historische Episoden'] },
+              ].map((block, i) => (
+                <div key={i} className="group relative bg-white/5 rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    {block.icon}
+                    <h2 className="text-xl font-bold text-white">{block.title}</h2>
+                  </div>
+                  <ul className="text-blue-200 text-sm space-y-2 text-left">
+                    {block.items.map((it, idx) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         );

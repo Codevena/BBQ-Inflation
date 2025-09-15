@@ -28,7 +28,7 @@ export default function AppleIcon() {
           boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
         }}
       >
-        📊
+        BBQ
       </div>
     ),
     {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { gsap } from 'gsap';
-import { DollarSign, BarChart3, TrendingUp, TrendingDown, Lightbulb, Banknote, Calendar, Briefcase } from 'lucide-react';
+import { DollarSign, BarChart3, TrendingUp, TrendingDown, Lightbulb, Banknote, Calendar, Briefcase, Scale, Target, Smile, Frown } from 'lucide-react';
 
 // Consistent number formatting function to avoid hydration issues
 const formatCurrency = (amount: number, decimals: number = 0): string => {
@@ -204,8 +204,8 @@ export default function SalaryInflationTracker() {
           {/* Hauptergebnis */}
           <div className={`bg-gradient-to-r ${result.isWinner ? 'from-green-500/20 to-blue-500/20 border-green-400/30' : 'from-red-500/20 to-orange-500/20 border-red-400/30'} backdrop-blur-sm rounded-xl p-6 border mb-6`}>
             <div className="text-center mb-6">
-              <h4 className="text-2xl font-bold text-white mb-2">
-                {result.isWinner ? '🎉' : '😔'} Dein Reallohn-Ergebnis
+              <h4 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+                {result.isWinner ? <Smile size={24} className="text-green-400" /> : <Frown size={24} className="text-red-400" />} Dein Reallohn-Ergebnis
               </h4>
               <p className={`text-lg ${result.isWinner ? 'text-green-300' : 'text-red-300'}`}>
                 Du verdienst real <strong>{Math.abs(result.realWageChange).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%</strong> {result.isWinner ? 'mehr' : 'weniger'}
@@ -235,7 +235,7 @@ export default function SalaryInflationTracker() {
               </div>
 
               <div className="bg-white/10 rounded-lg p-4 text-center">
-                <div className="text-2xl mb-2">⚖️</div>
+                <Scale size={32} className="text-yellow-300 mx-auto mb-2" />
                 <div className="text-sm text-gray-300">vs. Durchschnitt</div>
                 <div className={`text-xl font-bold ${result.vsAverageChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {result.vsAverage}
@@ -246,7 +246,7 @@ export default function SalaryInflationTracker() {
 
           {/* Detailanalyse */}
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-            <h5 className="text-xl font-bold text-white mb-4">📊 Detailanalyse 2020-2024:</h5>
+            <h5 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><BarChart3 size={20} className="text-blue-300" /> Detailanalyse 2020-2024:</h5>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -300,7 +300,7 @@ export default function SalaryInflationTracker() {
 
             {/* Fazit */}
             <div className="mt-6 bg-blue-500/10 rounded-lg p-4">
-              <h6 className="text-lg font-bold text-white mb-2">🎯 Fazit:</h6>
+              <h6 className="text-lg font-bold text-white mb-2 flex items-center gap-2"><Target size={18} className="text-yellow-400" /> Fazit:</h6>
               <p className="text-blue-200 text-sm leading-relaxed">
                 {result.isWinner ? (
                   <>
