@@ -61,7 +61,7 @@ export async function GET(request: Request) {
           error: 'Invalid type parameter. Use: rates, causes, historical, quiz, prices, or all'
         }, { status: 400 });
     }
-  } catch (_error) {
+  } catch {
     return NextResponse.json({
       success: false,
       error: 'Internal server error'

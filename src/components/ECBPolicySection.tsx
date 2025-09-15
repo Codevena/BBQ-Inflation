@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
@@ -38,6 +38,28 @@ export default function ECBPolicySection() {
   const [showImpact, setShowImpact] = useState(false);
   const [animatedData, setAnimatedData] = useState(ecbRateHistory.map(() => 0));
   const [isAnimating, setIsAnimating] = useState(false);
+
+  const animateChart = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+
+    const originalData = ecbRateHistory.map(item => item.rate);
+
+    gsap.to({ progress: 0 }, {
+      progress: 1,
+      duration: 3,
+      ease: 'power2.out',
+      onUpdate: function() {
+        const progress = (this.targets() as Array<{ progress: number }>)[0].progress;
+        const newData = originalData.map((value, index) => {
+          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
+          return value * pointProgress;
+        });
+        setAnimatedData([...newData]);
+      },
+      onComplete: () => setIsAnimating(false)
+    });
+  }, [isAnimating]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -86,29 +108,7 @@ export default function ECBPolicySection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
-
-  const animateChart = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-
-    const originalData = ecbRateHistory.map(item => item.rate);
-
-    gsap.to({ progress: 0 }, {
-      progress: 1,
-      duration: 3,
-      ease: 'power2.out',
-      onUpdate: function() {
-        const progress = this.targets()[0].progress;
-        const newData = originalData.map((value, index) => {
-          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
-          return value * pointProgress;
-        });
-        setAnimatedData([...newData]);
-      },
-      onComplete: () => setIsAnimating(false)
-    });
-  };
+  }, [animateChart]);
 
   const chartData = {
     labels: ecbRateHistory.map(item => item.year),

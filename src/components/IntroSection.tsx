@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CountUpNumber from './CountUpNumber';
@@ -19,7 +19,7 @@ export default function IntroSection() {
   const statsRef = useRef<HTMLDivElement>(null);
 
   // no external need for completion flag; kept local-only
-  const [typewriterComplete, setTypewriterComplete] = useState(false);
+  // Removed unused completion state
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -133,7 +133,6 @@ export default function IntroSection() {
             ]}
             speeds={[80, 50]}
             delays={[500, 1000]}
-            onComplete={() => setTypewriterComplete(true)}
           />
         </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
@@ -100,6 +100,27 @@ export default function EffectsSection() {
     return basePrice * Math.pow(1 + rate / 100, years);
   };
 
+  // Animate chart on first reveal
+  const animateChart = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    const originalData = inflationRatesGermany.map(item => item.rate);
+    gsap.to({ progress: 0 }, {
+      progress: 1,
+      duration: 3,
+      ease: 'power2.out',
+      onUpdate: function() {
+        const progress = (this.targets() as Array<{ progress: number }>)[0].progress;
+        const newData = originalData.map((value, index) => {
+          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
+          return value * pointProgress;
+        });
+        setAnimatedData([...newData]);
+      },
+      onComplete: () => setIsAnimating(false)
+    });
+  }, [isAnimating]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup
@@ -141,29 +162,7 @@ export default function EffectsSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
-
-  const animateChart = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    
-    const originalData = inflationRatesGermany.map(item => item.rate);
-    
-    gsap.to({ progress: 0 }, {
-      progress: 1,
-      duration: 3,
-      ease: 'power2.out',
-      onUpdate: function() {
-        const progress = this.targets()[0].progress;
-        const newData = originalData.map((value, index) => {
-          const pointProgress = Math.max(0, Math.min(1, (progress * originalData.length - index) / 1));
-          return value * pointProgress;
-        });
-        setAnimatedData([...newData]);
-      },
-      onComplete: () => setIsAnimating(false)
-    });
-  };
+  }, [animateChart]);
 
   return (
     <section 
@@ -239,7 +238,7 @@ export default function EffectsSection() {
                 Reallohn-Entwicklung Deutschland
               </h4>
               <div className="grid grid-cols-3 gap-4">
-                {realWageData.slice(-3).map((data, index) => (
+                {realWageData.slice(-3).map((data) => (
                   <div key={data.year} className="text-center">
                     <div className="text-sm text-purple-200">{data.year}</div>
                     <div className={`text-lg font-bold ${data.realGrowth >= 0 ? 'text-green-400' : 'text-red-400'}`}>
@@ -280,7 +279,7 @@ export default function EffectsSection() {
             </h3>
             
             <div className="grid gap-4">
-              {priceExamples.map((example, index) => {
+              {priceExamples.map((example) => {
                 const newPrice = calculatePriceIncrease(example.price2020, inflationRate, 5);
                 const increase = ((newPrice - example.price2020) / example.price2020) * 100;
                 

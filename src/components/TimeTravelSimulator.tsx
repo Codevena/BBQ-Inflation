@@ -62,6 +62,7 @@ export default function TimeTravelSimulator() {
   const [amount, setAmount] = useState(1000);
   const [result, setResult] = useState<TimeTravelResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const inflationYears = Object.keys(historicalInflation).map(Number) as Array<keyof typeof historicalInflation>;
 
   const calculatePurchasingPower = () => {
     setIsCalculating(true);
@@ -139,9 +140,9 @@ export default function TimeTravelSimulator() {
             onChange={(e) => setSelectedYear(parseInt(e.target.value))}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
           >
-            {Object.keys(historicalInflation).map(year => (
+            {inflationYears.map((year) => (
               <option key={year} value={year} className="bg-gray-800">
-                {year} ({historicalInflation[year as keyof typeof historicalInflation].currency})
+                {year} ({historicalInflation[year].currency})
               </option>
             ))}
           </select>
