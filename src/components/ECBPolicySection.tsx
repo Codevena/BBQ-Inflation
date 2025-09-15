@@ -52,7 +52,7 @@ export default function ECBPolicySection() {
     const originalData = ecbRateHistory.map(item => item.rate);
     const n = originalData.length;
     const start = performance.now();
-    const duration = 2600; // langsamer für mehr Effekt
+    const duration = 3200; // etwas langsamer und effektvoller
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2);
