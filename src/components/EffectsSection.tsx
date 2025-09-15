@@ -29,7 +29,7 @@ export default function EffectsSection() {
   
   const [inflationRate, setInflationRate] = useState(2.3);
   const [animatedData, setAnimatedData] = useState(inflationRatesGermany.map(() => 0));
-  const [isAnimating, setIsAnimating] = useState(false);
+  // Use refs to prevent re-renders from toggling timeline
 
   const chartData = {
     labels: inflationRatesGermany.map(item => item.year.toString()),
@@ -107,10 +107,8 @@ export default function EffectsSection() {
 
   // Animate chart on first reveal (requestAnimationFrame for robustness)
   const animateChart = useCallback(() => {
-    if (isAnimating) return;
     if (hasAnimatedRef.current || animatingRef.current) return;
     animatingRef.current = true;
-    setIsAnimating(true);
     const originalData = inflationRatesGermany.map(item => item.rate);
     const n = originalData.length;
     const start = performance.now();
@@ -130,14 +128,13 @@ export default function EffectsSection() {
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
-        setIsAnimating(false);
         rafRef.current = null;
         hasAnimatedRef.current = true;
         animatingRef.current = false;
       }
     };
     rafRef.current = requestAnimationFrame(step);
-  }, [isAnimating]);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -184,8 +181,7 @@ export default function EffectsSection() {
     return () => ctx.revert();
   }, [animateChart]);
 
-  // Sichtbarkeitsgesteuert: setzt Daten sobald der Abschnitt im Viewport ist
-  // Removed secondary on-scroll trigger to avoid double animation
+  // Sichtbarkeitsgesteuert-trigger entfernt (GSAP onEnter reicht, verhindert Doppel-Init)
 
   // Cleanup any pending rAF on unmount
   useEffect(() => {
