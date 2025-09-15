@@ -205,11 +205,9 @@ export default function MeasurementSection() {
         </div>
 
         {/* Measurement Add-ons: Kerninflation, BIP-Deflator, Basiseffekt, Biases */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mb-16">
-          {/* Left Column */}
-          <div className="space-y-6">
-            {/* Kerninflation */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 items-stretch">
+          {/* Kerninflation (links oben) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
                 <Target size={20} className="text-cyan-400" />
                 Kerninflation
@@ -221,8 +219,8 @@ export default function MeasurementSection() {
               </p>
             </div>
 
-            {/* BIP-Deflator */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          {/* BIP-Deflator (links unten) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
                 <BarChart3 size={20} className="text-cyan-400" />
                 BIP‑Deflator
@@ -233,12 +231,8 @@ export default function MeasurementSection() {
                 sondern bildet die gesamte <span className="text-white font-medium">Inlandsproduktion</span> ab – hilfreich für Makro‑Analysen.
               </p>
             </div>
-          </div>
-
-          {/* Right Column */}
-          <div className="space-y-6">
-            {/* Basiseffekt-Simulator */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          {/* Basiseffekt-Simulator (rechts, über zwei Reihen) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 md:row-span-2 flex flex-col">
               <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
                 <Calculator size={20} className="text-cyan-400" />
                 Basiseffekt‑Simulator
@@ -289,22 +283,21 @@ export default function MeasurementSection() {
                   Formel: ((Index aktuell / Index Vorjahr) − 1) × 100
                 </div>
               </div>
-            </div>
-
-            {/* Messfehler & Verzerrungen */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                <Lightbulb size={20} className="text-yellow-400" />
-                Messfehler & Verzerrungen
-              </h4>
-              <ul className="list-disc list-inside text-cyan-200 text-sm space-y-1">
-                <li><span className="text-white font-medium">Substitution:</span> Verbraucher weichen auf günstigere Güter aus.</li>
-                <li><span className="text-white font-medium">Qualitätsanpassungen (Hedonics):</span> Verbesserungen fließen als „Preisrückgang“ ein.</li>
-                <li><span className="text-white font-medium">Neue Produkte:</span> Verzögerte Aufnahme in den Warenkorb.</li>
-                <li><span className="text-white font-medium">Outlet‑Bias:</span> Veränderte Einkaufsorte (Online/Discount) werden verzerrt abgebildet.</li>
-              </ul>
-            </div>
           </div>
+        </div>
+
+        {/* Messfehler & Verzerrungen – volle Breite */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-16">
+          <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+            <Lightbulb size={20} className="text-yellow-400" />
+            Messfehler & Verzerrungen
+          </h4>
+          <ul className="list-disc list-inside text-cyan-200 text-sm space-y-1">
+            <li><span className="text-white font-medium">Substitution:</span> Verbraucher weichen auf günstigere Güter aus.</li>
+            <li><span className="text-white font-medium">Qualitätsanpassungen (Hedonics):</span> Verbesserungen fließen als „Preisrückgang“ ein.</li>
+            <li><span className="text-white font-medium">Neue Produkte:</span> Verzögerte Aufnahme in den Warenkorb.</li>
+            <li><span className="text-white font-medium">Outlet‑Bias:</span> Veränderte Einkaufsorte (Online/Discount) werden verzerrt abgebildet.</li>
+          </ul>
         </div>
 
         {/* Bottom Info */}
