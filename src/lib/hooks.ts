@@ -26,7 +26,15 @@ export const useLenis = () => {
     };
   }, []);
 
-  const scrollTo = useCallback((target: string | number, options?: any) => {
+  type LenisScrollOptions = {
+    duration?: number;
+    offset?: number;
+    immediate?: boolean;
+    lock?: boolean;
+    easing?: (t: number) => number;
+    [key: string]: unknown;
+  };
+  const scrollTo = useCallback((target: string | number, options?: LenisScrollOptions) => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(target, options);
     }
@@ -182,7 +190,7 @@ export const useAnimationOnScroll = (
 };
 
 export const useChartAnimation = (
-  chartRef: React.RefObject<any>,
+  chartRef: React.RefObject<{ chartInstance?: { data: { datasets: Array<{ data: number[] }> }; update: (mode?: unknown) => void } }>,
   data: number[],
   duration: number = 2
 ) => {

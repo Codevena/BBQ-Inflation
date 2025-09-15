@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import type { Chart as ChartType, ChartData, ChartOptions, TooltipItem, ChartEvent, ActiveElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { inflationCauses } from '@/data/inflationData';
 import { Search } from 'lucide-react';
@@ -16,7 +17,7 @@ if (typeof window !== 'undefined') {
 
 export default function CausesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const chartRef = useRef<any>(null);
+  const chartRef = useRef<ChartType<'doughnut'> | null>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ export default function CausesSection() {
   const [animatedData, setAnimatedData] = useState(inflationCauses.map(() => 0));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const chartData = {
+  const chartData: ChartData<'doughnut', number[], string> = {
     labels: inflationCauses.map(cause => cause.category),
     datasets: [
       {
@@ -39,7 +40,7 @@ export default function CausesSection() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -55,7 +56,7 @@ export default function CausesSection() {
         cornerRadius: 8,
         displayColors: true,
         callbacks: {
-          label: function(context: any) {
+          label: function(context: TooltipItem<'doughnut'>) {
             const cause = inflationCauses[context.dataIndex];
             return [
               `${cause.category}: ${cause.percentage}%`,
@@ -65,7 +66,7 @@ export default function CausesSection() {
         }
       }
     },
-    onHover: (event: any, elements: any[]) => {
+    onHover: (event: ChartEvent, elements: ActiveElement[]) => {
       if (elements.length > 0) {
         setHoveredIndex(elements[0].index);
       } else {

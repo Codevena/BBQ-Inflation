@@ -43,10 +43,24 @@ const productExamples = {
   2020: { name: 'Netflix Abo', price: 7.99, currency: '€' },
 };
 
+type YearData = { rate: number; currency: 'DM' | '€'; factor: number };
+type Product = { name: string; price: number; currency: 'DM' | '€' };
+interface TimeTravelResult {
+  originalAmount: number;
+  originalCurrency: string;
+  todayValue: number;
+  inflationFactor: number;
+  yearsDiff: number;
+  avgInflation: number;
+  example: Product;
+  exampleToday: number;
+  purchasingPowerLoss: number;
+}
+
 export default function TimeTravelSimulator() {
   const [selectedYear, setSelectedYear] = useState(2000);
   const [amount, setAmount] = useState(1000);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<TimeTravelResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const calculatePurchasingPower = () => {

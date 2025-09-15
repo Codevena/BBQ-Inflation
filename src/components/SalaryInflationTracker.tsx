@@ -32,10 +32,25 @@ const avgSalaryIncrease = {
   2024: 3.5, // Geschätzt
 };
 
+interface SalaryResult {
+  salary2020: number;
+  currentSalary: number;
+  inflationAdjustedSalary: number;
+  realWageChange: number;
+  cumulativeInflation: number;
+  avgSalaryToday: number;
+  vsAverageChange: number;
+  purchasingPowerChange: number;
+  monthlyDifference: number;
+  yearlyInflationLoss: number;
+  isWinner: boolean;
+  vsAverage: 'besser' | 'schlechter';
+}
+
 export default function SalaryInflationTracker() {
   const [salary2020, setSalary2020] = useState(45000);
   const [currentSalary, setCurrentSalary] = useState(50000);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<SalaryResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const calculateRealWage = () => {

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import CountUpNumber from './CountUpNumber';
 import { Building2, TrendingUp, TrendingDown, Target, LineChart, CheckCircle, Settings, ArrowUpDown, Clock, PiggyBank, Shield, DollarSign, AlertTriangle } from 'lucide-react';
@@ -129,7 +130,7 @@ export default function ECBPolicySection() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -144,7 +145,7 @@ export default function ECBPolicySection() {
         borderWidth: 1,
         cornerRadius: 8,
         callbacks: {
-          afterBody: function(context: any) {
+          afterBody: function(context: TooltipItem<'line'>[]) {
             const index = context[0].dataIndex;
             return ecbRateHistory[index].event;
           }
@@ -166,8 +167,9 @@ export default function ECBPolicySection() {
         },
         ticks: {
           color: 'rgba(255, 255, 255, 0.7)',
-          callback: function(value: any) {
-            return Number(value).toLocaleString('de-DE') + '%';
+          callback: function(value: number | string) {
+            const n = typeof value === 'string' ? Number(value) : value;
+            return n.toLocaleString('de-DE') + '%';
           }
         },
         beginAtZero: true,

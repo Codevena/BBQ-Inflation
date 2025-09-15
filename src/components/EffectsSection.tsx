@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb } from 'lucide-react';
-import { inflationRatesGermany, priceExamples, realWageData, inflationByCategory } from '@/data/inflationData';
+import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -16,7 +17,7 @@ if (typeof window !== 'undefined') {
 
 export default function EffectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const chartRef = useRef<any>(null);
+  // chartRef removed (unused)
   const titleRef = useRef<HTMLHeadingElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const priceGridRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,7 @@ export default function EffectsSection() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -60,8 +61,9 @@ export default function EffectsSection() {
         borderWidth: 1,
         cornerRadius: 8,
         callbacks: {
-          label: function(context: any) {
-            return `${context.parsed.y}% Inflation`;
+          label: function(context: TooltipItem<'line'>) {
+            const y = typeof context.parsed.y === 'number' ? context.parsed.y : Number(context.parsed.y);
+            return `${y}% Inflation`;
           }
         }
       }
@@ -81,8 +83,8 @@ export default function EffectsSection() {
         },
         ticks: {
           color: 'rgba(255, 255, 255, 0.7)',
-          callback: function(value: any) {
-            return value + '%';
+          callback: function(value: number | string) {
+            return `${value}%`;
           }
         },
         beginAtZero: true,

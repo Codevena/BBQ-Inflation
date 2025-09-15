@@ -55,7 +55,7 @@ export default function CountUpNumber({
     return () => {
       observer.unobserve(element);
     };
-  }, [endValue, duration, hasAnimated, triggerOnce]);
+  }, [endValue, duration, hasAnimated, triggerOnce, startCountUp]);
 
   const startCountUp = () => {
     setCurrentValue(0);
