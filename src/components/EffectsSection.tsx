@@ -357,6 +357,41 @@ export default function EffectsSection() {
             </div>
           </div>
         </div>
+
+        {/* Distribution Effects */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-6 border border-green-400/30">
+            <h4 className="text-lg font-semibold text-white mb-2">Verteilung: Sparer vs. Schuldner</h4>
+            <p className="text-blue-200 text-sm leading-relaxed">
+              Bei positiver Inflation und <span className="text-white font-medium">Nominalzinsen unter der Inflationsrate</span>
+              verlieren Ersparnisse real an Wert; <span className="text-white font-medium">Schuldner</span> profitieren, da ihre
+              reale Schuldenlast sinkt. Umgekehrt bei Realzinsen {'>'} 0.
+            </p>
+          </div>
+          <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-xl p-6 border border-yellow-400/30">
+            <h4 className="text-lg font-semibold text-white mb-2">Fixe vs. flexible Einkommen</h4>
+            <p className="text-blue-200 text-sm leading-relaxed">
+              Wer <span className="text-white font-medium">fixe Einkommen</span> bezieht (z. B. starre Löhne/Renten) verliert bei steigenden Preisen
+              an Kaufkraft. <span className="text-white font-medium">Flexible Einkommen</span> (Indexierung, variable Vergütung) gleichen schneller aus.
+            </p>
+          </div>
+        </div>
+
+        {/* Contracts & Price Setting */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+            <h5 className="text-white font-semibold mb-2">Indexierung</h5>
+            <p className="text-blue-200 text-sm">Preise/Löhne an einen Index koppeln stabilisiert Kaufkraft – kann aber Persistenz erhöhen.</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+            <h5 className="text-white font-semibold mb-2">Menu‑Costs</h5>
+            <p className="text-blue-200 text-sm">Preisanpassungen verursachen Kosten (IT, Etiketten, Kommunikation) → seltenere größere Sprünge.</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+            <h5 className="text-white font-semibold mb-2">Schuhsohlenkosten</h5>
+            <p className="text-blue-200 text-sm">Häufigere Transaktionen/Bankwege bei hoher Inflation verursachen indirekte Kosten.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
