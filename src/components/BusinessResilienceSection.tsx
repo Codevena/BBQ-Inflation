@@ -127,8 +127,44 @@ export default function BusinessResilienceSection() {
             Hinweis: Keine Finanzberatung – Inhalte dienen nur Bildungszwecken.
           </p>
         </div>
+
+        {/* Mini‑Beispiele */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Indexklausel (Beispiel) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <h4 className="text-white font-semibold mb-3">Indexklausel (Beispiel)</h4>
+            <div className="text-blue-200 text-sm mb-3">
+              Preisgleitformel gekoppelt an Energieindex (monatlich, symmetrisch):
+            </div>
+            <pre className="bg-black/40 text-blue-100 text-xs p-4 rounded-lg overflow-x-auto border border-white/10">{`neuer_preis_t = basispreis * [ 1 + 0.5 * (E_t / E_0 - 1) ]
+
+where:
+  basispreis = Vertragsbasis (EUR)
+  E_t       = Energieindex (t)
+  E_0       = Energieindex (Basis)
+  0.5       = Gewicht des Energieanteils`}</pre>
+            <p className="text-blue-300 text-xs mt-3">
+              Hinweis: beidseitig, mit Schwellwert/Deckel und Audit‑Recht für Indexquelle.
+            </p>
+          </div>
+
+          {/* Hedge‑Policy (Auszug) */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <h4 className="text-white font-semibold mb-3">Energie‑Hedge‑Policy (Auszug)</h4>
+            <div className="text-blue-200 text-sm mb-3">
+              Staffelung, Limits und Governance klar regeln:
+            </div>
+            <pre className="bg-black/40 text-blue-100 text-xs p-4 rounded-lg overflow-x-auto border border-white/10">{`Zielquote: 50–80% der nächsten 12 Monate
+Laufzeiten: 3–12 Monate, monatliche Tranchen
+Instrumente: Forwards, keine Spekulation
+Limits: VaR < 3% EBITDA, Kontrahenten-Rating ≥ BBB
+Governance: Komitee-Entscheid, 4‑Augen‑Prinzip`}</pre>
+            <p className="text-blue-300 text-xs mt-3">
+              Optional: Korridore für FX‑Risiken bei Importanteil {'>'} X% definieren.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-

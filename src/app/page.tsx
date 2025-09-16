@@ -12,13 +12,14 @@ import ECBPolicySection from '@/components/ECBPolicySection';
 import InflationEverydaySection from '@/components/InflationEverydaySection';
 import FiscalPolicySection from '@/components/FiscalPolicySection';
 import BusinessResilienceSection from '@/components/BusinessResilienceSection';
+import LabourPhillipsSection from '@/components/LabourPhillipsSection';
 import GlobalPerspectiveSection from '@/components/GlobalPerspectiveSection';
 import HistorySection from '@/components/HistorySection';
 import GlossarySection from '@/components/GlossarySection';
 import QuizSection from '@/components/QuizSection';
 import Navigation from '@/components/Navigation';
 
-const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#fiscal', '#everyday', '#business', '#global', '#history', '#glossary', '#quiz'];
+const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#fiscal', '#everyday', '#business', '#labour', '#global', '#history', '#glossary', '#quiz'];
 
 export default function Home() {
   // initialize Lenis smooth scroll without binding unused var
@@ -66,6 +67,7 @@ export default function Home() {
       <FiscalPolicySection />
       <InflationEverydaySection />
       <BusinessResilienceSection />
+      <LabourPhillipsSection />
       <GlobalPerspectiveSection />
       <HistorySection />
       <GlossarySection />
