@@ -92,7 +92,7 @@ export default function IntroSection() {
     <section 
       id="intro" 
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden py-16"
+      className="relative min-h-screen flex flex-col justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden py-10"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10 z-0 pointer-events-none select-none">
@@ -177,7 +177,7 @@ export default function IntroSection() {
         </div>
 
         {/* Definition Box */}
-        <div className="mt-8 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 border border-blue-400/30">
+        <div className="mt-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 border border-blue-400/30">
           <h3 className="text-2xl font-bold text-white mb-4 text-center flex items-center justify-center gap-3">
             <Lightbulb size={28} className="text-yellow-400" />
             Was ist Inflation?
@@ -194,7 +194,7 @@ export default function IntroSection() {
         {/* Impact & Glossary */}
         <div
           ref={impactRef}
-          className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6"
+          className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
         >
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 h-full">
             <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-3">

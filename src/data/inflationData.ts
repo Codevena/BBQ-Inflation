@@ -285,6 +285,54 @@ export const quizQuestions = [
     ],
     correct: 2,
     explanation: "Reale Zinsen zeigen die tatsächliche Kaufkraftentwicklung. Bei 3% Nominalzins und 2% Inflation beträgt der Realzins nur 1%."
+  },
+  {
+    id: 11,
+    question: "Welches Ziel verfolgt die EZB offiziell?",
+    options: [
+      "0% Inflation",
+      "Etwa 2% Inflation auf mittlere Sicht",
+      "Hohe Inflation zur Schuldenentwertung",
+      "Nur Wechselkursstabilität"
+    ],
+    correct: 1,
+    explanation: "Die EZB definiert Preisstabilität als mittelfristigen Anstieg des HVPI von 2%."
+  },
+  {
+    id: 12,
+    question: "Was beschreibt der Begriff 'Basiseffekt'?",
+    options: [
+      "Ein statistischer Effekt, der durch niedrige Vergleichswerte entsteht",
+      "Eine Steuer auf Basisgüter",
+      "Ein neues Messinstrument der EZB",
+      "Die Basis für Lohnverhandlungen"
+    ],
+    correct: 0,
+    explanation: "Hohe oder niedrige Vorjahreswerte verzerren die aktuelle Jahresrate, weil der Vergleichsbasiswert ungewöhnlich ist."
+  },
+  {
+    id: 13,
+    question: "Welche Güter sind in der Kerninflation ausgeschlossen?",
+    options: [
+      "Luxusgüter",
+      "Energie und unverarbeitete Lebensmittel",
+      "Mieten",
+      "Dienstleistungen"
+    ],
+    correct: 1,
+    explanation: "Die Kerninflation blendet volatilen Energie- und Nahrungsmittelpreise aus, um den zugrunde liegenden Trend zu zeigen."
+  },
+  {
+    id: 14,
+    question: "Wie kann sich ein schwächerer Euro auf die Inflation auswirken?",
+    options: [
+      "Importe werden günstiger, Inflation sinkt",
+      "Keine Auswirkung",
+      "Importe verteuern sich, Inflation steigt",
+      "Nur Aktienkurse ändern sich"
+    ],
+    correct: 2,
+    explanation: "Ein schwächerer Euro verteuert importierte Güter wie Energie oder Rohstoffe und erhöht damit den Preisdruck."
   }
 ];
 
@@ -419,6 +467,11 @@ export const inflationMythsFacts = [
     myth: 'Preiskontrollen stoppen Inflation dauerhaft',
     fact: 'Kurzfristig bremsen Deckel, langfristig drohen Knappheiten und Schattenmärkte.',
     explanation: 'Stattdessen wirken gezielte Transfers und Angebotsmaßnahmen nachhaltiger.'
+  },
+  {
+    myth: 'Inflation trifft alle Haushalte gleich',
+    fact: 'Ausgabenstrukturen unterscheiden sich – Haushalte mit hohem Energie- oder Mietanteil spüren Inflation stärker.',
+    explanation: 'Warenkörbe variieren: Pendler, Geringverdiener oder Familien mit hohem Lebensmittelanteil erleben andere Inflationsraten als Durchschnittswerte.'
   }
 ];
 
