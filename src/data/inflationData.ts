@@ -31,6 +31,18 @@ export const inflationRatesGermany: InflationData[] = [
   { year: 2025, rate: 2.2 }, // Destatis: August 2025: +2,2% (Kerninflation: +2,7%)
 ];
 
+// Kerninflation Deutschland (HVPI ohne Energie & unverarbeitete Lebensmittel)
+// Werte als vereinfachte Jahresdurchschnitte (gerundet) – Orientierung an Destatis/Eurostat Veröffentlichungen
+export const coreInflationRatesGermany: InflationData[] = [
+  { year: 2019, rate: 1.4 },
+  { year: 2020, rate: 1.3 },
+  { year: 2021, rate: 2.3 },
+  { year: 2022, rate: 4.9 },
+  { year: 2023, rate: 5.1 },
+  { year: 2024, rate: 3.0 },
+  { year: 2025, rate: 2.7 }, // Kommentar in Datensatz oben erwähnt
+];
+
 // Basierend auf Bundesbank und EZB-Analysen
 export const inflationCauses: InflationCause[] = [
   {

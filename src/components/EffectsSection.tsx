@@ -365,7 +365,7 @@ export default function EffectsSection() {
           <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-6 border border-green-400/30">
             <h4 className="text-lg font-semibold text-white mb-2">Verteilung: Sparer vs. Schuldner</h4>
             <p className="text-blue-200 text-sm leading-relaxed">
-              Bei positiver Inflation und <span className="text-white font-medium">Nominalzinsen unter der Inflationsrate</span>
+              Bei positiver Inflation und <span className="text-white font-medium">Nominalzinsen unter der Inflationsrate </span>
               verlieren Ersparnisse real an Wert; <span className="text-white font-medium">Schuldner</span> profitieren, da ihre
               reale Schuldenlast sinkt. Umgekehrt bei Realzinsen {'>'} 0.
             </p>

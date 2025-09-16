@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BarChart3, ShoppingCart, Target, TrendingUp, Lightbulb, Flag, Building2, Calculator, Landmark } from 'lucide-react';
-import { inflationByCategory, inflationRatesGermany } from '@/data/inflationData';
+import { inflationByCategory, inflationRatesGermany, coreInflationRatesGermany } from '@/data/inflationData';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -292,15 +292,21 @@ export default function MeasurementSection() {
             </div>
         </div>
 
-        {/* Kern vs. Gesamtinflation (Mini‑Chart) */}
+        {/* Kern vs. Gesamtinflation (Deutschland) */}
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-xl font-semibold text-white">Kern vs. Gesamtinflation (Mini)</h4>
+            <h4 className="text-xl font-semibold text-white">Kern vs. Gesamtinflation (Deutschland)</h4>
             <label className="flex items-center gap-2 text-cyan-200 text-sm">
               <input type="checkbox" checked={showCore} onChange={(e)=>setShowCore(e.target.checked)} />
               Kern anzeigen
             </label>
           </div>
+          <p className="text-cyan-200 text-sm mb-3">
+            Gesamtinflation umfasst alle Güter (inkl. Energie und Nahrungsmittel). 
+            Die <span className="text-white font-medium">Kerninflation</span> blendet diese besonders volatilen Komponenten aus und zeigt den
+            <span className="text-white font-medium"> mittelfristigen Trend</span>. 2022/23 lag die Gesamtinflation wegen Energiekrise deutlich über der Kernrate –
+            seit 2024 nähern sich beide wieder an.
+          </p>
           <div className="h-56">
             <Line
               data={{
@@ -317,8 +323,8 @@ export default function MeasurementSection() {
                     fill: true,
                   },
                   ...(showCore ? [{
-                    label: 'Kern (Demo)',
-                    data: inflationRatesGermany.map(d=>Math.max(0, d.rate - 0.6)),
+                    label: 'Kern (real)',
+                    data: coreInflationRatesGermany.map(d=>d.rate),
                     borderColor: '#F472B6',
                     backgroundColor: 'rgba(244,114,182,0.08)',
                     pointRadius: 0,
@@ -339,7 +345,15 @@ export default function MeasurementSection() {
               }}
             />
           </div>
-          <p className="text-cyan-300 text-xs mt-2">Kern (Demo): ohne Energie/Nahrung – Illustration; reale Werte variieren.</p>
+          <div className="mt-3 flex items-center gap-3 text-xs">
+            <span className="inline-flex items-center gap-1 text-cyan-300">
+              <span className="inline-block w-3 h-1 rounded bg-[#38BDF8]" /> Gesamt = alle Güter
+            </span>
+            <span className="inline-flex items-center gap-1 text-pink-300">
+              <span className="inline-block w-3 h-1 rounded bg-[#F472B6]" /> Kern = ohne Energie & unverarb. Lebensmittel
+            </span>
+            <span className="ml-auto text-cyan-300">Quelle: Destatis/Eurostat (Jahresraten, vereinfacht)</span>
+          </div>
         </div>
 
         {/* Messfehler & Verzerrungen – volle Breite */}
