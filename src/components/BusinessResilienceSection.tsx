@@ -23,8 +23,9 @@ export default function BusinessResilienceSection() {
   const animatingRef = useRef(false);
 
   const labels = ['Energie', 'Material', 'Logistik', 'Personal', 'Sonstiges'];
-  const beforeTarget = [24, 30, 12, 22, 12];
-  const afterTarget = [18, 28, 10, 22, 9];
+  // Prozentanteile – müssen je 100 ergeben (in % der Gesamtkosten)
+  const beforeTarget = [24, 30, 12, 22, 12]; // Summe: 100
+  const afterTarget  = [20, 28, 10, 24, 18]; // Summe: 100 (Energie/Logistik ↓; Anteile Personal/Sonstiges steigen)
 
   const [beforeSeries, setBeforeSeries] = useState<number[]>(beforeTarget.map(() => 0));
   const [afterSeries, setAfterSeries] = useState<number[]>(afterTarget.map(() => 0));
@@ -261,7 +262,7 @@ Governance: Komitee-Entscheid, 4‑Augen‑Prinzip`}</pre>
               }}
             />
           </div>
-          <p className="text-blue-300 text-xs mt-3">Beispielhafte Struktur (in % der Gesamtkosten); Nachher: Energieersparnis, Logistikoptimierung.</p>
+          <p className="text-blue-300 text-xs mt-3">Beispielhafte Struktur (in % der Gesamtkosten); Nachher: Energie/Logistik ↓, Material leicht ↓ – relative Anteile von Personal/Sonstigem steigen.</p>
         </div>
       </div>
     </section>

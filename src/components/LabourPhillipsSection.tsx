@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TrendingUp, Users, Scale, FileText } from 'lucide-react';
@@ -94,6 +94,16 @@ export default function LabourPhillipsSection() {
     };
   }, []);
 
+  const observedPoints = useMemo(() => {
+    return Array.from({ length: 20 }).map((_, i) => {
+      const u = 3 + i * 0.25; // Arbeitslosigkeit (%)
+      const jitter = (Math.random() - 0.5) * 0.5;
+      const pi = 5.5 - 0.5 * u + jitter; // Inflation (%)
+      return { x: u, y: parseFloat(pi.toFixed(2)) };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section id="labour" ref={sectionRef} className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-indigo-900 py-20">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -116,11 +126,7 @@ export default function LabourPhillipsSection() {
                 datasets: [
                   {
                     label: 'Beobachtungen',
-                    data: Array.from({ length: 20 }).map((_, i) => {
-                      const u = 3 + i * 0.25;
-                      const pi = 5.5 - 0.5 * u + (Math.random() - 0.5) * 0.5;
-                      return { x: u, y: parseFloat(pi.toFixed(2)) };
-                    }),
+                    data: observedPoints,
                     backgroundColor: 'rgba(168, 85, 247, 0.8)'
                   },
                   {
@@ -138,8 +144,20 @@ export default function LabourPhillipsSection() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false }, tooltip: { enabled: true } },
                 scales: {
-                  x: { title: { display: true, text: 'Arbeitslosigkeit (%)', color: '#ddd' }, ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                  y: { title: { display: true, text: 'Inflation (%)', color: '#ddd' }, ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                  x: {
+                    title: { display: true, text: 'Arbeitslosigkeit (%)', color: '#ddd' },
+                    min: 3,
+                    max: 10.5,
+                    ticks: { color: '#ddd' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                  },
+                  y: {
+                    title: { display: true, text: 'Inflation (%)', color: '#ddd' },
+                    min: 0,
+                    max: 6,
+                    ticks: { color: '#ddd', maxTicksLimit: 7 },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                  }
                 }
               }}
             />

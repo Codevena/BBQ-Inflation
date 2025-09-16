@@ -152,14 +152,14 @@ export default function GlobalPerspectiveSection() {
             ))}
           </div>
 
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
             {/* Mini Heat‑Grid */}
             <h4 className="text-xl font-bold text-white mb-4">Heat‑Grid (vereinfachte Darstellung)</h4>
             <div className="grid grid-cols-5 gap-2">
               {globalInflationData.map((c, i) => {
                 const rate = c.rate2025;
-                const hue = Math.max(0, 120 - Math.min(10, rate) * 12); // 0=rot,120=grün
-                const bg = `hsl(${hue} 70% / 0.6)`;
+                const hue = Math.max(0, 120 - Math.min(10, rate) * 12); // 0=rot, 120=grün
+                const bg = `hsl(${hue}, 70%, 50%, 0.65)`; // klassische hsl(a) Syntax
                 return (
                   <div key={i} className="h-6 rounded" title={`${c.country}: ${rate}%`} style={{ backgroundColor: bg }} />
                 );
