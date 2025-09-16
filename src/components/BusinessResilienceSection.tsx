@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Briefcase, Settings, Shield, Package, FileText } from 'lucide-react';
@@ -17,6 +17,47 @@ export default function BusinessResilienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const costChartRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const hasAnimatedRef = useRef(false);
+  const animatingRef = useRef(false);
+
+  const labels = ['Energie', 'Material', 'Logistik', 'Personal', 'Sonstiges'];
+  const beforeTarget = [24, 30, 12, 22, 12];
+  const afterTarget = [18, 28, 10, 22, 9];
+
+  const [beforeSeries, setBeforeSeries] = useState<number[]>(beforeTarget.map(() => 0));
+  const [afterSeries, setAfterSeries] = useState<number[]>(afterTarget.map(() => 0));
+
+  const animateBars = useCallback(() => {
+    if (hasAnimatedRef.current || animatingRef.current) return;
+    animatingRef.current = true;
+    const n = labels.length;
+    const start = performance.now();
+    const duration = 1200;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      // n‑step reveal so the last bar gets its own phase
+      const prog = eased * n;
+      const idx = Math.min(n - 1, Math.floor(prog));
+      const frac = Math.min(1, Math.max(0, prog - idx));
+      const b = beforeTarget.map((v, i) => (i < idx ? v : i === idx ? v * frac : 0));
+      const a = afterTarget.map((v, i) => (i < idx ? v : i === idx ? v * frac : 0));
+      setBeforeSeries(b);
+      setAfterSeries(a);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setBeforeSeries(beforeTarget);
+        setAfterSeries(afterTarget);
+        hasAnimatedRef.current = true;
+        animatingRef.current = false;
+        rafRef.current = null;
+      }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }, [labels.length]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,8 +76,30 @@ export default function BusinessResilienceSection() {
         ease: 'power2.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }
       });
+
+      if (costChartRef.current) {
+        // Keep container visible; animate bars via state
+        gsap.set(costChartRef.current, { opacity: 0, y: 20 });
+        gsap.to(costChartRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: costChartRef.current,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => animateBars(),
+          },
+        });
+      }
     }, sectionRef);
     return () => ctx.revert();
+  }, []);
+
+  // Cleanup rAF on unmount
+  useEffect(() => {
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
   return (
@@ -127,9 +190,7 @@ export default function BusinessResilienceSection() {
               </ul>
             </div>
           </div>
-          <p className="text-xs text-blue-300 mt-4">
-            Hinweis: Keine Finanzberatung – Inhalte dienen nur Bildungszwecken.
-          </p>
+          
         </div>
 
         {/* Mini‑Beispiele */}
@@ -170,21 +231,21 @@ Governance: Komitee-Entscheid, 4‑Augen‑Prinzip`}</pre>
         </div>
 
         {/* Mini‑Diagramm: Kostenstruktur vorher/nachher */}
-        <div className="mt-8 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+        <div ref={costChartRef} className="mt-8 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
           <h4 className="text-white font-semibold mb-3">Kostenstruktur – vorher vs. nach Effizienzprogramm</h4>
           <div className="h-64">
             <Bar
               data={{
-                labels: ['Energie', 'Material', 'Logistik', 'Personal', 'Sonstiges'],
+                labels,
                 datasets: [
                   {
                     label: 'Vorher',
-                    data: [24, 30, 12, 22, 12],
+                    data: beforeSeries,
                     backgroundColor: 'rgba(59, 130, 246, 0.5)'
                   },
                   {
                     label: 'Nachher',
-                    data: [18, 28, 10, 22, 9],
+                    data: afterSeries,
                     backgroundColor: 'rgba(16, 185, 129, 0.5)'
                   }
                 ]

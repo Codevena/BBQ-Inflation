@@ -74,7 +74,7 @@ const inflationProtectionAssets = [
     protection: 70,
     risk: 'Mittel',
     timeHorizon: '5+ Jahre',
-    description: 'Sachwerte mit oft indexierten Erlösen (Mieten/Maut)',
+    description: 'Sachwerte mit oft indexierten Erlösen',
     explanation:
       'Viele Infrastrukturprojekte und vermietete Immobilien besitzen inflationsgekoppelte Tarife oder Mieten. Cashflows wachsen dadurch mit dem Preisniveau. Gleichzeitig reagieren Bewertungen sensibel auf Zinsen und regulatorische Rahmenbedingungen – langfristig orientiert einsetzen.',
     color: '#22D3EE'
