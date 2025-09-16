@@ -743,39 +743,6 @@ export default function PresentationMode() {
                 />
               </div>
             </div>
-
-            {/* Aktuelles Beispiel */}
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-8 border border-green-400/30">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-2">
-                <Flag size={28} className="text-green-400" />
-                Deutschland 2020-2025: EZB in Aktion
-              </h3>
-              <div className="grid grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-lg font-bold text-green-400">2020-2021</div>
-                  <div className="text-sm text-green-200">0% Zinsen</div>
-                  <div className="text-xs text-green-300">Wirtschaft ankurbeln</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-yellow-400">2022</div>
-                  <div className="text-sm text-yellow-200">6,9% Inflation</div>
-                  <div className="text-xs text-yellow-300">EZB muss reagieren</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-orange-400">2022-2025</div>
-                  <div className="text-sm text-orange-200">Zinsen → 4,5%</div>
-                  <div className="text-xs text-orange-300">Inflation bremsen</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-green-400">2025</div>
-                  <div className="text-sm text-green-200">2,2% Inflation</div>
-                  <div className="text-xs text-green-300">Mission erfolgreich!</div>
-                </div>
-              </div>
-              <p className="text-xs text-green-200 mt-4">
-                Hinweis: „0% Zinsen“ bezieht sich auf den Hauptrefinanzierungssatz (MRO). Die Einlagefazilität lag bis Mitte 2022 bei −0,5%.
-              </p>
-            </div>
           </div>
         );
 
