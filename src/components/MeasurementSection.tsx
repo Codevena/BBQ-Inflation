@@ -74,6 +74,18 @@ export default function MeasurementSection() {
           ease: 'power2.out',
           scrollTrigger: { trigger: coreBlockRef.current, start: 'top 85%', once: true }
         });
+
+        // Stagger children inside core block
+        const coreChildren = coreBlockRef.current.querySelectorAll('.stagger-child');
+        gsap.set(coreChildren, { opacity: 0, y: 16 });
+        gsap.to(coreChildren, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.06,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: coreBlockRef.current, start: 'top 85%', once: true }
+        });
       }
 
       // Fade-in for biases block when it enters viewport
@@ -82,6 +94,18 @@ export default function MeasurementSection() {
           opacity: 1,
           y: 0,
           duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: biasesBlockRef.current, start: 'top 85%', once: true }
+        });
+
+        // Stagger list items / elements in biases block
+        const biasChildren = biasesBlockRef.current.querySelectorAll('.stagger-child');
+        gsap.set(biasChildren, { opacity: 0, y: 16 });
+        gsap.to(biasChildren, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.05,
           ease: 'power2.out',
           scrollTrigger: { trigger: biasesBlockRef.current, start: 'top 85%', once: true }
         });
@@ -319,19 +343,19 @@ export default function MeasurementSection() {
         {/* Kern vs. Gesamtinflation (Deutschland) */}
         <div ref={coreBlockRef} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-xl font-semibold text-white">Kern vs. Gesamtinflation (Deutschland)</h4>
+            <h4 className="text-xl font-semibold text-white stagger-child">Kern vs. Gesamtinflation (Deutschland)</h4>
             <label className="flex items-center gap-2 text-cyan-200 text-sm">
               <input type="checkbox" checked={showCore} onChange={(e)=>setShowCore(e.target.checked)} />
               Kern anzeigen
             </label>
           </div>
-          <p className="text-cyan-200 text-sm mb-3">
+          <p className="text-cyan-200 text-sm mb-3 stagger-child">
             Gesamtinflation umfasst alle Güter (inkl. Energie und Nahrungsmittel). 
             Die <span className="text-white font-medium">Kerninflation</span> blendet diese besonders volatilen Komponenten aus und zeigt den
             <span className="text-white font-medium"> mittelfristigen Trend</span>. 2022/23 lag die Gesamtinflation wegen Energiekrise deutlich über der Kernrate –
             seit 2024 nähern sich beide wieder an.
           </p>
-          <div className="h-56">
+          <div className="h-56 stagger-child">
             <Line
               data={{
                 labels: inflationRatesGermany.map(d=>d.year.toString()),
@@ -369,28 +393,28 @@ export default function MeasurementSection() {
               }}
             />
           </div>
-          <div className="mt-3 flex items-center gap-3 text-xs">
-            <span className="inline-flex items-center gap-1 text-cyan-300">
+          <div className="mt-3 flex items-center gap-3 text-xs stagger-child">
+            <span className="inline-flex items-center gap-1 text-cyan-300 stagger-child">
               <span className="inline-block w-3 h-1 rounded bg-[#38BDF8]" /> Gesamt = alle Güter
             </span>
-            <span className="inline-flex items-center gap-1 text-pink-300">
+            <span className="inline-flex items-center gap-1 text-pink-300 stagger-child">
               <span className="inline-block w-3 h-1 rounded bg-[#F472B6]" /> Kern = ohne Energie & unverarb. Lebensmittel
             </span>
-            <span className="ml-auto text-cyan-300">Quelle: Destatis/Eurostat (Jahresraten, vereinfacht)</span>
+            <span className="ml-auto text-cyan-300 stagger-child">Quelle: Destatis/Eurostat (Jahresraten, vereinfacht)</span>
           </div>
         </div>
 
         {/* Messfehler & Verzerrungen – volle Breite */}
         <div ref={biasesBlockRef} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-16">
-          <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+          <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2 stagger-child">
             <Lightbulb size={20} className="text-yellow-400" />
             Messfehler & Verzerrungen
           </h4>
           <ul className="list-disc list-inside text-cyan-200 text-sm space-y-1">
-            <li><span className="text-white font-medium">Substitution:</span> Verbraucher weichen auf günstigere Güter aus.</li>
-            <li><span className="text-white font-medium">Qualitätsanpassungen (Hedonics):</span> Verbesserungen fließen als „Preisrückgang“ ein.</li>
-            <li><span className="text-white font-medium">Neue Produkte:</span> Verzögerte Aufnahme in den Warenkorb.</li>
-            <li><span className="text-white font-medium">Outlet‑Bias:</span> Veränderte Einkaufsorte (Online/Discount) werden verzerrt abgebildet.</li>
+            <li className="stagger-child"><span className="text-white font-medium">Substitution:</span> Verbraucher weichen auf günstigere Güter aus.</li>
+            <li className="stagger-child"><span className="text-white font-medium">Qualitätsanpassungen (Hedonics):</span> Verbesserungen fließen als „Preisrückgang“ ein.</li>
+            <li className="stagger-child"><span className="text-white font-medium">Neue Produkte:</span> Verzögerte Aufnahme in den Warenkorb.</li>
+            <li className="stagger-child"><span className="text-white font-medium">Outlet‑Bias:</span> Veränderte Einkaufsorte (Online/Discount) werden verzerrt abgebildet.</li>
           </ul>
         </div>
 

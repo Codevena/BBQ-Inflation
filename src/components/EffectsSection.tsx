@@ -116,19 +116,20 @@ export default function EffectsSection() {
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2); // easeOutQuad
-      const prog = eased * (n - 1);
-      const idx = Math.floor(prog);
-      const frac = prog - idx;
+      // Use n steps so the last point (2025) gets a full reveal phase
+      const prog = eased * n;
+      const idx = Math.min(n - 1, Math.floor(prog));
+      const frac = Math.min(1, Math.max(0, prog - idx));
       const newData = originalData.map((v, i) => {
         if (i < idx) return v;
-        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        if (i === idx) return v * frac;
         return 0;
       });
       setAnimatedData(newData);
       if (t < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
-        // ensure final frame shows full original data (fix last point = 0%)
+        // Finalize exact values
         setAnimatedData(originalData);
         rafRef.current = null;
         hasAnimatedRef.current = true;
