@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BarChart3, ShoppingCart, Target, TrendingUp, Lightbulb, Flag, Building2, Calculator, Landmark } from 'lucide-react';
@@ -21,12 +21,48 @@ export default function MeasurementSection() {
   const categoriesRef = useRef<HTMLDivElement>(null);
   const coreBlockRef = useRef<HTMLDivElement>(null);
   const biasesBlockRef = useRef<HTMLDivElement>(null);
+  const miniRafRef = useRef<number | null>(null);
+  const miniHasAnimatedRef = useRef(false);
+  const miniAnimatingRef = useRef(false);
 
   // Basiseffekt-Simulator state (einfach, lokal, keine Tooltips)
   const [basePrev, setBasePrev] = useState<number>(100);
   const [baseCurr, setBaseCurr] = useState<number>(102);
   const baseEffectRate = ((baseCurr / Math.max(1, basePrev)) - 1) * 100;
   const [showCore, setShowCore] = useState<boolean>(true);
+  const [headlineSeries, setHeadlineSeries] = useState<number[]>(inflationRatesGermany.map(() => 0));
+  const [coreSeries, setCoreSeries] = useState<number[]>(coreInflationRatesGermany.map(() => 0));
+
+  const animateMiniChart = useCallback(() => {
+    if (miniHasAnimatedRef.current || miniAnimatingRef.current) return;
+    miniAnimatingRef.current = true;
+    const originalHeadline = inflationRatesGermany.map(d => d.rate);
+    const originalCore = coreInflationRatesGermany.map(d => d.rate);
+    const n = Math.min(originalHeadline.length, originalCore.length);
+    const start = performance.now();
+    const duration = 1400;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 2);
+      const prog = eased * n; // ensure last point animates smoothly
+      const idx = Math.min(n - 1, Math.floor(prog));
+      const frac = Math.min(1, Math.max(0, prog - idx));
+      const h = originalHeadline.map((v, i) => (i < idx ? v : i === idx ? v * frac : 0));
+      const c = originalCore.map((v, i) => (i < idx ? v : i === idx ? v * frac : 0));
+      setHeadlineSeries(h);
+      setCoreSeries(c);
+      if (t < 1) {
+        miniRafRef.current = requestAnimationFrame(step);
+      } else {
+        setHeadlineSeries(originalHeadline);
+        setCoreSeries(originalCore);
+        miniHasAnimatedRef.current = true;
+        miniAnimatingRef.current = false;
+        miniRafRef.current = null;
+      }
+    };
+    miniRafRef.current = requestAnimationFrame(step);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,7 +108,12 @@ export default function MeasurementSection() {
           y: 0,
           duration: 0.9,
           ease: 'power2.out',
-          scrollTrigger: { trigger: coreBlockRef.current, start: 'top 85%', once: true }
+          scrollTrigger: {
+            trigger: coreBlockRef.current,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => animateMiniChart(),
+          }
         });
 
         // Stagger children inside core block
@@ -114,6 +155,13 @@ export default function MeasurementSection() {
     }, sectionRef);
 
     return () => ctx.revert();
+  }, []);
+  
+  // Cleanup rAF
+  useEffect(() => {
+    return () => {
+      if (miniRafRef.current) cancelAnimationFrame(miniRafRef.current);
+    };
   }, []);
 
   return (
@@ -358,21 +406,21 @@ export default function MeasurementSection() {
           <div className="h-56 stagger-child">
             <Line
               data={{
-                labels: inflationRatesGermany.map(d=>d.year.toString()),
-                datasets: [
-                  {
-                    label: 'Gesamt',
-                    data: inflationRatesGermany.map(d=>d.rate),
-                    borderColor: '#38BDF8',
-                    backgroundColor: 'rgba(56,189,248,0.1)',
-                    pointRadius: 0,
-                    tension: 0.35,
-                    borderWidth: 2,
-                    fill: true,
-                  },
+                 labels: inflationRatesGermany.map(d=>d.year.toString()),
+                 datasets: [
+                   {
+                     label: 'Gesamt',
+                    data: headlineSeries,
+                     borderColor: '#38BDF8',
+                     backgroundColor: 'rgba(56,189,248,0.1)',
+                     pointRadius: 0,
+                     tension: 0.35,
+                     borderWidth: 2,
+                     fill: true,
+                   },
                   ...(showCore ? [{
                     label: 'Kern (real)',
-                    data: coreInflationRatesGermany.map(d=>d.rate),
+                    data: coreSeries,
                     borderColor: '#F472B6',
                     backgroundColor: 'rgba(244,114,182,0.08)',
                     pointRadius: 0,
