@@ -104,6 +104,14 @@ export const historicalEvents: HistoricalEvent[] = [
     impact: "Fed-Chef Volcker hob Leitzinsen >20% an; Rezession zur Inflationsbekämpfung"
   },
   {
+    year: 1983,
+    country: "USA",
+    rate: 3.2,
+    title: "Volcker-Disinflation",
+    description: "Nach massiven Zinsschocks fiel die Inflation rapide – Glaubwürdigkeit wurde wiederhergestellt.",
+    impact: "Zwei Rezessionen 1980/82, aber nachhaltige Senkung der Inflationserwartungen unter 4%."
+  },
+  {
     year: 1989,
     country: "Argentinien",
     rate: 3079,
@@ -134,6 +142,14 @@ export const historicalEvents: HistoricalEvent[] = [
     title: "Frühphase nach der Sowjetunion",
     description: "Transformationsschock, Preisfreigaben, fiskalische Instabilität",
     impact: "Hrywnja-Einführung, Stabilisierungspolitiken zur Preisberuhigung"
+  },
+  {
+    year: 1998,
+    country: "Japan",
+    rate: -0.7,
+    title: "Deflation in Japan",
+    description: "Platzen der Asset-Blase, Bankenkrise und schwache Nachfrage führten zu fallenden Preisen.",
+    impact: "Kreditklemme, Lohnstagnation, Beginn langfristiger Nullzinspolitik und späterer Abenomics."
   }
 ];
 
@@ -390,24 +406,19 @@ export const lifeSituationTips = [
 // Inflations-Mythen und Fakten
 export const inflationMythsFacts = [
   {
-    myth: 'Inflation ist immer schlecht',
-    fact: 'Moderate Inflation (2%) zeigt gesunde Wirtschaft',
-    explanation: 'Leichte Inflation motiviert Investitionen und Konsum'
+    myth: 'Inflation = nur Geldmengenwachstum',
+    fact: 'Ohne Nachfrage, Umlaufgeschwindigkeit und Angebot greift die Quantitätsgleichung zu kurz.',
+    explanation: 'Monetäre Impulse wirken erst über Kredit, Erwartungen und Produktionskapazitäten auf Preise.'
   },
   {
-    myth: 'Deflation ist besser als Inflation',
-    fact: 'Deflation kann zu Wirtschaftsstillstand führen',
-    explanation: 'Fallende Preise → Konsumverzicht → Rezession'
+    myth: 'Löhne sind der Haupttreiber',
+    fact: 'Löhne reagieren meist verzögert auf Preise – oft lösen sie die Inflation nicht aus, sondern passen sich an.',
+    explanation: 'Angebots- und Nachfrageschocks sowie Energiepreise sind häufig der Startpunkt; Löhne bestimmen eher Persistenz.'
   },
   {
-    myth: 'Goldkauf schützt immer vor Inflation',
-    fact: 'Gold schwankt stark und bringt keine Zinsen',
-    explanation: 'Aktien und Immobilien oft besserer Inflationsschutz'
-  },
-  {
-    myth: 'Inflation trifft alle gleich',
-    fact: 'Verschiedene Gruppen sind unterschiedlich betroffen',
-    explanation: 'Schuldner profitieren, Sparer verlieren'
+    myth: 'Preiskontrollen stoppen Inflation dauerhaft',
+    fact: 'Kurzfristig bremsen Deckel, langfristig drohen Knappheiten und Schattenmärkte.',
+    explanation: 'Stattdessen wirken gezielte Transfers und Angebotsmaßnahmen nachhaltiger.'
   }
 ];
 
