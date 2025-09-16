@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CountUpNumber from './CountUpNumber';
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, AlertTriangle, PiggyBank, Briefcase, Home } from 'lucide-react';
 import SequentialTypewriter from './SequentialTypewriter';
 
 if (typeof window !== 'undefined') {
@@ -17,6 +17,7 @@ export default function IntroSection() {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const impactRef = useRef<HTMLDivElement>(null);
 
   // no external need for completion flag; kept local-only
   // Removed unused completion state
@@ -24,7 +25,7 @@ export default function IntroSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Check if all refs are available
-      const elements = [titleRef.current, subtitleRef.current, worldMapRef.current, statsRef.current].filter(Boolean);
+      const elements = [titleRef.current, subtitleRef.current, worldMapRef.current, statsRef.current, impactRef.current].filter(Boolean);
       if (elements.length === 0) return;
 
       // Initial setup
@@ -190,6 +191,57 @@ export default function IntroSection() {
           </p>
         </div>
 
+        {/* Impact & Glossary */}
+        <div
+          ref={impactRef}
+          className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 h-full">
+            <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
+              <AlertTriangle size={24} className="text-red-300" />
+              Warum ist das wichtig?
+            </h4>
+            <ul className="space-y-4 text-blue-100 text-sm">
+              <li className="flex items-start gap-3">
+                <Home size={18} className="mt-0.5 text-blue-300" />
+                <span>
+                  <strong className="text-white">Alltag & Wohnen:</strong> Mieten, Energie und Lebensmittel werden teurer – Haushalte müssen Budgets anpassen.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <PiggyBank size={18} className="mt-0.5 text-yellow-300" />
+                <span>
+                  <strong className="text-white">Ersparnisse & Kredite:</strong> Reale Geldwerte schrumpfen, während Schuldner bei festen Zinsen profitieren.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Briefcase size={18} className="mt-0.5 text-emerald-300" />
+                <span>
+                  <strong className="text-white">Löhne & Unternehmen:</strong> Tarifverhandlungen, Preissetzung und Investitionen hängen von stabilen Erwartungen ab.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 h-full">
+            <h4 className="text-xl font-bold text-white mb-4 text-center">Kurz-Glossar</h4>
+            <div className="grid grid-cols-1 gap-4">
+              <GlossaryCard
+                term="Preisniveau"
+                explanation="Durchschnittlicher Preis aller Güter im Warenkorb – steigt das Niveau, sprechen wir von Inflation."
+              />
+              <GlossaryCard
+                term="Kaufkraft"
+                explanation="Wie viele Waren und Dienstleistungen du für 1 € bekommst. Inflation verringert diese Kaufkraft."
+              />
+              <GlossaryCard
+                term="Nominal vs. Real"
+                explanation="Nominal = Betrag in Euro. Real = inflationsbereinigt, zeigt was du dir tatsächlich leisten kannst."
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         </div>
@@ -200,5 +252,19 @@ export default function IntroSection() {
       <div className="absolute top-40 right-20 w-16 h-16 bg-red-500/20 rounded-full" />
       <div className="absolute bottom-32 left-20 w-12 h-12 bg-yellow-500/20 rounded-full" />
     </section>
+  );
+}
+
+interface GlossaryCardProps {
+  term: string;
+  explanation: string;
+}
+
+function GlossaryCard({ term, explanation }: GlossaryCardProps) {
+  return (
+    <div className="bg-white/5 rounded-xl border border-white/10 p-4">
+      <div className="text-white font-semibold text-sm mb-2">{term}</div>
+      <p className="text-xs text-blue-100 leading-relaxed">{explanation}</p>
+    </div>
   );
 }
