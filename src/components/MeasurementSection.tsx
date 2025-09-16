@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BarChart3, ShoppingCart, Target, TrendingUp, Lightbulb, Flag, Building2, Calculator, Landmark } from 'lucide-react';
-import { inflationByCategory } from '@/data/inflationData';
+import { inflationByCategory, inflationRatesGermany } from '@/data/inflationData';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function MeasurementSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,6 +24,7 @@ export default function MeasurementSection() {
   const [basePrev, setBasePrev] = useState<number>(100);
   const [baseCurr, setBaseCurr] = useState<number>(102);
   const baseEffectRate = ((baseCurr / Math.max(1, basePrev)) - 1) * 100;
+  const [showCore, setShowCore] = useState<boolean>(true);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -285,6 +290,56 @@ export default function MeasurementSection() {
                 sondern bildet die gesamte <span className="text-white font-medium">Inlandsproduktion</span> ab – hilfreich für Makro‑Analysen.
               </p>
             </div>
+        </div>
+
+        {/* Kern vs. Gesamtinflation (Mini‑Chart) */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-xl font-semibold text-white">Kern vs. Gesamtinflation (Mini)</h4>
+            <label className="flex items-center gap-2 text-cyan-200 text-sm">
+              <input type="checkbox" checked={showCore} onChange={(e)=>setShowCore(e.target.checked)} />
+              Kern anzeigen
+            </label>
+          </div>
+          <div className="h-56">
+            <Line
+              data={{
+                labels: inflationRatesGermany.map(d=>d.year.toString()),
+                datasets: [
+                  {
+                    label: 'Gesamt',
+                    data: inflationRatesGermany.map(d=>d.rate),
+                    borderColor: '#38BDF8',
+                    backgroundColor: 'rgba(56,189,248,0.1)',
+                    pointRadius: 0,
+                    tension: 0.35,
+                    borderWidth: 2,
+                    fill: true,
+                  },
+                  ...(showCore ? [{
+                    label: 'Kern (Demo)',
+                    data: inflationRatesGermany.map(d=>Math.max(0, d.rate - 0.6)),
+                    borderColor: '#F472B6',
+                    backgroundColor: 'rgba(244,114,182,0.08)',
+                    pointRadius: 0,
+                    tension: 0.35,
+                    borderWidth: 2,
+                    fill: false,
+                  }] : [])
+                ]
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ddd' } }, tooltip: { enabled: true } },
+                scales: {
+                  x: { ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                  y: { ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+              }}
+            />
+          </div>
+          <p className="text-cyan-300 text-xs mt-2">Kern (Demo): ohne Energie/Nahrung – Illustration; reale Werte variieren.</p>
         </div>
 
         {/* Messfehler & Verzerrungen – volle Breite */}

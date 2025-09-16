@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AlertTriangle } from 'lucide-react';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js';
+import { Line } from 'react-chartjs-2';
 import { historicalEvents } from '@/data/inflationData';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
 export default function HistorySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -179,6 +183,30 @@ export default function HistorySection() {
                     >
                       {formatInflationRate(event.rate)}
                     </span>
+                  </div>
+
+                  {/* Sparkline (mini) */}
+                  <div className="h-10 mb-4">
+                    <Line
+                      data={{
+                        labels: Array.from({length: 12}).map((_,i)=>`${i}`),
+                        datasets: [{
+                          data: Array.from({length: 12}).map((_,i)=> Math.max(0.1, Math.pow(1.4, i/2) )),
+                          borderColor: 'rgba(251, 191, 36, 0.9)',
+                          backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                          fill: true,
+                          pointRadius: 0,
+                          tension: 0.3,
+                          borderWidth: 2,
+                        }]
+                      }}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                        scales: { x: { display: false }, y: { display: false } }
+                      }}
+                    />
                   </div>
 
                   {/* Description */}
