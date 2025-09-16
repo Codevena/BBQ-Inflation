@@ -33,6 +33,17 @@ export default function MeasurementSection() {
   const [headlineSeries, setHeadlineSeries] = useState<number[]>(inflationRatesGermany.map(() => 0));
   const [coreSeries, setCoreSeries] = useState<number[]>(coreInflationRatesGermany.map(() => 0));
 
+  const resetMiniChart = useCallback(() => {
+    if (miniRafRef.current) {
+      cancelAnimationFrame(miniRafRef.current);
+      miniRafRef.current = null;
+    }
+    miniHasAnimatedRef.current = false;
+    miniAnimatingRef.current = false;
+    setHeadlineSeries(inflationRatesGermany.map(() => 0));
+    setCoreSeries(coreInflationRatesGermany.map(() => 0));
+  }, []);
+
   const animateMiniChart = useCallback(() => {
     if (miniHasAnimatedRef.current || miniAnimatingRef.current) return;
     miniAnimatingRef.current = true;
@@ -111,8 +122,17 @@ export default function MeasurementSection() {
           scrollTrigger: {
             trigger: coreBlockRef.current,
             start: 'top 85%',
-            once: true,
-            onEnter: () => animateMiniChart(),
+            onEnter: () => {
+              resetMiniChart();
+              requestAnimationFrame(() => animateMiniChart());
+            },
+            onEnterBack: () => {
+              resetMiniChart();
+              requestAnimationFrame(() => animateMiniChart());
+            },
+            onLeaveBack: () => {
+              resetMiniChart();
+            }
           }
         });
 
@@ -155,7 +175,7 @@ export default function MeasurementSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [animateMiniChart, resetMiniChart]);
   
   // Cleanup rAF
   useEffect(() => {

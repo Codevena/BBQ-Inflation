@@ -44,6 +44,17 @@ export default function ECBPolicySection() {
   const [animatedData, setAnimatedData] = useState(ecbRateHistory.map(() => 0));
   const isAnimatingRef = useRef(false);
 
+  const resetChart = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    hasAnimatedRef.current = false;
+    animatingRef.current = false;
+    isAnimatingRef.current = false;
+    setAnimatedData(ecbRateHistory.map(() => 0));
+  }, []);
+
   const animateChart = useCallback(() => {
     if (isAnimatingRef.current) return;
     if (hasAnimatedRef.current || animatingRef.current) return;
@@ -92,16 +103,21 @@ export default function ECBPolicySection() {
       // Main animation timeline - optimized for better performance
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: chartRef.current,
           start: 'top 80%',
           end: 'bottom 20%',
-          toggleActions: 'play none none none',
-          once: true,
-          onEnter: (self) => {
-            animateChart();
-            // ensure no further toggling to avoid flicker
-            self.disable();
+          toggleActions: 'play none none reverse',
+          onEnter: () => {
+            resetChart();
+            requestAnimationFrame(() => animateChart());
           },
+          onEnterBack: () => {
+            resetChart();
+            requestAnimationFrame(() => animateChart());
+          },
+          onLeaveBack: () => {
+            resetChart();
+          }
         }
       });
 
@@ -125,23 +141,10 @@ export default function ECBPolicySection() {
         ease: 'power2.out'
       }, '-=0.5');
 
-      // Kein Fallback nötig – IntersectionObserver setzt Daten bei Sichtbarkeit
-
     }, sectionRef);
 
-      // Fallback: ensure animation starts if section is already visible
-      if (sectionRef.current) {
-        const io = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            animateChart();
-            io.disconnect();
-          }
-        }, { threshold: 0.3 });
-        io.observe(sectionRef.current);
-      }
-
     return () => ctx.revert();
-  }, [animateChart]);
+  }, [animateChart, resetChart]);
 
   // Removed extra on-scroll trigger to avoid double animation; GSAP onEnter handles it
 

@@ -94,7 +94,7 @@ export default function InflationTypesSection() {
                 key={type.key}
                 type="button"
                 onClick={() => setActiveType(type.key)}
-                className={`text-left rounded-2xl border transition-all duration-300 h-full p-6 backdrop-blur-sm ${
+                className={`text-left rounded-2xl border transition-all duration-300 h-full p-6 backdrop-blur-sm cursor-pointer ${
                   isActive
                     ? 'bg-white/15 border-indigo-300/70 shadow-lg shadow-indigo-500/30 scale-[1.02]'
                     : 'bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10'
