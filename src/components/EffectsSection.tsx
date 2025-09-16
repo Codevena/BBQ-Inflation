@@ -9,6 +9,7 @@ import { Line } from 'react-chartjs-2';
 import { BarChart3, Lightbulb, Info } from 'lucide-react';
 // removed useAnimationOnScroll to avoid double triggering animations
 import { inflationRatesGermany, priceExamples, realWageData } from '@/data/inflationData';
+import SalaryInflationTracker from './SalaryInflationTracker';
 import { DATA_STAND_SHORT } from '@/data/constants';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
@@ -396,7 +397,13 @@ export default function EffectsSection() {
           </div>
         </div>
 
-        {/* Salary Inflation Tracker removed per request */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-semibold text-white mb-6 text-center flex items-center justify-center gap-2">
+            <Lightbulb size={22} className="text-yellow-400" />
+            Dein Reallohn-Check
+          </h3>
+          <SalaryInflationTracker />
+        </div>
       </div>
     </section>
   );
