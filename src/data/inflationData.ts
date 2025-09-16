@@ -333,6 +333,78 @@ export const quizQuestions = [
     ],
     correct: 2,
     explanation: "Ein schwächerer Euro verteuert importierte Güter wie Energie oder Rohstoffe und erhöht damit den Preisdruck."
+  },
+  {
+    id: 15,
+    question: "Was misst der HVPI im Vergleich zum nationalen VPI?",
+    options: [
+      "Nur die Preise für Industriegüter",
+      "Einen europaweit harmonisierten Verbraucherpreisindex",
+      "Lediglich die Preise für Exportgüter",
+      "Den Wechselkurs zum US-Dollar"
+    ],
+    correct: 1,
+    explanation: "Der Harmonisierte Verbraucherpreisindex (HVPI) folgt EU-weit gleichen Regeln und ermöglicht länderübergreifende Vergleiche."
+  },
+  {
+    id: 16,
+    question: "Welche Aussage zur Kerninflation ist korrekt?",
+    options: [
+      "Sie berücksichtigt nur Energiepreise",
+      "Sie schwankt stärker als die Gesamtinflation",
+      "Sie blendet besonders volatile Komponenten aus",
+      "Sie ist immer höher als die Gesamtinflation"
+    ],
+    correct: 2,
+    explanation: "Zur Kerninflation zählen alle Preise außer Energie und unverarbeiteten Lebensmitteln – so zeigt sie den mittelfristigen Trend."
+  },
+  {
+    id: 17,
+    question: "Was beschreibt der Begriff 'Greenflation'?",
+    options: [
+      "Preisverfall durch grüne Technologien",
+      "Preisdruck durch Kosten der Energiewende",
+      "Steuern auf umweltfreundliche Produkte",
+      "Inflation nur bei Bio-Lebensmitteln"
+    ],
+    correct: 1,
+    explanation: "Investitionen in die Energiewende und knappe Rohstoffe können Preise in grünen Zukunftsbranchen anheben – das nennt man Greenflation."
+  },
+  {
+    id: 18,
+    question: "Welche Folge kann Hyperinflation haben?",
+    options: [
+      "Steigende Kaufkraft",
+      "Gleichbleibende Preise",
+      "Flucht in Sachwerte und Fremdwährungen",
+      "Höhere Realzinsen"
+    ],
+    correct: 2,
+    explanation: "Bei Hyperinflation verliert Geld extrem schnell an Wert – Menschen weichen auf stabile Währungen und Sachwerte aus."
+  },
+  {
+    id: 19,
+    question: "Welche Maßnahme gehört zur Fiskalpolitik gegen Inflation?",
+    options: [
+      "Senkung der Leitzinsen",
+      "Reduktion von Staatsausgaben",
+      "Kauf von Staatsanleihen durch die Zentralbank",
+      "Abwertung der Währung"
+    ],
+    correct: 1,
+    explanation: "Eine konsolidierende Fiskalpolitik – etwa Ausgabenkürzungen oder Steuererhöhungen – kann Nachfrage bremsen und damit Inflation dämpfen."
+  },
+  {
+    id: 20,
+    question: "Was versteht man unter 'kalter Progression'?",
+    options: [
+      "Eine Steuer auf kalte Getränke",
+      "Inflationsbedingtes Rutschen in höhere Steuerklassen ohne Reallohnzuwachs",
+      "Ein Programm der EZB",
+      "Sinkende Steuersätze bei Inflation"
+    ],
+    correct: 1,
+    explanation: "Steigen Löhne nur nominal, verschiebt die progressive Einkommensteuer den Arbeitnehmer in höhere Stufen – die Steuerlast steigt real."
   }
 ];
 
