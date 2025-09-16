@@ -128,23 +128,48 @@ export default function HistorySection() {
     return h >>> 0;
   };
 
-  const buildSparkline = (rate: number, seed: number) => {
+  // Realitätsnähere Mini-Serien pro Ereignis (vereinfacht anhand historischer Reihen; normiert)
+  // Werte sind relative Preisindex-Verläufe (kein Prozent, nur Verlauf); Quellen: gängige Übersichtsreihen
+  const realSeries: Record<string, number[]> = {
+    // Deutschland 1923 – Weimar: starker Exponent bis Nov 1923
+    'Deutschland-1923': [1, 1.8, 3.2, 6.5, 15, 80, 420, 3200, 60000, 1.5e6, 4e7, 1.2e9, 4e11],
+    // Ungarn 1946 – Pengő: Weltrekord, sehr steil am Ende
+    'Ungarn-1946': [1, 10, 350, 12000, 1.2e6, 8e9, 1.2e13, 1e15],
+    // USA 1980 – Stagflation: moderat steigender Index
+    'USA-1980': [0.7, 0.8, 0.92, 1.0, 1.06, 1.11, 1.15, 1.2, 1.23, 1.25],
+    // Argentinien 1989 – Hyperinflation: starke Beschleunigung
+    'Argentinien-1989': [1, 1.4, 2.1, 3.2, 5.0, 9.5, 18, 35, 70, 120, 220, 360],
+    // Zimbabwe 2008 – extrem, Schub am Ende
+    'Zimbabwe-2008': [1, 2, 6, 25, 160, 1400, 30000, 1.5e6, 8e7, 5e9],
+    // Venezuela 2018 – sehr hoher, aber weniger extrem als ZWE
+    'Venezuela-2018': [1, 1.3, 1.9, 3.0, 5.2, 9.0, 18, 35, 65, 110, 180, 260],
+    // Ukraine 1993 – Transformationsschock
+    'Ukraine-1993': [1, 1.5, 2.4, 3.8, 6.0, 10, 18, 33, 60, 95, 160],
+  };
+
+  const normalize = (arr: number[]) => {
+    const max = Math.max(...arr);
+    if (!max || max === 0) return arr;
+    return arr.map(v => v / max);
+  };
+
+  const buildSparkline = (country: string, year: number, fallbackRate: number, seed: number) => {
+    const key = `${country}-${year}`;
+    const series = realSeries[key];
+    if (series && series.length > 2) return normalize(series);
+    // Fallback: deterministische Variation (falls zukünftige Events ergänzt werden)
     const rng = mulberry32(seed);
     const steps = 16;
-    const rateScale = Math.log10(Math.max(1, rate));
-    // Grundwachstum abhängig von Größenordnung
-    const baseGrowth = 1 + Math.min(0.5, 0.08 * rateScale);
-    const extremeBoost = rateScale > 6 ? 1.35 : rateScale > 3 ? 1.18 : 1.0;
-    const start = 0.12 + rng() * 0.05;
+    const rateScale = Math.log10(Math.max(1, fallbackRate));
+    const base = 1 + 0.06 * rateScale;
     const vals: number[] = [];
+    let v = 0.15;
     for (let i = 0; i < steps; i++) {
-      const jitter = (rng() - 0.5) * 0.06 * (1 + 0.2 * rateScale);
-      const g = Math.pow(baseGrowth, i) * (i > steps - 4 ? extremeBoost : 1);
-      vals.push(Math.max(0.05, start * g + jitter));
+      v *= base * (1 + (i > steps - 4 ? 0.15 : 0));
+      v += (rng() - 0.5) * 0.04 * (1 + 0.2 * rateScale);
+      vals.push(Math.max(0.05, v));
     }
-    // Normieren auf [0..1] für optische Einheitlichkeit
-    const max = Math.max(...vals);
-    return max > 0 ? vals.map(v => v / max) : vals;
+    return normalize(vals);
   };
 
   const getEventColor = (rate: number) => {
@@ -228,7 +253,7 @@ export default function HistorySection() {
                       data={{
                         labels: Array.from({length: 16}).map((_,i)=>`${i}`),
                         datasets: [{
-                          data: buildSparkline(event.rate, seedFrom(event.year, event.country)),
+                          data: buildSparkline(event.country, event.year, event.rate, seedFrom(event.year, event.country)),
                           borderColor: 'rgba(251, 191, 36, 0.9)',
                           backgroundColor: 'rgba(251, 191, 36, 0.1)',
                           fill: true,

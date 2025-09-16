@@ -152,26 +152,7 @@ export default function GlobalPerspectiveSection() {
             ))}
           </div>
 
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
-            {/* Mini Heat‑Grid */}
-            <h4 className="text-xl font-bold text-white mb-4">Heat‑Grid (vereinfachte Darstellung)</h4>
-            <div className="grid grid-cols-5 gap-2">
-              {globalInflationData.map((c, i) => {
-                const rate = c.rate2025;
-                const hue = Math.max(0, 120 - Math.min(10, rate) * 12); // 0=rot, 120=grün
-                const bg = `hsl(${hue}, 70%, 50%, 0.65)`; // klassische hsl(a) Syntax
-                return (
-                  <div key={i} className="h-6 rounded" title={`${c.country}: ${rate}%`} style={{ backgroundColor: bg }} />
-                );
-              })}
-            </div>
-            <div className="mt-3 flex items-center justify-between text-[10px] text-purple-300">
-              <span>Niedrig</span>
-              <div className="flex-1 h-1 mx-2 rounded" style={{ background: 'linear-gradient(90deg, hsl(120,70%,50%) 0%, hsl(0,70%,50%) 100%)' }} />
-              <span>Hoch</span>
-            </div>
-            <p className="text-purple-300 text-xs mt-2">Schnellblick: Farbstärke ≈ Inflationshöhe – keine Karte, nur kompaktes Raster.</p>
-          </div>
+          {/* Heat‑Grid entfernt auf Wunsch */}
             <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <Search size={24} className="text-blue-400" />
               Erkenntnisse:
