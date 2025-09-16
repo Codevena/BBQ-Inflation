@@ -410,3 +410,182 @@ export const inflationMythsFacts = [
     explanation: 'Schuldner profitieren, Sparer verlieren'
   }
 ];
+
+export interface InflationTypeDetail {
+  key: 'demand' | 'supply' | 'imported' | 'wages';
+  title: string;
+  summary: string;
+  typicalTriggers: string[];
+  indicators: string[];
+  policyResponse: string[];
+}
+
+export const inflationTypeDetails: InflationTypeDetail[] = [
+  {
+    key: 'demand',
+    title: 'Nachfrageinflation',
+    summary: 'Zu viel Geld jagt zu wenige Güter – häufig in Boomphasen, bei Nachholkonsum oder sehr lockerer Finanzpolitik.',
+    typicalTriggers: [
+      'Starke Fiskalimpulse, Transferprogramme, expansive Kreditvergabe',
+      'Aufgestaute Nachfrage (z. B. nach Lockdowns) trifft auf begrenzte Kapazitäten',
+      'Optimistische Erwartungen – Haushalte kaufen „aus Angst vor späteren Preiserhöhungen“'
+    ],
+    indicators: [
+      'Hohe Auslastung, niedrige Arbeitslosigkeit, steigende Kapazitätsauslastung',
+      'Schneller Lohnanstieg ohne entsprechende Produktivität',
+      'Breit angelegte Preissteigerungen quer durch Gütergruppen'
+    ],
+    policyResponse: [
+      'Restriktivere Geldpolitik (Leitzinsen anheben, Liquidität entziehen)',
+      'Abbau temporärer Stimuli, automatische Stabilisatoren wirken lassen',
+      'Kommunikation zur Dämpfung überzogener Erwartungen'
+    ]
+  },
+  {
+    key: 'supply',
+    title: 'Angebots-/Kosteninflation',
+    summary: 'Produktionskosten steigen – Unternehmen geben sie weiter. Klassisch bei Energie- oder Rohstoffschocks.',
+    typicalTriggers: [
+      'Sprunghaft höhere Energie- oder Rohstoffpreise',
+      'Lieferkettenausfälle, Transportprobleme, Naturereignisse',
+      'Regulatorische Eingriffe (z. B. CO₂-Preis, Mindestlohnanstiege)' 
+    ],
+    indicators: [
+      'Anziehende Produzentenpreise (PPI) vor Verbraucherpreisen',
+      'Margendruck bei energieintensiven Sektoren',
+      'Kostenweitergabe konzentriert in bestimmten Gütergruppen'
+    ],
+    policyResponse: [
+      'Temporäre Stützmaßnahmen für besonders betroffene Haushalte/Unternehmen',
+      'Investitionen in Effizienz, Diversifizierung von Lieferketten fördern',
+      'Geldpolitik: abwägen zwischen Inflationsbekämpfung und Wachstum'
+    ]
+  },
+  {
+    key: 'imported',
+    title: 'Importierte Inflation',
+    summary: 'Steigende Weltmarktpreise oder ein schwächerer Wechselkurs verteuern Importe und schlagen auf den VPI durch.',
+    typicalTriggers: [
+      'Schwäche der eigenen Währung gegenüber USD oder wichtigen Handelspartnern',
+      'Globale Energie- und Lebensmittelpreisschübe',
+      'Zölle, Handelskonflikte, Lieferkettenverlagerungen'
+    ],
+    indicators: [
+      'Starker Beitrag importierter Güter in Inflationszerlegung',
+      'Wachsende Leistungsbilanzdefizite',
+      'Parallel steigende Terms of Trade oder Wechselkursvolatilität'
+    ],
+    policyResponse: [
+      'Wechselkurs stabilisieren (Vertrauen, ggf. Interventionen)',
+      'Handel diversifizieren, strategische Reserven aufbauen',
+      'Geldpolitik: Zweitrundeneffekte im Blick behalten'
+    ]
+  },
+  {
+    key: 'wages',
+    title: 'Lohn-Preis-Spirale',
+    summary: 'Steigende Preise führen zu höheren Lohnforderungen, die wiederum Kosten und Preise anheben – Erwartungen sind der Katalysator.',
+    typicalTriggers: [
+      'Inflationserwartungen entankern sich, Gewerkschaften verlangen Inflationsausgleich',
+      'Produktivität stagniert, während Löhne kräftig steigen',
+      'Indexierte Verträge verbreiten Preisanpassungen automatisch'
+    ],
+    indicators: [
+      'Löhne wachsen schneller als Produktivität über mehrere Quartale',
+      'Dienstleistungsinflation bleibt hartnäckig hoch',
+      'Tarifabschlüsse mit mehrjährigen Indexklauseln'
+    ],
+    policyResponse: [
+      'Erwartungsmanagement durch glaubwürdige Inflationsziele',
+      'Sozialpartner-Dialog, um Einmalzahlungen statt dauerhafter Lohnsprünge zu stärken',
+      'Strenge Geldpolitik, falls zweite Runde droht'
+    ]
+  }
+];
+
+export interface InflationSpeedCategory {
+  label: string;
+  range: string;
+  description: string;
+  example: string;
+}
+
+export const inflationSpeedCategories: InflationSpeedCategory[] = [
+  {
+    label: 'Schleichend',
+    range: '0–3 % p. a.',
+    description: 'Preisauftrieb ist moderat, Unternehmen und Haushalte können planen – Zielbereich vieler Zentralbanken.',
+    example: 'Eurozone 1999–2007 (~2%)'
+  },
+  {
+    label: 'Trabend',
+    range: '3–10 % p. a.',
+    description: 'Kaufkraft erodiert spürbar, Indexierungen nehmen zu, Politik reagiert meist restriktiver.',
+    example: 'USA späte 1960er (~5–6%)'
+  },
+  {
+    label: 'Galoppierend',
+    range: '10–50 % p. a.',
+    description: 'Preise steigen schnell, Verträge werden sehr kurz, Barbestände verlieren massiv an Wert.',
+    example: 'Brasilien Anfang 1990er (>20%)'
+  },
+  {
+    label: 'Hyperinflation',
+    range: '> 50 % pro Monat',
+    description: 'Preisspirale außer Kontrolle; Geld wird sofort ausgegeben, Wirtschaft kollabiert.',
+    example: 'Zimbabwe 2008, Ungarn 1946'
+  }
+];
+
+export interface InflationPhenomenon {
+  title: string;
+  description: string;
+  example: string;
+}
+
+export const inflationPhenomena: InflationPhenomenon[] = [
+  {
+    title: 'Shrinkflation',
+    description: 'Gleicher Preis, kleinere Packung – verdeckte Preiserhöhung ohne sichtbare Zahl auf dem Preisschild.',
+    example: 'Süßwaren: 200g → 180g bei identischem Preis'
+  },
+  {
+    title: 'Skimpflation',
+    description: 'Qualität oder Service sinken, Preis bleibt. Kunden bemerken langsamer den realen Aufschlag.',
+    example: 'Hotelreinigung nur noch alle zwei Tage'
+  },
+  {
+    title: '„Greedflation“-Debatte',
+    description: 'Diskussion, ob Unternehmen Marktmacht nutzen, um Margen auszubauen. Evidenz uneinheitlich.',
+    example: 'Lebensmittelketten 2022/23: kurze Spitzen, später Margendruck'
+  }
+];
+
+export interface InflationComparisonRow {
+  topic: string;
+  stagflation: string;
+  deflation: string;
+}
+
+export const inflationComparisonRows: InflationComparisonRow[] = [
+  {
+    topic: 'Typische Lage',
+    stagflation: 'Hohe Inflation bei stagnierendem oder schrumpfendem BIP, Arbeitslosigkeit steigt.',
+    deflation: 'Fallende Preise bei schwacher Nachfrage, häufig begleitet von Kredit- und Bilanzabbau.'
+  },
+  {
+    topic: 'Treiber',
+    stagflation: 'Angebotsschocks (Öl), Lohn-Preis-Spiralen, schlechte Erwartungssteuerung.',
+    deflation: 'Nachfrageschwäche, Sparüberschüsse, fallende Vermögenspreise, Schuldenabbau.'
+  },
+  {
+    topic: 'Risiken',
+    stagflation: 'Reallöhne fallen, Profitabilität leidet, schwierige geldpolitische Abwägung.',
+    deflation: 'Schuldenlast steigt real, Konsumaufschub, Gefahr einer Abwärtsspirale.'
+  },
+  {
+    topic: 'Politikreaktion',
+    stagflation: 'Angebotsseite stärken, Energieabhängigkeit reduzieren, glaubwürdige Zinsanhebungen.',
+    deflation: 'Lockere Geld- und Fiskalpolitik, Kreditkanäle reparieren, Erwartungen aufbrechen.'
+  }
+];

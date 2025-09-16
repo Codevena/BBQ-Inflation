@@ -6,6 +6,7 @@ import { BarChart3, ArrowRight, ArrowLeft } from 'lucide-react';
 import IntroSection from '@/components/IntroSection';
 import CausesSection from '@/components/CausesSection';
 import EffectsSection from '@/components/EffectsSection';
+import InflationTypesSection from '@/components/InflationTypesSection';
 import MeasurementSection from '@/components/MeasurementSection';
 import CPIBasketSection from '@/components/CPIBasketSection';
 import ECBPolicySection from '@/components/ECBPolicySection';
@@ -19,7 +20,7 @@ import GlossarySection from '@/components/GlossarySection';
 import QuizSection from '@/components/QuizSection';
 import Navigation from '@/components/Navigation';
 
-const sections = ['#intro', '#causes', '#effects', '#measurement', '#ecb-policy', '#fiscal', '#everyday', '#business', '#labour', '#global', '#history', '#glossary', '#quiz'];
+const sections = ['#intro', '#causes', '#types', '#effects', '#measurement', '#ecb-policy', '#fiscal', '#everyday', '#business', '#labour', '#global', '#history', '#glossary', '#quiz'];
 
 export default function Home() {
   // initialize Lenis smooth scroll without binding unused var
@@ -60,6 +61,7 @@ export default function Home() {
       <div className="pt-20">
         <IntroSection />
       <CausesSection />
+      <InflationTypesSection />
       <EffectsSection />
       <MeasurementSection />
       <CPIBasketSection />

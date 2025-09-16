@@ -11,6 +11,7 @@ interface NavigationProps {
 const nameMap: Record<string, string> = {
   '#intro': 'Einführung',
   '#causes': 'Ursachen',
+  '#types': 'Inflationsarten',
   '#effects': 'Auswirkungen',
   '#measurement': 'Messung',
   '#ecb-policy': 'EZB-Politik',
