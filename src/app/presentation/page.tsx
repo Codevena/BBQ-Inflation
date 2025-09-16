@@ -6,6 +6,7 @@ import { inflationRatesGermany, inflationCauses, historicalEvents, priceExamples
 import { DATA_STAND_SHORT } from '@/data/constants';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line, Doughnut } from 'react-chartjs-2';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   TrendingUp,
   Lightbulb,
@@ -225,37 +226,47 @@ export default function PresentationMode() {
     return () => { if (ecbRaf.current) cancelAnimationFrame(ecbRaf.current); };
   }, [currentSlide, ecbAnimated, ecbRates]);
 
+  const easeOutSmooth: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  const easeInOutSmooth: [number, number, number, number] = [0.45, 0, 0.55, 1];
+  const fadeUpVariant = (delay = 0) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0, transition: { delay, duration: 0.45, ease: easeOutSmooth } }
+  });
+
   const renderSlide = () => {
     const slideType = slides[currentSlide];
 
     switch (slideType) {
       case 'title':
         return (
-          <div className="text-center">
-            <h1 className="text-6xl font-bold text-white mb-8 flex items-center justify-center gap-4">
+          <div className="text-center space-y-12">
+            <motion.h1
+              className="text-6xl font-bold text-white flex items-center justify-center gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutSmooth } }}
+            >
               <TrendingUp size={64} className="text-cyan-400" />
               Inflation verstehen
-            </h1>
-            <p className="text-2xl text-blue-200 mb-12">
+            </motion.h1>
+            <motion.p
+              className="text-2xl text-blue-200"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0, transition: { delay: 0.15, duration: 0.45, ease: easeOutSmooth } }}
+            >
               Ursachen, Auswirkungen und Geschichte
-            </p>
+            </motion.p>
             <div className="grid grid-cols-4 gap-8">
-              <div className="bg-white/10 rounded-xl p-6">
-                <div className="text-3xl font-bold text-red-400">6.9%</div>
-                <div className="text-blue-200">Deutschland 2022</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-6">
-                <div className="text-3xl font-bold text-yellow-400">2.0%</div>
-                <div className="text-blue-200">EZB Ziel</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-6">
-                <div className="text-3xl font-bold text-green-400">2.2%</div>
-                <div className="text-blue-200">Deutschland 2024</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-6">
-                <div className="text-3xl font-bold text-green-400">+1.6%</div>
-                <div className="text-blue-200">Reallöhne 2024</div>
-              </div>
+              {[
+                { value: '6.9%', label: 'Deutschland 2022', color: 'text-red-400' },
+                { value: '2.0%', label: 'EZB Ziel', color: 'text-yellow-400' },
+                { value: '2.2%', label: 'Deutschland 2024', color: 'text-green-400' },
+                { value: '+1.6%', label: 'Reallöhne 2024', color: 'text-green-400' }
+              ].map((item, idx) => (
+                <motion.div key={item.label} className="bg-white/10 rounded-xl p-6" {...fadeUpVariant(0.25 + idx * 0.06)}>
+                  <div className={`text-3xl font-bold ${item.color}`}>{item.value}</div>
+                  <div className="text-blue-200">{item.label}</div>
+                </motion.div>
+              ))}
             </div>
           </div>
         );
@@ -273,10 +284,11 @@ export default function PresentationMode() {
                 { title: '2. Ursachen & Auswirkungen', icon: <Search size={24} className="text-cyan-300" />, items: ['Nachfrage vs. Angebot', 'Reallöhne & Preise'] },
                 { title: '3. EZB & Geschichte', icon: <Building2 size={24} className="text-cyan-300" />, items: ['EZB-Tools & Leitzins', 'Historische Episoden'] },
               ].map((block, i) => (
-                <div
+                <motion.div
                   key={i}
                   ref={(el) => { roadmapRefs.current[i] = el; }}
                   className="group relative bg-white/5 rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10"
+                  {...fadeUpVariant(0.2 + i * 0.1)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                   <div className="flex items-center justify-center gap-2 mb-4">
@@ -291,7 +303,7 @@ export default function PresentationMode() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               ))}
             </div>
             <p className="text-sm text-blue-300 mt-6">
@@ -307,29 +319,29 @@ export default function PresentationMode() {
               <Lightbulb size={48} className="text-cyan-400" />
               Was ist Inflation?
             </h1>
-            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-12 border border-blue-400/30">
+            <motion.div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl p-12 border border-blue-400/30" {...fadeUpVariant(0.15)}>
               <p className="text-2xl text-blue-100 leading-relaxed mb-8">
                 Inflation ist der <strong className="text-white">allgemeine Anstieg des Preisniveaus</strong> für
                 Güter und Dienstleistungen in einer Volkswirtschaft über einen bestimmten Zeitraum.
               </p>
               <div className="grid grid-cols-3 gap-8 mt-12">
-                <div className="text-center">
+                <motion.div className="text-center" {...fadeUpVariant(0.25)}>
                   <BarChart3 size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Messung</h3>
                   <p className="text-blue-200">Verbraucherpreisindex (VPI)</p>
-                </div>
-                <div className="text-center">
+                </motion.div>
+                <motion.div className="text-center" {...fadeUpVariant(0.32)}>
                   <Target size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Ziel</h3>
                   <p className="text-blue-200">2% jährlich (EZB)</p>
-                </div>
-                <div className="text-center">
+                </motion.div>
+                <motion.div className="text-center" {...fadeUpVariant(0.39)}>
                   <Scale size={48} className="text-cyan-400 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">Balance</h3>
                   <p className="text-blue-200">Weder zu hoch noch zu niedrig</p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         );
 
@@ -340,7 +352,7 @@ export default function PresentationMode() {
               <BarChart3 size={48} className="text-cyan-400" />
               Deutschland: Inflationsentwicklung
             </h1>
-            <div className="bg-white/5 rounded-2xl p-8 mb-8">
+            <motion.div className="bg-white/5 rounded-2xl p-8 mb-8" {...fadeUpVariant(0.1)}>
               <div className="h-96">
                 <Line 
                   data={{
@@ -370,10 +382,10 @@ export default function PresentationMode() {
               <p className="text-center text-blue-300 text-xs mt-4">
                 Verbraucherpreisindex (VPI), jährliche Veränderungsrate. Stand: {DATA_STAND_SHORT}. Quelle: Statistisches Bundesamt (Destatis).
               </p>
-            </div>
-            <p className="text-xl text-blue-200">
+            </motion.div>
+            <motion.p className="text-xl text-blue-200" {...fadeUpVariant(0.25)}>
               <strong className="text-red-400">2022:</strong> Ukraine-Krieg führte zu Energiekrise → 6,9% Inflation
-            </p>
+            </motion.p>
           </div>
         );
 
@@ -385,7 +397,7 @@ export default function PresentationMode() {
               Was verursacht Inflation?
             </h1>
             <div className="grid grid-cols-2 gap-12">
-              <div className="bg-red-500/20 rounded-2xl p-8 border border-red-400/30">
+              <motion.div className="bg-red-500/20 rounded-2xl p-8 border border-red-400/30" {...fadeUpVariant(0.15)}>
                 <h2 className="text-3xl font-bold text-red-400 mb-6">Nachfrageinflation</h2>
                 <p className="text-xl text-red-100 mb-4">
                   &quot;Zu viel Geld jagt zu wenige Güter&quot;
@@ -395,8 +407,8 @@ export default function PresentationMode() {
                   <li>• Niedrigzinspolitik</li>
                   <li>• Staatliche Konjunkturpakete</li>
                 </ul>
-              </div>
-              <div className="bg-orange-500/20 rounded-2xl p-8 border border-orange-400/30">
+              </motion.div>
+              <motion.div className="bg-orange-500/20 rounded-2xl p-8 border border-orange-400/30" {...fadeUpVariant(0.22)}>
                 <h2 className="text-3xl font-bold text-orange-400 mb-6">Angebotsinflation</h2>
                 <p className="text-xl text-orange-100 mb-4">
                   &quot;Produktionskosten steigen&quot;
@@ -406,7 +418,7 @@ export default function PresentationMode() {
                   <li>• Energiekrise (Ukraine-Krieg)</li>
                   <li>• Rohstoffknappheit</li>
                 </ul>
-              </div>
+              </motion.div>
             </div>
           </div>
         );
@@ -522,7 +534,7 @@ export default function PresentationMode() {
             </h1>
             <div className="grid grid-cols-2 gap-8">
               {(priceExamples || []).map((example, index) => (
-                <div key={index} className="bg-white/5 rounded-2xl p-8 border border-white/10">
+                <motion.div key={index} className="bg-white/5 rounded-2xl p-8 border border-white/10" {...fadeUpVariant(0.15 + index * 0.08)}>
                   <h3 className="text-2xl font-bold text-white mb-6">{example.item}</h3>
                   <div className="flex justify-between items-center mb-4">
                     <div className="text-center">
@@ -540,7 +552,7 @@ export default function PresentationMode() {
                       +{example.increase}%
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
             <p className="text-blue-300 text-xs mt-6">
@@ -557,7 +569,7 @@ export default function PresentationMode() {
               Wie wird Inflation gemessen?
             </h1>
             <div className="grid grid-cols-2 gap-12">
-              <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
+              <motion.div className="bg-white/5 rounded-2xl p-8 border border-white/10" {...fadeUpVariant(0.15)}>
                 <h2 className="text-3xl font-bold text-cyan-400 mb-6">Verbraucherpreisindex (VPI)</h2>
                 <div className="text-left space-y-4 text-cyan-200">
                   <p className="flex items-center gap-2"><ShoppingCart size={20} className="text-cyan-400" /> <strong>Warenkorb:</strong> 650 repräsentative Güter</p>
@@ -565,8 +577,8 @@ export default function PresentationMode() {
                   <p className="flex items-center gap-2"><Calendar size={20} className="text-cyan-400" /> <strong>Messung:</strong> Monatlich durch Destatis</p>
                   <p className="flex items-center gap-2"><Hash size={20} className="text-cyan-400" /> <strong>Formel:</strong> (VPI heute - VPI vor Jahr) / VPI vor Jahr × 100</p>
                 </div>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
+              </motion.div>
+              <motion.div className="bg-white/5 rounded-2xl p-8 border border-white/10" {...fadeUpVariant(0.25)}>
                 <h2 className="text-3xl font-bold text-blue-400 mb-6">HVPI (EU-weit)</h2>
                 <div className="text-left space-y-4 text-blue-200">
                   <p className="flex items-center gap-2"><Flag size={20} className="text-blue-400" /> <strong>Harmonisiert:</strong> Einheitliche Standards</p>
@@ -574,7 +586,7 @@ export default function PresentationMode() {
                   <p className="flex items-center gap-2"><BarChart3 size={20} className="text-blue-400" /> <strong>Eurostat:</strong> EU-Koordination</p>
                   <p className="flex items-center gap-2"><Target size={20} className="text-blue-400" /> <strong>Ziel:</strong> 2% für Eurozone</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         );
@@ -588,7 +600,7 @@ export default function PresentationMode() {
             </h1>
             <div className="grid grid-cols-1 gap-6">
               {(inflationByCategory || []).map((category, index) => (
-                <div key={index} className="bg-white/5 rounded-xl p-6 border border-white/10">
+                <motion.div key={index} className="bg-white/5 rounded-xl p-6 border border-white/10" {...fadeUpVariant(0.12 + index * 0.08)}>
                   <div className="grid grid-cols-4 gap-6 items-center">
                     <div className="text-left">
                       <h3 className="text-xl font-bold text-white">{category.category}</h3>
@@ -610,7 +622,7 @@ export default function PresentationMode() {
                       <div className="text-blue-200 text-sm">Änderung</div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -1210,7 +1222,17 @@ export default function PresentationMode() {
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-7xl">
-          {renderSlide()}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slides[currentSlide]}
+              initial={{ opacity: 0, y: 40, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: easeOutSmooth } }}
+              exit={{ opacity: 0, y: -30, scale: 0.98, transition: { duration: 0.3, ease: easeInOutSmooth } }}
+              className="w-full"
+            >
+              {renderSlide()}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
 
