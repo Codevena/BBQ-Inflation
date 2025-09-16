@@ -4,10 +4,14 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Briefcase, Settings, Shield, Package, FileText } from 'lucide-react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function BusinessResilienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -163,6 +167,40 @@ Governance: Komitee-Entscheid, 4‑Augen‑Prinzip`}</pre>
               Optional: Korridore für FX‑Risiken bei Importanteil {'>'} X% definieren.
             </p>
           </div>
+        </div>
+
+        {/* Mini‑Diagramm: Kostenstruktur vorher/nachher */}
+        <div className="mt-8 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <h4 className="text-white font-semibold mb-3">Kostenstruktur – vorher vs. nach Effizienzprogramm</h4>
+          <div className="h-64">
+            <Bar
+              data={{
+                labels: ['Energie', 'Material', 'Logistik', 'Personal', 'Sonstiges'],
+                datasets: [
+                  {
+                    label: 'Vorher',
+                    data: [24, 30, 12, 22, 12],
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)'
+                  },
+                  {
+                    label: 'Nachher',
+                    data: [18, 28, 10, 22, 9],
+                    backgroundColor: 'rgba(16, 185, 129, 0.5)'
+                  }
+                ]
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ddd' } } },
+                scales: {
+                  x: { ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                  y: { ticks: { color: '#ddd' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+              }}
+            />
+          </div>
+          <p className="text-blue-300 text-xs mt-3">Beispielhafte Struktur (in % der Gesamtkosten); Nachher: Energieersparnis, Logistikoptimierung.</p>
         </div>
       </div>
     </section>

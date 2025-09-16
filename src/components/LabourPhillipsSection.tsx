@@ -4,6 +4,10 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TrendingUp, Users, Scale, FileText } from 'lucide-react';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import { Scatter } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -40,6 +44,58 @@ export default function LabourPhillipsSection() {
           <p className="text-xl text-purple-200 max-w-4xl mx-auto">
             Zusammenhang zwischen Inflation, Arbeitslosigkeit und Lohnverhandlungen – einfach erklärt
           </p>
+        </div>
+
+        {/* Mini-Diagramm: Phillips-Kurve (Scatter) */}
+        <div className="mt-10 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <h4 className="text-white font-semibold mb-3">Phillips‑Kurve – visuelle Intuition</h4>
+          <div className="h-64">
+            <Scatter
+              data={{
+                datasets: [
+                  {
+                    label: 'Beobachtungen',
+                    data: Array.from({ length: 20 }).map((_, i) => {
+                      const u = 3 + i * 0.25; // Arbeitslosigkeit (%)
+                      const pi = 5.5 - 0.5 * u + (Math.random() - 0.5) * 0.5; // Inflation (%)
+                      return { x: u, y: parseFloat(pi.toFixed(2)) };
+                    }),
+                    backgroundColor: 'rgba(168, 85, 247, 0.8)'
+                  },
+                  {
+                    label: 'Richtungs-Kurve',
+                    data: Array.from({ length: 25 }).map((_, i) => {
+                      const u = 3 + i * 0.3;
+                      const pi = 5.5 - 0.5 * u;
+                      return { x: u, y: pi };
+                    }),
+                    showLine: true,
+                    backgroundColor: 'rgba(236, 72, 153, 0.0)',
+                    borderColor: 'rgba(236, 72, 153, 0.9)',
+                    pointRadius: 0,
+                  }
+                ]
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: true } },
+                scales: {
+                  x: {
+                    title: { display: true, text: 'Arbeitslosigkeit (%)', color: '#ddd' },
+                    ticks: { color: '#ddd' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                  },
+                  y: {
+                    title: { display: true, text: 'Inflation (%)', color: '#ddd' },
+                    ticks: { color: '#ddd' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                  }
+                }
+              }}
+            />
+          </div>
+          <p className="text-purple-200 text-xs mt-3">Punkte = hypothetische Beobachtungen; Linie = typischer kurzfristiger Trade‑off (nicht stabil).</p>
         </div>
 
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -88,4 +144,3 @@ export default function LabourPhillipsSection() {
     </section>
   );
 }
-
