@@ -202,18 +202,21 @@ export default function PresentationMode() {
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 2);
-      const prog = eased * (n - 1);
-      const idx = Math.floor(prog);
-      const frac = prog - idx;
+      // Use n steps so the last point animates progressively
+      const prog = eased * n;
+      const idx = Math.min(n - 1, Math.floor(prog));
+      const frac = Math.min(1, Math.max(0, prog - idx));
       const data = ecbRates.map((v, i) => {
         if (i < idx) return v;
-        if (i === idx) return v * Math.min(1, Math.max(0, frac));
+        if (i === idx) return v * frac;
         return 0;
       });
       setEcbData(data);
       if (t < 1) {
         ecbRaf.current = requestAnimationFrame(step);
       } else {
+        // finalize exact values so last point doesn't appear truncated
+        setEcbData(ecbRates);
         setEcbAnimated(true);
         ecbRaf.current = null;
       }
