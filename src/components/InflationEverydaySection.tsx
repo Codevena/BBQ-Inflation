@@ -405,9 +405,6 @@ export default function InflationEverydaySection() {
                       <p className="text-emerald-100 text-sm leading-relaxed flex-1">
                         {asset.explanation}
                       </p>
-                      <div className="mt-4 p-3 rounded-lg border" style={{ borderColor: `${asset.color}33`, backgroundColor: `${asset.color}14` }}>
-                        <p className="text-xs text-emerald-200">Hinweis: Kein Ersatz für Beratung. Mischung aus Anlagen und ausreichende Liquiditätsreserve reduzieren Risiken.</p>
-                      </div>
                     </div>
                   </div>
                 </div>
