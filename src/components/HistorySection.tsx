@@ -110,6 +110,43 @@ export default function HistorySection() {
     return `${r.toLocaleString('de-DE')}%`;
   };
 
+  // Deterministische kleine Variation pro Event, damit die Sparklines nicht identisch sind
+  const mulberry32 = (a: number) => {
+    return function() {
+      let t = (a += 0x6D2B79F5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
+  const seedFrom = (year: number, country: string) => {
+    let h = year | 0;
+    for (let i = 0; i < country.length; i++) {
+      h = Math.imul(31, h) + country.charCodeAt(i);
+    }
+    return h >>> 0;
+  };
+
+  const buildSparkline = (rate: number, seed: number) => {
+    const rng = mulberry32(seed);
+    const steps = 16;
+    const rateScale = Math.log10(Math.max(1, rate));
+    // Grundwachstum abhängig von Größenordnung
+    const baseGrowth = 1 + Math.min(0.5, 0.08 * rateScale);
+    const extremeBoost = rateScale > 6 ? 1.35 : rateScale > 3 ? 1.18 : 1.0;
+    const start = 0.12 + rng() * 0.05;
+    const vals: number[] = [];
+    for (let i = 0; i < steps; i++) {
+      const jitter = (rng() - 0.5) * 0.06 * (1 + 0.2 * rateScale);
+      const g = Math.pow(baseGrowth, i) * (i > steps - 4 ? extremeBoost : 1);
+      vals.push(Math.max(0.05, start * g + jitter));
+    }
+    // Normieren auf [0..1] für optische Einheitlichkeit
+    const max = Math.max(...vals);
+    return max > 0 ? vals.map(v => v / max) : vals;
+  };
+
   const getEventColor = (rate: number) => {
     if (rate >= 1000000) return 'from-red-600 to-red-800';
     if (rate >= 1000) return 'from-orange-500 to-red-600';
@@ -189,9 +226,9 @@ export default function HistorySection() {
                   <div className="h-10 mb-4">
                     <Line
                       data={{
-                        labels: Array.from({length: 12}).map((_,i)=>`${i}`),
+                        labels: Array.from({length: 16}).map((_,i)=>`${i}`),
                         datasets: [{
-                          data: Array.from({length: 12}).map((_,i)=> Math.max(0.1, Math.pow(1.4, i/2) )),
+                          data: buildSparkline(event.rate, seedFrom(event.year, event.country)),
                           borderColor: 'rgba(251, 191, 36, 0.9)',
                           backgroundColor: 'rgba(251, 191, 36, 0.1)',
                           fill: true,
@@ -204,7 +241,7 @@ export default function HistorySection() {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false }, tooltip: { enabled: false } },
-                        scales: { x: { display: false }, y: { display: false } }
+                        scales: { x: { display: false }, y: { display: false, min: 0, max: 1 } }
                       }}
                     />
                   </div>

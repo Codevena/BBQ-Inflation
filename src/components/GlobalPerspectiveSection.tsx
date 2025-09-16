@@ -165,7 +165,12 @@ export default function GlobalPerspectiveSection() {
                 );
               })}
             </div>
-            <p className="text-purple-300 text-xs mt-2">Dunkler = höhere Inflation. Raster dient der schnellen Orientierung.</p>
+            <div className="mt-3 flex items-center justify-between text-[10px] text-purple-300">
+              <span>Niedrig</span>
+              <div className="flex-1 h-1 mx-2 rounded" style={{ background: 'linear-gradient(90deg, hsl(120,70%,50%) 0%, hsl(0,70%,50%) 100%)' }} />
+              <span>Hoch</span>
+            </div>
+            <p className="text-purple-300 text-xs mt-2">Schnellblick: Farbstärke ≈ Inflationshöhe – keine Karte, nur kompaktes Raster.</p>
           </div>
             <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <Search size={24} className="text-blue-400" />
