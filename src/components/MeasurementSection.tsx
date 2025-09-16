@@ -19,6 +19,8 @@ export default function MeasurementSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
+  const coreBlockRef = useRef<HTMLDivElement>(null);
+  const biasesBlockRef = useRef<HTMLDivElement>(null);
 
   // Basiseffekt-Simulator state (einfach, lokal, keine Tooltips)
   const [basePrev, setBasePrev] = useState<number>(100);
@@ -29,7 +31,7 @@ export default function MeasurementSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial setup
-      gsap.set([titleRef.current, contentRef.current, categoriesRef.current], {
+      gsap.set([titleRef.current, contentRef.current, categoriesRef.current, coreBlockRef.current, biasesBlockRef.current], {
         opacity: 0,
         y: 50
       });
@@ -62,6 +64,28 @@ export default function MeasurementSection() {
         duration: 1.2,
         ease: 'power2.out'
       }, '-=0.3');
+
+      // Fade-in for core vs headline block when it enters viewport
+      if (coreBlockRef.current) {
+        gsap.to(coreBlockRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: coreBlockRef.current, start: 'top 85%', once: true }
+        });
+      }
+
+      // Fade-in for biases block when it enters viewport
+      if (biasesBlockRef.current) {
+        gsap.to(biasesBlockRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: biasesBlockRef.current, start: 'top 85%', once: true }
+        });
+      }
 
     }, sectionRef);
 
@@ -293,7 +317,7 @@ export default function MeasurementSection() {
         </div>
 
         {/* Kern vs. Gesamtinflation (Deutschland) */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
+        <div ref={coreBlockRef} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-8">
           <div className="flex items-center justify-between mb-3">
             <h4 className="text-xl font-semibold text-white">Kern vs. Gesamtinflation (Deutschland)</h4>
             <label className="flex items-center gap-2 text-cyan-200 text-sm">
@@ -357,7 +381,7 @@ export default function MeasurementSection() {
         </div>
 
         {/* Messfehler & Verzerrungen – volle Breite */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-16">
+        <div ref={biasesBlockRef} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-16">
           <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
             <Lightbulb size={20} className="text-yellow-400" />
             Messfehler & Verzerrungen
