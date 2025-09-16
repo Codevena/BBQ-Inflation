@@ -42,13 +42,13 @@ export default function ECBPolicySection() {
   const [selectedRate, setSelectedRate] = useState(2.0);
   const [showImpact, setShowImpact] = useState(false);
   const [animatedData, setAnimatedData] = useState(ecbRateHistory.map(() => 0));
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isAnimatingRef = useRef(false);
 
   const animateChart = useCallback(() => {
-    if (isAnimating) return;
+    if (isAnimatingRef.current) return;
     if (hasAnimatedRef.current || animatingRef.current) return;
     animatingRef.current = true;
-    setIsAnimating(true);
+    isAnimatingRef.current = true;
     const originalData = ecbRateHistory.map(item => item.rate);
     const n = originalData.length;
     const start = performance.now();
@@ -71,14 +71,14 @@ export default function ECBPolicySection() {
       } else {
         // finalize to full data so last point isn't 0%
         setAnimatedData(originalData);
-        setIsAnimating(false);
+        isAnimatingRef.current = false;
         rafRef.current = null;
         hasAnimatedRef.current = true;
         animatingRef.current = false;
       }
     };
     rafRef.current = requestAnimationFrame(step);
-  }, [isAnimating]);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
