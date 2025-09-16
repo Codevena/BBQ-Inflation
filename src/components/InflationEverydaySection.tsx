@@ -58,6 +58,14 @@ const inflationProtectionAssets = [
     timeHorizon: 'Jederzeit',
     description: 'Zinsen meist unter Inflation',
     color: '#8B5CF6'
+  },
+  {
+    name: 'Infrastruktur/REITs',
+    protection: 70,
+    risk: 'Mittel',
+    timeHorizon: '5+ Jahre',
+    description: 'Sachwerte mit oft indexierten Erlösen (Mieten/Maut)',
+    color: '#22D3EE'
   }
 ];
 
@@ -99,6 +107,7 @@ export default function InflationEverydaySection() {
   const [inflationRate, setInflationRate] = useState(3.0);
   const [years, setYears] = useState(10);
   const [selectedAsset, setSelectedAsset] = useState(0);
+  const [flipped, setFlipped] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -308,52 +317,90 @@ export default function InflationEverydaySection() {
             {inflationProtectionAssets.map((asset, index) => (
               <div
                 key={index}
-                className={`bg-white/5 backdrop-blur-sm rounded-xl p-6 border cursor-pointer transition-all duration-300 ${
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedAsset === index}
+                className={`relative bg-white/5 backdrop-blur-sm rounded-xl border cursor-pointer transition-all duration-300 perspective [perspective:1000px] ${
                   selectedAsset === index 
                     ? 'border-emerald-400 bg-white/10 scale-105' 
                     : 'border-white/10 hover:border-white/30'
                 }`}
-                onClick={() => setSelectedAsset(index)}
+                onClick={() => {
+                  setSelectedAsset(index);
+                  setFlipped(prev => ({ ...prev, [index]: !prev[index] }));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedAsset(index);
+                    setFlipped(prev => ({ ...prev, [index]: !prev[index] }));
+                  }
+                }}
               >
-                <div className="text-center mb-4">
-                  <h4 className="text-xl font-bold text-white mb-2">{asset.name}</h4>
-                  <div className="text-3xl font-bold mb-2" style={{ color: asset.color }}>
-                    {asset.protection}%
-                  </div>
-                  <div className="text-sm text-emerald-200">Inflationsschutz</div>
-                </div>
+                <div
+                  className="p-6 transition-transform duration-500 [transform-style:preserve-3d] min-h-[230px]"
+                  style={{ transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+                >
+                  {/* Front */}
+                  <div className="absolute inset-0 p-6 [backface-visibility:hidden]">
+                    <div className="text-center mb-4">
+                      <h4 className="text-xl font-bold text-white mb-2">{asset.name}</h4>
+                      <div className="text-3xl font-bold mb-2" style={{ color: asset.color }}>
+                        {asset.protection}%
+                      </div>
+                      <div className="text-sm text-emerald-200">Inflationsschutz</div>
+                    </div>
 
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-emerald-200 text-sm">Risiko:</span>
-                    <span className={`text-sm font-bold ${
-                      asset.risk === 'Niedrig' ? 'text-green-400' : 
-                      asset.risk === 'Mittel' ? 'text-yellow-400' : 'text-red-400'
-                    }`}>
-                      {asset.risk}
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-emerald-200 text-sm">Zeithorizont:</span>
-                    <span className="text-white text-sm font-bold">{asset.timeHorizon}</span>
-                  </div>
-                </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-emerald-200 text-sm">Risiko:</span>
+                        <span className={`text-sm font-bold ${
+                          asset.risk === 'Niedrig' ? 'text-green-400' : 
+                          asset.risk === 'Mittel' ? 'text-yellow-400' : 'text-red-400'
+                        }`}>
+                          {asset.risk}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between">
+                        <span className="text-emerald-200 text-sm">Zeithorizont:</span>
+                        <span className="text-white text-sm font-bold">{asset.timeHorizon}</span>
+                      </div>
+                    </div>
 
-                <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <p className="text-emerald-100 text-sm">{asset.description}</p>
-                </div>
+                    <div className="mt-4 p-3 bg-white/5 rounded-lg">
+                      <p className="text-emerald-100 text-sm">{asset.description}</p>
+                    </div>
 
-                {/* Protection Bar */}
-                <div className="mt-4">
-                  <div className="w-full bg-slate-700 rounded-full h-2">
-                    <div 
-                      className="h-2 rounded-full transition-all duration-500"
-                      style={{ 
-                        width: `${asset.protection}%`,
-                        backgroundColor: asset.color
-                      }}
-                    />
+                    {/* Protection Bar */}
+                    <div className="mt-4">
+                      <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div 
+                          className="h-2 rounded-full transition-all duration-500"
+                          style={{ 
+                            width: `${asset.protection}%`,
+                            backgroundColor: asset.color
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Back */}
+                  <div className="absolute inset-0 p-6 [backface-visibility:hidden]" style={{ transform: 'rotateY(180deg)' }}>
+                    <div className="h-full flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-xl font-bold text-white mb-3">Mehr Infos</h4>
+                        <ul className="text-emerald-100 text-sm space-y-2">
+                          <li><span className="text-white font-semibold">Warum:</span> {asset.description}</li>
+                          <li><span className="text-white font-semibold">Risiko:</span> {asset.risk}</li>
+                          <li><span className="text-white font-semibold">Horizont:</span> {asset.timeHorizon}</li>
+                        </ul>
+                      </div>
+                      <div className="mt-4 p-3 rounded-lg border" style={{ borderColor: `${asset.color}33`, backgroundColor: `${asset.color}14` }}>
+                        <p className="text-xs text-emerald-200">Tipp: Kombiniere mit Diversifikation und einem Notgroschen, um Schwankungen abzufedern.</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
