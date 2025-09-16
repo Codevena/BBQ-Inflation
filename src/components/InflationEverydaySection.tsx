@@ -25,6 +25,8 @@ const inflationProtectionAssets = [
     risk: 'Hoch',
     timeHorizon: '5+ Jahre',
     description: 'Unternehmen können Preise anpassen',
+    explanation:
+      'Unternehmen erwirtschaften nominale Umsätze. Bei allgemeinem Preisauftrieb können viele Firmen Preise anheben, wodurch Umsätze und Gewinne langfristig in nominalen Größen mitwachsen. Dividenden steigen häufig mit der Zeit. Kurzfristig können Bewertungen bei Zinsanstiegen jedoch fallen – daher längerfristiger Horizont und breite Diversifikation wichtig.',
     color: '#EF4444'
   },
   {
@@ -33,6 +35,8 @@ const inflationProtectionAssets = [
     risk: 'Mittel',
     timeHorizon: '10+ Jahre',
     description: 'Sachwerte steigen mit Inflation',
+    explanation:
+      'Immobilien sind Sachwerte. Mieten enthalten oft Indexklauseln oder werden bei Neuvermietung an das Preisniveau angepasst. Bau- und Landkosten steigen langfristig mit, was Werte stützt. Gleichzeitig machen höhere Zinsen Finanzierungen teurer und können Bewertungen drücken – daher stabilisierend über lange Sicht, nicht kurzfristig.',
     color: '#F59E0B'
   },
   {
@@ -41,6 +45,8 @@ const inflationProtectionAssets = [
     risk: 'Hoch',
     timeHorizon: '3+ Jahre',
     description: 'Direkte Inflationstreiber',
+    explanation:
+      'Rohstoffe (Energie, Metalle, Agrar) sind oft direkte Preistreiber im Warenkorb. Steigen ihre Preise, steigt häufig auch die gemessene Inflation. Exposure bietet deshalb einen natürlichen Hedge. Gleichzeitig sind Rohstoffe sehr volatil, zyklisch und mit Lager-/Rollkosten behaftet – daher nur dosiert als Beimischung.',
     color: '#10B981'
   },
   {
@@ -49,6 +55,8 @@ const inflationProtectionAssets = [
     risk: 'Niedrig',
     timeHorizon: '1+ Jahre',
     description: 'Zinsen passen sich an Inflation an',
+    explanation:
+      'Inflationsindexierte Anleihen (z. B. TIPS, OAT€i) koppeln Kupon und/oder Rückzahlung an einen Preisindex. Unerwartete Inflation wird damit kompensiert – man erhält Realrenditen plus gemessene Inflation. Zu beachten: Indexformel, Steuern und die Sensitivität gegenüber Realzinsen.',
     color: '#3B82F6'
   },
   {
@@ -57,6 +65,8 @@ const inflationProtectionAssets = [
     risk: 'Niedrig',
     timeHorizon: 'Jederzeit',
     description: 'Zinsen meist unter Inflation',
+    explanation:
+      'Liquidität ist wichtig – aber Nominalzinsen liegen oft unter der Inflationsrate. Dadurch verliert das Guthaben real an Kaufkraft. Für Notgroschen und kurzfristige Reserven sinnvoll, nicht als Inflationsschutz über längere Zeiträume.',
     color: '#8B5CF6'
   },
   {
@@ -65,6 +75,8 @@ const inflationProtectionAssets = [
     risk: 'Mittel',
     timeHorizon: '5+ Jahre',
     description: 'Sachwerte mit oft indexierten Erlösen (Mieten/Maut)',
+    explanation:
+      'Viele Infrastrukturprojekte und vermietete Immobilien besitzen inflationsgekoppelte Tarife oder Mieten. Cashflows wachsen dadurch mit dem Preisniveau. Gleichzeitig reagieren Bewertungen sensibel auf Zinsen und regulatorische Rahmenbedingungen – langfristig orientiert einsetzen.',
     color: '#22D3EE'
   }
 ];
@@ -320,7 +332,7 @@ export default function InflationEverydaySection() {
                 role="button"
                 tabIndex={0}
                 aria-pressed={selectedAsset === index}
-                className={`relative bg-white/5 backdrop-blur-sm rounded-xl border cursor-pointer transition-all duration-300 perspective [perspective:1000px] ${
+                className={`relative overflow-hidden bg-white/5 backdrop-blur-sm rounded-xl border cursor-pointer transition-all duration-300 [perspective:1000px] ${
                   selectedAsset === index 
                     ? 'border-emerald-400 bg-white/10 scale-105' 
                     : 'border-white/10 hover:border-white/30'
@@ -338,7 +350,7 @@ export default function InflationEverydaySection() {
                 }}
               >
                 <div
-                  className="p-6 transition-transform duration-500 [transform-style:preserve-3d] min-h-[230px]"
+                  className="relative p-6 transition-transform duration-500 [transform-style:preserve-3d] min-h-[260px]"
                   style={{ transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
                 >
                   {/* Front */}
@@ -388,17 +400,13 @@ export default function InflationEverydaySection() {
 
                   {/* Back */}
                   <div className="absolute inset-0 p-6 [backface-visibility:hidden]" style={{ transform: 'rotateY(180deg)' }}>
-                    <div className="h-full flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-xl font-bold text-white mb-3">Mehr Infos</h4>
-                        <ul className="text-emerald-100 text-sm space-y-2">
-                          <li><span className="text-white font-semibold">Warum:</span> {asset.description}</li>
-                          <li><span className="text-white font-semibold">Risiko:</span> {asset.risk}</li>
-                          <li><span className="text-white font-semibold">Horizont:</span> {asset.timeHorizon}</li>
-                        </ul>
-                      </div>
+                    <div className="h-full flex flex-col">
+                      <h4 className="text-xl font-bold text-white mb-3">Warum schützt {asset.name}?</h4>
+                      <p className="text-emerald-100 text-sm leading-relaxed flex-1">
+                        {asset.explanation}
+                      </p>
                       <div className="mt-4 p-3 rounded-lg border" style={{ borderColor: `${asset.color}33`, backgroundColor: `${asset.color}14` }}>
-                        <p className="text-xs text-emerald-200">Tipp: Kombiniere mit Diversifikation und einem Notgroschen, um Schwankungen abzufedern.</p>
+                        <p className="text-xs text-emerald-200">Hinweis: Kein Ersatz für Beratung. Mischung aus Anlagen und ausreichende Liquiditätsreserve reduzieren Risiken.</p>
                       </div>
                     </div>
                   </div>
