@@ -292,7 +292,7 @@ export default function MeasurementSection() {
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-lg font-semibold text-white">{category.category}</h4>
                   <div className="text-right">
-                    <div className="text-sm text-cyan-200">2025 vs 2022</div>
+                    <div className="text-sm text-cyan-200">2025 vs 2020</div>
                   </div>
                 </div>
                 
@@ -302,8 +302,8 @@ export default function MeasurementSection() {
                     <div className="text-xs text-green-200">2025</div>
                   </div>
                   <div className="text-center p-3 bg-red-500/20 rounded-lg border border-red-400/30">
-                    <div className="text-xl font-bold text-red-400">{category.rate2022}%</div>
-                    <div className="text-xs text-red-200">2022</div>
+                    <div className="text-xl font-bold text-red-400">{category.rate2020}%</div>
+                    <div className="text-xs text-red-200">2020</div>
                   </div>
                 </div>
                 

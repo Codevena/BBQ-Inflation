@@ -428,12 +428,12 @@ export const priceExamples = [
 
 // Zusätzliche Inflationsdaten für tiefere Einblicke
 export const inflationByCategory = [
-  // Juni 2025 (y/y) aus Destatis Pressemitteilung Nr. 250, 10.07.2025; 2022 Werte unverändert
-  { category: "Energie",           rate2025: -3.5, rate2022: 35.7, description: "Energieprodukte (Haushaltsenergie + Kraftstoffe)" },
-  { category: "Nahrungsmittel",    rate2025:  2.0, rate2022: 13.4, description: "Nahrungsmittel (ohne alkoholfreie Getränke)" },
-  { category: "Wohnung",           rate2025:  1.2, rate2022: 2.9,  description: "Wohnung, Wasser, Strom, Gas u. a." },
-  { category: "Verkehr",           rate2025:  1.6, rate2022: 7.6,  description: "Verkehr (inkl. Kraftstoffe)" },
-  { category: "Dienstleistungen",  rate2025:  3.3, rate2022: 3.1,  description: "Dienstleistungen insgesamt" }
+  // 2020 → Juni 2025 kumulative Veränderung (Indexbasis 2020=100). Quelle: Destatis Monatsindizes.
+  { category: "Energie (Haushaltsenergie)",          rate2020: 0.0, rate2025: 46.6, description: "Strom, Gas u. a. Brennstoffe (Haushaltsenergie)" },
+  { category: "Nahrungsmittel",                       rate2020: 0.0, rate2025: 35.5, description: "Nahrungsmittel (Destatis Teilindex)" },
+  { category: "Wohnung, Wasser, Strom, Gas u. a.",    rate2020: 0.0, rate2025: 17.4, description: "Hauptgruppe 04" },
+  { category: "Verkehr",                               rate2020: 0.0, rate2025: 26.9, description: "Hauptgruppe 07 (inkl. Kraftstoffe)" },
+  { category: "Dienstleistungen (Gaststätte/Hotel)",  rate2020: 0.0, rate2025: 32.2, description: "Gaststätten- und Beherbergungsdienstleistungen (HG 11)" }
 ];
 
 export const realWageData = [

@@ -612,13 +612,13 @@ export default function PresentationMode() {
                       <div className="text-green-200 text-sm">2025</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-red-400">{category.rate2022}%</div>
-                      <div className="text-red-200 text-sm">2022</div>
+                      <div className="text-2xl font-bold text-red-400">{category.rate2020}%</div>
+                      <div className="text-red-200 text-sm">2020</div>
                     </div>
                     <div className="text-center">
-                      <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2022 || 0) ? 'text-green-400' : 'text-red-400'}`}>
-                        {(category.rate2025 || 0) < (category.rate2022 || 0) ? '↓' : '↑'}
-                        {Math.abs((category.rate2025 || 0) - (category.rate2022 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}pp
+                      <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2020 || 0) ? 'text-green-400' : 'text-red-400'}`}>
+                        {(category.rate2025 || 0) < (category.rate2020 || 0) ? '↓' : '↑'}
+                        {Math.abs((category.rate2025 || 0) - (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}pp
                       </div>
                       <div className="text-blue-200 text-sm">Änderung</div>
                     </div>
