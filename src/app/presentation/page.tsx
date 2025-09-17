@@ -551,9 +551,14 @@ export default function PresentationMode() {
                 </motion.div>
               ))}
             </div>
-            <p className="text-blue-300 text-xs mt-6">
-              Hinweis: Beispielwerte für die Präsentation. Reale Preisentwicklung variiert nach Region und Kategorie.
-            </p>
+            <div className="text-blue-300 text-xs mt-6 space-y-1">
+              <p>Quellen:</p>
+              <p>• Statistisches Bundesamt (Destatis): Durchschnittspreise ausgewählter Waren/Dienstleistungen, Jahresdurchschnitt 2020 und Juni 2025</p>
+              <p>• ADAC: Kraftstoffpreise (Jahresdurchschnitt 2020; aktuelle Preise 09/2025)</p>
+              <p>• BDEW: Strompreisanalyse (Haushaltsstrompreise 2020, 2025)</p>
+            </div>
+
+
           </div>
         );
 
