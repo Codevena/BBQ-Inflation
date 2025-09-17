@@ -626,6 +626,12 @@ export default function PresentationMode() {
                 </motion.div>
               ))}
             </div>
+              <div className="text-blue-300 text-xs mt-6 space-y-1">
+                <p>Quellen:</p>
+                <p>• Destatis: Pressemitteilung Nr. 250 vom 10.07.2025 (Juni 2025, Vorjahresvergleich)</p>
+                <p>• Destatis: VPI Tabellen 61111-0004/0006 (Hauptgruppen & Sonderaggregate, 2020=100)</p>
+              </div>
+
           </div>
         );
 

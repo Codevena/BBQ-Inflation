@@ -428,11 +428,12 @@ export const priceExamples = [
 
 // Zusätzliche Inflationsdaten für tiefere Einblicke
 export const inflationByCategory = [
-  { category: "Energie", rate2025: 0.8, rate2022: 35.7, description: "Strom, Gas, Kraftstoffe" },
-  { category: "Nahrungsmittel", rate2025: 1.2, rate2022: 13.4, description: "Lebensmittel und Getränke" },
-  { category: "Wohnung", rate2025: 3.1, rate2022: 2.9, description: "Miete, Nebenkosten" },
-  { category: "Verkehr", rate2025: 2.0, rate2022: 7.6, description: "ÖPNV, Kraftfahrzeuge" },
-  { category: "Dienstleistungen", rate2025: 4.2, rate2022: 3.1, description: "Restaurants, Friseur, etc." }
+  // Juni 2025 (y/y) aus Destatis Pressemitteilung Nr. 250, 10.07.2025; 2022 Werte unverändert
+  { category: "Energie",           rate2025: -3.5, rate2022: 35.7, description: "Energieprodukte (Haushaltsenergie + Kraftstoffe)" },
+  { category: "Nahrungsmittel",    rate2025:  2.0, rate2022: 13.4, description: "Nahrungsmittel (ohne alkoholfreie Getränke)" },
+  { category: "Wohnung",           rate2025:  1.2, rate2022: 2.9,  description: "Wohnung, Wasser, Strom, Gas u. a." },
+  { category: "Verkehr",           rate2025:  1.6, rate2022: 7.6,  description: "Verkehr (inkl. Kraftstoffe)" },
+  { category: "Dienstleistungen",  rate2025:  3.3, rate2022: 3.1,  description: "Dienstleistungen insgesamt" }
 ];
 
 export const realWageData = [
