@@ -176,7 +176,7 @@ export default function MeasurementSection() {
 
     return () => ctx.revert();
   }, [animateMiniChart, resetMiniChart]);
-  
+
   // Cleanup rAF
   useEffect(() => {
     return () => {
@@ -185,14 +185,14 @@ export default function MeasurementSection() {
   }, []);
 
   return (
-    <section 
-      id="measurement" 
+    <section
+      id="measurement"
       ref={sectionRef}
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-slate-900 to-cyan-900 py-20"
     >
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="text-center mb-16">
-          <h2 
+          <h2
             ref={titleRef}
             className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6"
           >
@@ -204,7 +204,7 @@ export default function MeasurementSection() {
         </div>
 
         <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
-          
+
           {/* Left Column - Explanation */}
           <div className="space-y-8">
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
@@ -214,8 +214,8 @@ export default function MeasurementSection() {
               </h3>
               <div className="space-y-4 text-cyan-200">
                 <p className="leading-relaxed">
-                  Der <strong className="text-white">Verbraucherpreisindex</strong> misst die durchschnittliche 
-                  Preisentwicklung aller Waren und Dienstleistungen, die private Haushalte für 
+                  Der <strong className="text-white">Verbraucherpreisindex</strong> misst die durchschnittliche
+                  Preisentwicklung aller Waren und Dienstleistungen, die private Haushalte für
                   Konsumzwecke kaufen.
                 </p>
                 <div className="bg-cyan-500/10 border border-cyan-400/30 rounded-lg p-4">
@@ -225,7 +225,7 @@ export default function MeasurementSection() {
                   </h4>
                   <p className="text-sm">
                     Ein repräsentativer &quot;Warenkorb&quot; mit ca. 650 Gütern und Dienstleistungen
-                    wird regelmäßig bepreist. Die Gewichtung erfolgt nach den Ausgabenanteilen 
+                    wird regelmäßig bepreist. Die Gewichtung erfolgt nach den Ausgabenanteilen
                     der Haushalte.
                   </p>
                 </div>
@@ -247,8 +247,8 @@ export default function MeasurementSection() {
                 Harmonisierter VPI (HVPI)
               </h3>
               <p className="text-cyan-200 leading-relaxed mb-4">
-                Für EU-weite Vergleiche verwendet die EZB den <strong className="text-white">HVPI</strong>, 
-                der nach einheitlichen Standards berechnet wird. Dies ermöglicht es der EZB, 
+                Für EU-weite Vergleiche verwendet die EZB den <strong className="text-white">HVPI</strong>,
+                der nach einheitlichen Standards berechnet wird. Dies ermöglicht es der EZB,
                 eine gemeinsame Geldpolitik für die Eurozone zu betreiben.
               </p>
               <div className="grid grid-cols-2 gap-4">
@@ -270,8 +270,8 @@ export default function MeasurementSection() {
                 Warum verschiedene Raten?
               </h4>
               <p className="text-indigo-200 text-sm leading-relaxed">
-                Verschiedene Gütergruppen entwickeln sich unterschiedlich. Während Energiepreise 
-                stark schwanken, sind Dienstleistungen meist stabiler. Die Gesamtinflation ist 
+                Verschiedene Gütergruppen entwickeln sich unterschiedlich. Während Energiepreise
+                stark schwanken, sind Dienstleistungen meist stabiler. Die Gesamtinflation ist
                 der gewichtete Durchschnitt aller Kategorien.
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function MeasurementSection() {
               <TrendingUp size={28} className="text-cyan-400" />
               Inflation nach Kategorien (Deutschland)
             </h3>
-            
+
             {inflationByCategory.map((category) => (
               <div
                 key={category.category}
@@ -299,7 +299,7 @@ export default function MeasurementSection() {
                 <div className="grid grid-cols-3 gap-4 mb-3">
                   {/* 2020 */}
                   <div className="text-center p-3 bg-blue-500/20 rounded-lg border border-blue-400/30">
-                    <div className="text-xl font-bold text-blue-300">{(100 + (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
+                    <div className="text-xl font-bold text-blue-300">{`${(category.rate2020 || 0) >= 0 ? '+' : ''}${Math.abs(category.rate2020 || 0).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`}</div>
                     <div className="text-xs text-blue-200">2020</div>
                   </div>
                   {/* Arrow + Δ */}
@@ -312,16 +312,17 @@ export default function MeasurementSection() {
                   </div>
                   {/* 2025 */}
                   <div className={`text-center p-3 rounded-lg border ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'bg-red-500/20 border-red-400/30' : 'bg-green-500/20 border-green-400/30'}`}>
-                    <div className={`text-xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{(100 + (category.rate2025 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
+                    <div className={`text-xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{`${(category.rate2025 || 0) >= 0 ? '+' : ''}${Math.abs(category.rate2025 || 0).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`}</div>
                     <div className="text-xs text-blue-200">2025</div>
                   </div>
                 </div>
-                
+                <div className="text-blue-200 text-xs mt-1">Index: 100   {(100 + (category.rate2025 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
+
                 <p className="text-cyan-200 text-sm">{category.description}</p>
-                
+
                 {/* Progress Bar */}
                 <div className="mt-4 bg-slate-700 rounded-full h-2 overflow-hidden">
-                  <div 
+                  <div
                     className={`h-full transition-all duration-1000 ${
                       category.rate2025 > 3 ? 'bg-red-400' : category.rate2025 > 2 ? 'bg-yellow-400' : 'bg-green-400'
                     }`}
@@ -331,7 +332,7 @@ export default function MeasurementSection() {
               </div>
             ))}
 
-            
+
           </div>
         </div>
 
@@ -428,7 +429,7 @@ export default function MeasurementSection() {
             </label>
           </div>
           <p className="text-cyan-200 text-sm mb-3 stagger-child">
-            Gesamtinflation umfasst alle Güter (inkl. Energie und Nahrungsmittel). 
+            Gesamtinflation umfasst alle Güter (inkl. Energie und Nahrungsmittel).
             Die <span className="text-white font-medium">Kerninflation</span> blendet diese besonders volatilen Komponenten aus und zeigt den
             <span className="text-white font-medium"> mittelfristigen Trend</span>. 2022/23 lag die Gesamtinflation wegen Energiekrise deutlich über der Kernrate –
             seit 2024 nähern sich beide wieder an.
