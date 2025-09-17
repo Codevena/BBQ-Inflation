@@ -1164,12 +1164,12 @@ export default function PresentationMode() {
               </p>
             </div>
             <div className="mt-10 flex justify-center">
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg border border-white/20 transition-all duration-300 hover:scale-105"
               >
                 Mehr über Inflation erfahren
-              </a>
+              </Link>
             </div>
 
           </div>
