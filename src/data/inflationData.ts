@@ -409,42 +409,21 @@ export const quizQuestions = [
 ];
 
 // Quelle: Statistisches Bundesamt, Verbraucherpreisindex
+// Reale Werte mit Quellen:
+// - Super E10 (2020 Jahresdurchschnitt ~1,27 €/L, Quelle: ADAC Jahresrückblick 2020/2024; Sept. 2025 aktuell ~1,89 €/L, Quelle: ADAC "Aktueller Spritpreis")
+// - Strom Haushalt (2020 ~31,8 ct/kWh; 2025 ~39,7 ct/kWh; Quelle: BDEW Strompreisanalyse 2020/2025)
 export const priceExamples = [
   {
-    item: "Brot (1kg)",
-    price2020: 1.37,
-    price2025: 1.93,
-    increase: 41
-  },
-  {
-    item: "Benzin (1L)",
+    item: "Benzin (Super E10, 1L)",
     price2020: 1.27,
-    price2025: 1.77,
-    increase: 39
+    price2025: 1.89,
+    increase: 49
   },
   {
-    item: "Miete (m²/Monat)",
-    price2020: 8.74,
-    price2025: 11.65,
-    increase: 33
-  },
-  {
-    item: "Strom (kWh)",
-    price2020: 0.31,
-    price2025: 0.49,
-    increase: 58
-  },
-  {
-    item: "Restaurant-Besuch",
-    price2020: 12.50,
-    price2025: 17.20,
-    increase: 38
-  },
-  {
-    item: "Öffentliche Verkehrsmittel",
-    price2020: 2.90,
-    price2025: 3.58,
-    increase: 23
+    item: "Strom (Haushalt, kWh)",
+    price2020: 0.32,
+    price2025: 0.40,
+    increase: 25
   }
 ];
 
