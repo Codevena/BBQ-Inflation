@@ -185,6 +185,49 @@ const glossaryTerms = [
     example: 'Verankerte Erwartungen nahe 2% stabilisieren die Preisentwicklung.',
     category: 'Wirtschaftstheorie'
   }
+,
+  {
+    term: 'Tariflohn',
+    definition: 'Im Tarifvertrag ausgehandelter Lohnsatz (Gewerkschaften/Arbeitgeberverbände).',
+    example: 'Tarifabschluss +5% bei 3% Inflation → Reallohn +2%.',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Mindestlohn',
+    definition: 'Gesetzlich festgelegter Lohn pro Stunde – Untergrenze am Arbeitsmarkt.',
+    example: 'Anhebung kann untere Lohnverteilung und Preissetzung beeinflussen.',
+    category: 'Grundbegriffe'
+  },
+  {
+    term: 'Indexierung',
+    definition: 'Automatische Kopplung von Zahlungen/Preisen an einen Index (z. B. VPI).',
+    example: 'Renten/Verträge steigen mit dem Verbraucherpreisindex.',
+    category: 'Finanzen'
+  },
+  {
+    term: 'Gleitklausel',
+    definition: 'Vertragsklausel, die Preise/Löhne bei Indexänderungen automatisch anpasst.',
+    example: 'Energie-Liefervertrag passt sich an Erzeugerpreise an.',
+    category: 'Finanzen'
+  },
+  {
+    term: 'Terms of Trade (ToT)',
+    definition: 'Verhältnis der Exportpreise zu den Importpreisen eines Landes.',
+    example: 'Steigende Importpreise verschlechtern ToT → importierte Inflation.',
+    category: 'Wirtschaftstheorie'
+  },
+  {
+    term: 'Wechselkurs-Pass-Through',
+    definition: 'Durchschlag von Wechselkursänderungen auf inländische Preise.',
+    example: 'Euro-Abwertung → teurere Importe → höhere Verbraucherpreise.',
+    category: 'Wirtschaftstheorie'
+  },
+  {
+    term: 'Preis‑Lohn‑Produktivität',
+    definition: 'Nachhaltige Lohnpfade orientieren sich an Produktivitätswachstum + Inflationsziel.',
+    example: '1% Produktivität + 2% Zielinflation → Lohnanstieg ~3% ohne Kostendruck.',
+    category: 'Wirtschaftstheorie'
+  }
 ];
 
 const furtherResources = [
