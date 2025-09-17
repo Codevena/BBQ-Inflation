@@ -103,14 +103,7 @@ export const historicalEvents: HistoricalEvent[] = [
     description: "Ölkrisen 1973/1979, Lohn-Preis-Spiralen und anhaltender Preisdruck",
     impact: "Fed-Chef Volcker hob Leitzinsen >20% an; Rezession zur Inflationsbekämpfung"
   },
-  {
-    year: 1983,
-    country: "USA",
-    rate: 3.2,
-    title: "Volcker-Disinflation",
-    description: "Nach massiven Zinsschocks fiel die Inflation rapide – Glaubwürdigkeit wurde wiederhergestellt.",
-    impact: "Zwei Rezessionen 1980/82, aber nachhaltige Senkung der Inflationserwartungen unter 4%."
-  },
+
   {
     year: 1989,
     country: "Argentinien",

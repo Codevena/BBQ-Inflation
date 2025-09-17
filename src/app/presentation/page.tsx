@@ -1097,7 +1097,7 @@ export default function PresentationMode() {
             </h1>
             <div className="space-y-8">
               {(historicalEvents || [])
-                .filter(e => !['Japan','Zimbabwe','Venezuela'].includes((e.country || '')))
+                .filter(e => !['Japan','Zimbabwe'].includes((e.country || ''))) // Venezuela wieder aufnehmen
                 .sort((a, b) => (a.year || 0) - (b.year || 0)) // Sortierung von alt zu neu
                 .map((event, index) => (
                 <div key={index} className="bg-white/5 rounded-2xl p-6 border border-white/10">
