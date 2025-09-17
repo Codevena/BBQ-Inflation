@@ -160,6 +160,31 @@ const glossaryTerms = [
     example: 'Strittig; Evidenz variiert je Branche/Zeit',
     category: 'Grundbegriffe'
   }
+,
+  {
+    term: 'Reallohn',
+    definition: 'Inflationsbereinigter Lohn: zeigt die Kaufkraft deines Einkommens.',
+    example: 'Nominal +3%, Inflation +2% → Reallohn +1%.',
+    category: 'Finanzen'
+  },
+  {
+    term: 'Nominallohn',
+    definition: 'Lohn in Euro ohne Inflationsbereinigung.',
+    example: 'Bei 3% Inflation bedeutet +2% Nominallohn real −1%.',
+    category: 'Finanzen'
+  },
+  {
+    term: 'Lohn-Preis-Spirale',
+    definition: 'Wechselseitiges Aufschaukeln von Löhnen und Preisen.',
+    example: 'Höhere Löhne erhöhen Kosten → Preise steigen → neue Lohnforderungen.',
+    category: 'Wirtschaftstheorie'
+  },
+  {
+    term: 'Inflationserwartungen',
+    definition: 'Erwartete künftige Inflation; prägt Lohn- und Preissetzungen.',
+    example: 'Verankerte Erwartungen nahe 2% stabilisieren die Preisentwicklung.',
+    category: 'Wirtschaftstheorie'
+  }
 ];
 
 const furtherResources = [
@@ -266,8 +291,8 @@ export default function GlossarySection() {
   });
 
   return (
-    <section 
-      id="glossary" 
+    <section
+      id="glossary"
       ref={sectionRef}
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-gray-900 to-slate-900 py-20"
     >
@@ -281,12 +306,12 @@ export default function GlossarySection() {
             <div>
               Glossar &
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-slate-400 block">
-                Vertiefung
+                Ressourcen
               </span>
             </div>
           </h2>
           <p className="text-xl text-gray-200 max-w-4xl mx-auto">
-            Alle wichtigen Begriffe und weiterführende Ressourcen für Inflation-Experten
+            Alle wichtigen Begriffe und weiterführende Ressourcen
           </p>
         </div>
 
@@ -296,7 +321,7 @@ export default function GlossarySection() {
             <BookOpen size={32} className="text-blue-400" />
             Fachbegriffe erklärt
           </h3>
-          
+
           {/* Search and Filter */}
           <div className="mb-8 space-y-4">
             <div className="flex flex-col md:flex-row gap-4">
@@ -335,11 +360,11 @@ export default function GlossarySection() {
                     {term.category}
                   </span>
                 </div>
-                
+
                 <p className="text-gray-200 mb-4 leading-relaxed">
                   {term.definition}
                 </p>
-                
+
                 <div className="bg-blue-500/10 border border-blue-400/30 rounded-lg p-3">
                   <p className="text-blue-100 text-sm">
                     <strong>Beispiel:</strong> {term.example}
@@ -374,7 +399,7 @@ export default function GlossarySection() {
             <Link size={32} className="text-blue-400" />
             Weiterführende Ressourcen
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {furtherResources.map((resource, index) => (
               <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
@@ -384,11 +409,11 @@ export default function GlossarySection() {
                     {resource.type}
                   </span>
                 </div>
-                
+
                 <p className="text-gray-200 mb-4">
                   {resource.description}
                 </p>
-                
+
                 <a
                   href={`https://${resource.url}`}
                   target="_blank"
