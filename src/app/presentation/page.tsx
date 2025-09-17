@@ -29,7 +29,7 @@ import {
   Brain,
   FileText,
   ThumbsUp,
-  MessageSquare,
+
   Calendar,
   Hash,
   Settings,
@@ -64,7 +64,7 @@ const slides = [
 
 export default function PresentationMode() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [showNotes, setShowNotes] = useState(false);
+
   const roadmapRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
   // Statistics slide animated data
   const [statsAnimated, setStatsAnimated] = useState(false);
@@ -120,11 +120,7 @@ export default function PresentationMode() {
           e.preventDefault();
           setCurrentSlide(slides.length - 1);
           break;
-        case 'n':
-        case 'N':
-          e.preventDefault();
-          setShowNotes(!showNotes);
-          break;
+
         case 'Escape':
           e.preventDefault();
           window.location.href = '/';
@@ -134,7 +130,7 @@ export default function PresentationMode() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextSlide, prevSlide, showNotes]);
+  }, [nextSlide, prevSlide]);
 
   // Auto-highlight roadmap cards sequentially (mimic hover glow; no mouse needed)
   useEffect(() => {
@@ -354,7 +350,7 @@ export default function PresentationMode() {
             </h1>
             <motion.div className="bg-white/5 rounded-2xl p-8 mb-8" {...fadeUpVariant(0.1)}>
               <div className="h-96">
-                <Line 
+                <Line
                   data={{
                     labels: inflationRatesGermany.map(item => item.year.toString()),
                     datasets: [{
@@ -433,7 +429,7 @@ export default function PresentationMode() {
             <div className="grid grid-cols-2 gap-12 items-center">
               <div className="bg-white/5 rounded-2xl p-8">
                 <div className="h-96">
-                  <Doughnut 
+                  <Doughnut
                     data={{
                       labels: inflationCauses.map(cause => cause.category),
                       datasets: [{
@@ -462,7 +458,7 @@ export default function PresentationMode() {
                 {inflationCauses.map((cause, index) => (
                   <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <div className="flex items-center gap-4">
-                      <div 
+                      <div
                         className="w-6 h-6 rounded-full"
                         style={{ backgroundColor: cause.color }}
                       />
@@ -1167,10 +1163,20 @@ export default function PresentationMode() {
                 wie Inflation unser tägliches Leben beeinflusst.
               </p>
             </div>
+            <div className="mt-10 flex justify-center">
+              <a
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg border border-white/20 transition-all duration-300 hover:scale-105"
+              >
+                Mehr über Inflation erfahren
+              </a>
+            </div>
+
           </div>
         );
 
       default:
+
         return (
           <div className="text-center">
             <h1 className="text-5xl font-bold text-white mb-12">
@@ -1208,134 +1214,9 @@ export default function PresentationMode() {
         <span>Folie {currentSlide + 1} / {slides.length}</span>
       </div>
 
-      {/* Help */}
-      <div className="fixed bottom-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-xs text-white/80">
-        <div>→ Weiter | ← Zurück | N Notizen | ESC Zurück</div>
-      </div>
 
-      {/* Speaker Notes */}
-      {showNotes && (
-        <div className="fixed top-4 right-4 w-80 bg-black/80 backdrop-blur-sm rounded-lg p-4 text-sm text-white">
-          <h3 className="font-bold mb-2 flex items-center gap-2">
-            <MessageSquare size={16} className="text-cyan-400" />
-            Sprechernotizen:
-          </h3>
-          <div className="text-white/80 max-h-60 overflow-y-auto">
-            {slides[currentSlide] === 'title' && (
-              <div>
-                <p className="mb-2"><strong>Begrüßung:</strong> &quot;Heute nehme ich euch mit auf eine Reise durch das Thema Inflation.&quot;</p>
-                <p className="mb-2"><strong>Zahlen erklären:</strong> 6,9% war 2022 die höchste Inflation seit 1973. 2024 nur noch 2,2%.</p>
-                <p><strong>Überleitung:</strong> &quot;Aber was ist Inflation eigentlich genau?&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'definition' && (
-              <div>
-                <p className="mb-2"><strong>Definition:</strong> &quot;Inflation = allgemeiner Preisanstieg. Nicht einzelne Produkte, sondern der Durchschnitt.&quot;</p>
-                <p className="mb-2"><strong>VPI erklären:</strong> &quot;Gemessen wird mit einem &apos;Warenkorb&apos; von 650 typischen Produkten.&quot;</p>
-                <p><strong>2% Ziel:</strong> &quot;Warum 2%? Zeigt gesunde, wachsende Wirtschaft. 0% wäre Stillstand.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'statistics' && (
-              <div>
-                <p className="mb-2"><strong>Grafik erklären:</strong> &quot;2019-2021 normal, dann 2022 Schock durch Ukraine-Krieg.&quot;</p>
-                <p className="mb-2"><strong>Energiekrise:</strong> &quot;Gas- und Ölpreise explodierten → alles wurde teurer.&quot;</p>
-                <p><strong>Erholung:</strong> &quot;2025 wieder bei 2,2% (Stand {DATA_STAND_SHORT}).&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'causes-intro' && (
-              <div>
-                <p className="mb-2"><strong>Zwei Arten:</strong> &quot;Nachfrage vs. Angebot - wie Waage im Ungleichgewicht.&quot;</p>
-                <p className="mb-2"><strong>Nachfrage:</strong> &quot;Alle wollen kaufen, aber nicht genug da → Preise steigen.&quot;</p>
-                <p><strong>Angebot:</strong> &quot;Produktion wird teurer → Unternehmen geben Kosten weiter.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'causes-chart' && (
-              <div>
-                <p className="mb-2"><strong>Diagramm:</strong> &quot;Nachfrageinflation 30% - Post-Corona alle wollten wieder konsumieren.&quot;</p>
-                <p className="mb-2"><strong>Angebot 25%:</strong> &quot;Lieferketten kaputt, dann Ukraine-Krieg.&quot;</p>
-                <p><strong>Geldpolitik 20%:</strong> &quot;EZB hatte Zinsen bei 0% → viel billiges Geld.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'effects-intro' && (
-              <div>
-                <p className="mb-2"><strong>Reallöhne:</strong> &quot;Tiefpunkt 2022: −4,3%. 2024 wieder Erholung bei +1,6%.&quot;</p>
-                <p className="mb-2"><strong>Sparer:</strong> &quot;Bei 0,1% Zinsen und 6% Inflation verliert man 5,9% pro Jahr.&quot;</p>
-                <p><strong>Erholung:</strong> &quot;2024 wieder positive Reallöhne mit +1,6%.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'effects-prices' && (
-              <div>
-                <p className="mb-2"><strong>Konkrete Beispiele:</strong> &quot;Strom +55% - das merkt jeder in der Nebenkostenabrechnung.&quot;</p>
-                <p className="mb-2"><strong>Brot +38%:</strong> &quot;Grundnahrungsmittel besonders betroffen.&quot;</p>
-                <p><strong>Unterschiede:</strong> &quot;Nicht alles gleich - ÖPNV nur +21%.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'measurement-intro' && (
-              <div>
-                <p className="mb-2"><strong>VPI:</strong> &quot;Statistisches Bundesamt geht jeden Monat &apos;einkaufen&apos; - 650 Produkte.&quot;</p>
-                <p className="mb-2"><strong>Gewichtung:</strong> &quot;Miete 25%, Nahrung 10% - je nach Ausgabenanteil.&quot;</p>
-                <p><strong>HVPI:</strong> &quot;EU-weit gleiche Standards, damit EZB vergleichen kann.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'ecb-policy' && (
-              <div>
-                <p className="mb-2"><strong>Werkzeug:</strong> &quot;Leitzins ist das Hauptwerkzeug der EZB - wie ein Gaspedal für die Wirtschaft.&quot;</p>
-                <p className="mb-2"><strong>Mechanismus:</strong> &quot;Hohe Zinsen = teurer leihen = weniger ausgeben = Preise sinken.&quot;</p>
-                <p className="mb-2"><strong>Aktuell:</strong> &quot;2022 musste EZB von 0% auf 4,5% - drastische Maßnahme!&quot;</p>
-                <p><strong>Erfolg:</strong> &quot;Hat funktioniert: 6,9% → 2,2% in 2 Jahren.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'ecb-instruments' && (
-              <div>
-                <p className="mb-2"><strong>4 Hauptinstrumente:</strong> &quot;Die EZB hat ein ganzes Arsenal an Werkzeugen.&quot;</p>
-                <p className="mb-2"><strong>Hauptrefinanzierung:</strong> &quot;Das ist der normale Weg - Banken leihen sich Geld gegen Sicherheiten.&quot;</p>
-                <p className="mb-2"><strong>Spitzenrefinanzierung:</strong> &quot;Notfall über Nacht - teurer, aber sofort verfügbar.&quot;</p>
-                <p className="mb-2"><strong>Einlagefazilität:</strong> &quot;Banken parken überschüssiges Geld – je nach Phase positiv oder negativ; aktuell positiv (Einlagen werden vergütet).&quot;</p>
-                <p><strong>Mindestreserve:</strong> &quot;1% müssen Banken immer bei der EZB lassen - das bindet Geld.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'ecb-mechanism' && (
-              <div>
-                <p className="mb-2"><strong>Gesamtbild:</strong> &quot;Jetzt sehen wir das große Ganze - wie alles zusammenhängt.&quot;</p>
-                <p className="mb-2"><strong>Kette:</strong> &quot;EZB → Banken → Wirtschaft → Verbraucher → Preise.&quot;</p>
-                <p className="mb-2"><strong>Expansiv:</strong> &quot;Niedrige Zinsen = mehr Geld = mehr Konsum = höhere Preise.&quot;</p>
-                <p className="mb-2"><strong>Restriktiv:</strong> &quot;Hohe Zinsen = weniger Geld = weniger Konsum = niedrigere Preise.&quot;</p>
-                <p><strong>Aktuell:</strong> &quot;2022-2025 perfektes Beispiel: Restriktive Politik hat Inflation gebremst.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'history-intro' && (
-              <div>
-                <p className="mb-2"><strong>Definition:</strong> &quot;Hyperinflation = über 50% pro Monat. Währung wird wertlos.&quot;</p>
-                <p className="mb-2"><strong>Ursachen:</strong> &quot;Meist Kriege, Politik oder Geld drucken ohne Ende.&quot;</p>
-                <p><strong>Heute:</strong> &quot;Moderne Zentralbanken haben gelernt - deshalb 2% Ziel.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'history-timeline' && (
-              <div>
-                <p className="mb-2"><strong>Chronologie:</strong> &quot;Von 1923 bis 2008 - Zeitstrahl zeigt Entwicklung.&quot;</p>
-                <p className="mb-2"><strong>Deutschland 1923:</strong> &quot;Reparationen → Geld drucken → 1 Dollar = 4 Billionen Mark.&quot;</p>
-                <p className="mb-2"><strong>Ungarn 1946:</strong> &quot;Weltrekord! Preise verdoppelten sich alle 15 Stunden.&quot;</p>
-                <p><strong>Lehre:</strong> &quot;Deshalb haben wir heute unabhängige Zentralbanken.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'key-takeaways' && (
-              <div>
-                <p className="mb-2"><strong>4 Kernbotschaften:</strong> &quot;Das solltet ihr mitnehmen.&quot;</p>
-                <p className="mb-2"><strong>Normal:</strong> &quot;2% Inflation = gesunde Wirtschaft, nicht schlimm.&quot;</p>
-                <p className="mb-2"><strong>EZB:</strong> &quot;Unabhängige Zentralbank verhindert Hyperinflation.&quot;</p>
-                <p><strong>Deutschland:</strong> &quot;Wir sind auf dem richtigen Weg zurück zur Normalität.&quot;</p>
-              </div>
-            )}
-            {slides[currentSlide] === 'summary' && (
-              <div>
-                <p className="mb-2"><strong>Kernpunkte:</strong> &quot;Inflation normal, 2% optimal, EZB passt auf.&quot;</p>
-                <p className="mb-2"><strong>Deutschland:</strong> &quot;2022 Schock, 2024 wieder normal.&quot;</p>
-                <p><strong>Persönlich:</strong> &quot;Verstehen hilft bei Finanzentscheidungen.&quot;</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+
+
     </div>
   );
 }
