@@ -292,18 +292,24 @@ export default function MeasurementSection() {
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-lg font-semibold text-white">{category.category}</h4>
                   <div className="text-right">
-                    <div className="text-sm text-cyan-200">2025 vs 2020</div>
+                    <div className="text-sm text-cyan-200">2020 	 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 92 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 a0 92 2025</div>
                   </div>
                 </div>
-                
-                <div className="grid grid-cols-2 gap-4 mb-3">
-                  <div className="text-center p-3 bg-green-500/20 rounded-lg border border-green-400/30">
-                    <div className="text-xl font-bold text-green-400">{category.rate2025}%</div>
-                    <div className="text-xs text-green-200">2025</div>
+
+                <div className="grid grid-cols-3 gap-4 mb-3">
+                  {/* 2020 */}
+                  <div className="text-center p-3 bg-blue-500/20 rounded-lg border border-blue-400/30">
+                    <div className="text-xl font-bold text-blue-300">{category.rate2020}%</div>
+                    <div className="text-xs text-blue-200">2020</div>
                   </div>
-                  <div className="text-center p-3 bg-red-500/20 rounded-lg border border-red-400/30">
-                    <div className="text-xl font-bold text-red-400">{category.rate2020}%</div>
-                    <div className="text-xs text-red-200">2020</div>
+                  {/* Arrow */}
+                  <div className="flex items-center justify-center">
+                    <div className={`${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'} text-2xl font-bold`}>→</div>
+                  </div>
+                  {/* 2025 */}
+                  <div className={`text-center p-3 rounded-lg border ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'bg-red-500/20 border-red-400/30' : 'bg-green-500/20 border-green-400/30'}`}>
+                    <div className={`text-xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{category.rate2025}%</div>
+                    <div className="text-xs text-blue-200">2025</div>
                   </div>
                 </div>
                 

@@ -602,19 +602,31 @@ export default function PresentationMode() {
             <div className="grid grid-cols-1 gap-6">
               {(inflationByCategory || []).map((category, index) => (
                 <motion.div key={index} className="bg-white/5 rounded-xl p-6 border border-white/10" {...fadeUpVariant(0.12 + index * 0.08)}>
-                  <div className="grid grid-cols-4 gap-6 items-center">
+                  <div className="grid grid-cols-5 gap-6 items-center">
                     <div className="text-left">
                       <h3 className="text-xl font-bold text-white">{category.category}</h3>
                       <p className="text-cyan-200 text-sm">{category.description}</p>
                     </div>
+
+                    {/* 2020 (links) */}
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-400">{category.rate2025}%</div>
-                      <div className="text-green-200 text-sm">2025</div>
+                      <div className="text-2xl font-bold text-blue-300">{category.rate2020}%</div>
+                      <div className="text-blue-200 text-sm">2020</div>
                     </div>
+
+                    {/* Pfeil */}
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-red-400">{category.rate2020}%</div>
-                      <div className="text-red-200 text-sm">2020</div>
+                      <div className={`text-2xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>→</div>
+                      <div className="text-blue-200 text-sm">nach</div>
                     </div>
+
+                    {/* 2025 (rechts) */}
+                    <div className="text-center">
+                      <div className={`text-2xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{category.rate2025}%</div>
+                      <div className="text-blue-200 text-sm">2025</div>
+                    </div>
+
+                    {/* Änderung */}
                     <div className="text-center">
                       <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2020 || 0) ? 'text-green-400' : 'text-red-400'}`}>
                         {(category.rate2025 || 0) < (category.rate2020 || 0) ? '↓' : '↑'}
