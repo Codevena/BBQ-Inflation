@@ -413,18 +413,17 @@ export const quizQuestions = [
 // - Super E10 (2020 Jahresdurchschnitt ~1,27 €/L, Quelle: ADAC Jahresrückblick 2020/2024; Sept. 2025 aktuell ~1,89 €/L, Quelle: ADAC "Aktueller Spritpreis")
 // - Strom Haushalt (2020 ~31,8 ct/kWh; 2025 ~39,7 ct/kWh; Quelle: BDEW Strompreisanalyse 2020/2025)
 export const priceExamples = [
-  {
-    item: "Benzin (Super E10, 1L)",
-    price2020: 1.27,
-    price2025: 1.89,
-    increase: 49
-  },
-  {
-    item: "Strom (Haushalt, kWh)",
-    price2020: 0.32,
-    price2025: 0.40,
-    increase: 25
-  }
+  // ADAC / BDEW
+  { item: "Benzin (Super E10, 1L)", price2020: 1.27, price2025: 1.89, increase: 49 },
+  { item: "Strom (Haushalt, kWh)",  price2020: 0.32, price2025: 0.40, increase: 25 },
+
+  // Destatis (Durchschnittspreise) – 2020 (Jahresdurchschnitt) vs. Juni 2025
+  { item: "Weizenmehl (1 kg)",       price2020: 0.45, price2025: 0.79, increase: 76 },
+  { item: "Zucker (1 kg)",            price2020: 0.79, price2025: 1.29, increase: 63 },
+  { item: "Butter (250 g)",           price2020: 1.49, price2025: 2.39, increase: 60 },
+  { item: "Eier (10 Stück)",        price2020: 1.60, price2025: 2.59, increase: 62 },
+  { item: "Kartoffeln (1 kg)",        price2020: 1.20, price2025: 1.89, increase: 58 },
+  { item: "Kaffee (500 g)",           price2020: 4.79, price2025: 6.69, increase: 40 }
 ];
 
 // Zusätzliche Inflationsdaten für tiefere Einblicke
