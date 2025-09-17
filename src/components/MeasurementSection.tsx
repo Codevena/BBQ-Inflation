@@ -299,16 +299,20 @@ export default function MeasurementSection() {
                 <div className="grid grid-cols-3 gap-4 mb-3">
                   {/* 2020 */}
                   <div className="text-center p-3 bg-blue-500/20 rounded-lg border border-blue-400/30">
-                    <div className="text-xl font-bold text-blue-300">{category.rate2020}%</div>
+                    <div className="text-xl font-bold text-blue-300">{(100 + (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
                     <div className="text-xs text-blue-200">2020</div>
                   </div>
-                  {/* Arrow */}
-                  <div className="flex items-center justify-center">
+                  {/* Arrow + Δ */}
+                  <div className="flex flex-col items-center justify-center">
+                    <div className={`${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'} text-sm font-semibold mb-1`}>
+                      {(category.rate2025 || 0) - (category.rate2020 || 0) >= 0 ? '+' : ''}
+                      {Math.abs((category.rate2025 || 0) - (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
+                    </div>
                     <div className={`${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'} text-2xl font-bold`}>→</div>
                   </div>
                   {/* 2025 */}
                   <div className={`text-center p-3 rounded-lg border ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'bg-red-500/20 border-red-400/30' : 'bg-green-500/20 border-green-400/30'}`}>
-                    <div className={`text-xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{category.rate2025}%</div>
+                    <div className={`text-xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{(100 + (category.rate2025 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
                     <div className="text-xs text-blue-200">2025</div>
                   </div>
                 </div>

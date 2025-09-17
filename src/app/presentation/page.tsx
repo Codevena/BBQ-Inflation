@@ -53,8 +53,8 @@ const slides = [
   'effects-prices',
   'measurement-intro',
   'measurement-categories',
-  'ecb-policy',
   'ecb-instruments',
+  'ecb-policy',
   'ecb-mechanism',
   'history-intro',
   'history-timeline',
@@ -610,19 +610,22 @@ export default function PresentationMode() {
 
                     {/* 2020 (links) */}
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-300">{category.rate2020}%</div>
+                      <div className="text-2xl font-bold text-blue-300">{(100 + (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
                       <div className="text-blue-200 text-sm">2020</div>
                     </div>
 
-                    {/* Pfeil */}
+                    {/* Pfeil + Δ */}
                     <div className="text-center">
+                      <div className={`${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'} text-sm font-semibold mb-1`}>
+                        {(category.rate2025 || 0) - (category.rate2020 || 0) >= 0 ? '+' : ''}
+                        {Math.abs((category.rate2025 || 0) - (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
+                      </div>
                       <div className={`text-2xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>→</div>
-                      <div className="text-blue-200 text-sm">nach</div>
                     </div>
 
                     {/* 2025 (rechts) */}
                     <div className="text-center">
-                      <div className={`text-2xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{category.rate2025}%</div>
+                      <div className={`text-2xl font-bold ${(category.rate2025 || 0) >= (category.rate2020 || 0) ? 'text-red-400' : 'text-green-400'}`}>{(100 + (category.rate2025 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}</div>
                       <div className="text-blue-200 text-sm">2025</div>
                     </div>
 
@@ -630,9 +633,9 @@ export default function PresentationMode() {
                     <div className="text-center">
                       <div className={`text-xl font-bold ${(category.rate2025 || 0) < (category.rate2020 || 0) ? 'text-green-400' : 'text-red-400'}`}>
                         {(category.rate2025 || 0) < (category.rate2020 || 0) ? '↓' : '↑'}
-                        {Math.abs((category.rate2025 || 0) - (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}pp
+                        {Math.abs((category.rate2025 || 0) - (category.rate2020 || 0)).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%
                       </div>
-                      <div className="text-blue-200 text-sm">Änderung</div>
+                      <div className="text-blue-200 text-sm">Δ seit 2020</div>
                     </div>
                   </div>
                 </motion.div>
