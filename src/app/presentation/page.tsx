@@ -392,6 +392,7 @@ export default function PresentationMode() {
               <Search size={48} className="text-cyan-400" />
               Was verursacht Inflation?
             </h1>
+            <p className="text-blue-200 text-xl mb-8">Die 2 häufigsten Inflationsursachen</p>
             <div className="grid grid-cols-2 gap-12">
               <motion.div className="bg-red-500/20 rounded-2xl p-8 border border-red-400/30" {...fadeUpVariant(0.15)}>
                 <h2 className="text-3xl font-bold text-red-400 mb-6">Nachfrageinflation</h2>
